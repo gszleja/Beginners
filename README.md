@@ -25,4 +25,6 @@ dane[localizeErrors(reguly,Hipoteczny$adapt)] <- NA
 czyste_dane
 
 
+git config --global user.email "yehoshyn.illia@gmail.com"
+git config --global user.name "Yehoshyn"
 
