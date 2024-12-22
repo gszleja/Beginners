@@ -118,4 +118,3 @@ ggplot(hipo_baza) +
   
 
 ```
-
