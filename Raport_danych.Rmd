@@ -10,34 +10,39 @@ editor_options:
 
 #Instalacja Pakietów
 
-if (! require("tidyverse")) install.packages("tidyverse", dependencies =
-TRUE) if (! require("dlookr")) install.packages("dlookr", dependencies =
-TRUE) if (! require("VIM")) install.packages("VIM", dependencies = TRUE)
-if (! require("validate")) install.packages("validate", dependencies =
-TRUE)
+if (! require("tidyverse")) install.packages("tidyverse", dependencies = TRUE)
+if (! require("dlookr")) install.packages("dlookr", dependencies = TRUE)
+if (! require("VIM")) install.packages("VIM", dependencies = TRUE)
+if (! require("validate")) install.packages("validate", dependencies = TRUE)
 
 #Wczytywanie bibliotek
 
+<<<<<<< HEAD
 library(tidyverse) library(dlookr) library(VIM) library(validate)
 
 library(readr) Hipoteczny \<- read_delim("Hipoteczny.csv", delim = ";",
 escape_double = FALSE, trim_ws = TRUE)
+=======
+library(tidyverse)
+library(dlookr)
+library(VIM)
+library(validate)
+library(readr)
+>>>>>>> 6c31e8a1930a1c5d223277df8efb28d7c29fe3f2
 
 #Wproadzenie danych
 
 ```{r}
-library(readr)
 Hipoteczny <- read_delim("Hipoteczny.csv", 
     delim = ";", escape_double = FALSE, trim_ws = TRUE)
-
+hipo_baza <- Hipoteczny
 ```
 
 #Wizualizacja Danych
 
 ```{r}
-
-hipo_baza <- Hipoteczny
 sum(is.na(hipo_baza))
-
+hipo_baza[!is.na(hipo_baza),]
+sum(is.na(hipo_baza))
 
 ```
