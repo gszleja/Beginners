@@ -15,4 +15,3 @@
 ## 5. EDA
 ## - Przeprowadzanie analizy jednowymiarowej
 ## - Przeprowadzenie analizy dwuwymiarowej
-
