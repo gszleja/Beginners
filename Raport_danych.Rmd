@@ -86,6 +86,10 @@ hipo_baza$Education <- ifelse(hipo_baza$Education == "graduate", 1, 0)
 
 #Kolumna Self_Employed, przekodowanie Yes=1, No=0
 hipo_baza$Self_Employed <- ifelse(hipo_baza$Self_Employed == "yes", 1, 0)
+
+hipo_baza$Property_Area <- ifelse(hipo_baza$Property_Area == "urban", 1,
+                              ifelse(hipo_baza$Property_Area == "semiurban", 2,
+                                  ifelse(hipo_baza$Property_Area == "rural", 3, NA)))
 ```
 
 
