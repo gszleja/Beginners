@@ -41,7 +41,18 @@ sum(is.na(hipo_baza))
 
 ```
 
-#Sprwadzaniei usuwanie dupliatów
+
+#Usuwanie wartośći niezawierających "LP" w kolumnie "Loan_ID", i usuwanie tych wierszy
+```{r}
+sum(!grepl("LP", hipo_baza$Loan_ID))
+hipo_baza <- hipo_baza[grepl("LP", hipo_baza$Loan_ID), ]
+sum(!grepl("LP", hipo_baza$Loan_ID))
+
+
+```
+
+
+#Sprwadzanie i usuwanie dupliatów
 ```{r}
 sum(duplicated(hipo_baza$Loan_ID))
 hipo_baza <- hipo_baza[!duplicated(hipo_baza$Loan_ID), ]
@@ -49,10 +60,23 @@ sum(duplicated(hipo_baza$Loan_ID))
 
 
 ```
+#Kolumna Gender, przekodowanie aby 1 ozn. mężczyzne a 0 kobietę
+```{r}
+hipo_baza$Gender <- ifelse(hipo_baza$Gender == "Male", 1, 0)
+```
 
+#Kolumna Married, przekodowanie aby 1 ozn. Żonatych a 0 nieżonatych
+```{r}
+hipo_baza$Married <- ifelse(hipo_baza$Married == "Yes", 1, 0)
+```
 
+#Kolumna Education, przekodowanie aby Graduate =1 a 0=Not Graduate.
+```{r}
+hipo_baza$Education <- ifelse(hipo_baza$Education == "Graduate", 1, 0)
+```
 
-
-
-
+#Kolumna Self_Employed, przekodowanie Yes=1, No=0
+```{r}
+hipo_baza$Self_Employed <- ifelse(hipo_baza$Self_Employed == "Yes", 1, 0)
+```
 
