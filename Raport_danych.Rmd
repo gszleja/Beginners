@@ -51,14 +51,16 @@ sum(duplicated(hipo_baza$Loan_ID))
 
 ```
 
-#Usuwanie wartośći niezawierających "LP" w kolumnie "Loan_ID", i usuwanie tych wierszy
+#Usuwanie błednych wartości 
 
 ```{r}
 sum(!grepl("LP", hipo_baza$Loan_ID))
 hipo_baza <- hipo_baza[grepl("^LP\\d{6}$", hipo_baza$Loan_ID), ]  #czyszczenie jeśli nie mają LP i 6 cyfr
 hipo_baza <- subset(hipo_baza, Gender %in% c("Male", "Female")) #czyszczenie jesli nie ma male lub female
 hipo_baza <- subset(hipo_baza, Married %in% c("Yes", "No")) #czyszczenie jesli nie ma Yes lub No
-hipo_baza <- subset(hipo_baza, Married %in% c("Graduate", "Not Graduate")) #czyszczenie jesli graduate lub Not
+hipo_baza <- subset(hipo_baza, Education %in% c("Graduate", "Not Graduate")) #czyszczenie jesli graduate lub Not
+
+
 
 ```
 
