@@ -18,26 +18,21 @@ library(tidyverse)
 library(dlookr)
 library(VIM)
 library(validate)
-
 library(readr)
-Hipoteczny <- read_delim("Hipoteczny.csv", 
-    delim = ";", escape_double = FALSE, trim_ws = TRUE)
 
 #Wproadzenie danych
 ```{r}
-library(readr)
 Hipoteczny <- read_delim("Hipoteczny.csv", 
     delim = ";", escape_double = FALSE, trim_ws = TRUE)
-
+hipo_baza <- Hipoteczny
 ```
 
 
 #Wizualizacja Danych
 ```{r}
-
-hipo_baza <- Hipoteczny
 sum(is.na(hipo_baza))
-
+hipo_baza[!is.na(hipo_baza),]
+sum(is.na(hipo_baza))
 
 ```
 
