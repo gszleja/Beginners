@@ -30,7 +30,7 @@ Hipoteczny <- read_delim("Hipoteczny.csv",
 hipo_baza <- Hipoteczny
 ```
 
-#Wizualizacja Danych
+#Usunięcie pustych wartości
 ```{r}
 sum(is.na(hipo_baza))
 hipo_baza <- hipo_baza[complete.cases(hipo_baza), ]
@@ -44,6 +44,7 @@ sum(duplicated(hipo_baza$Loan_ID))
 hipo_baza <- hipo_baza[!duplicated(hipo_baza$Loan_ID), ]
 sum(duplicated(hipo_baza$Loan_ID))
 ```
+
 #Zmiana danych, aby były zapisane małymi literami
 ```{r}
 hipo_baza$Gender <- tolower(hipo_baza$Gender)
@@ -78,6 +79,24 @@ hipo_baza$Education <- ifelse(hipo_baza$Education == "graduate", 1, 0)
 
 #Kolumna Self_Employed, przekodowanie Yes=1, No=0
 hipo_baza$Self_Employed <- ifelse(hipo_baza$Self_Employed == "yes", 1, 0)
+
+#Kolumna Property_Area urban=1, semiurban=2, rural=3
+#hipo_baza <- ifelse(hipo_baza$Property_Area)
+`
+``
+
+#Zminaa typu na liczbowy:
+```{r}
+hipo_baza$Gender <- as.integer(hipo_baza$Gender)
+hipo_baza$Married <- as.integer(hipo_baza$Married)
+hipo_baza$Dependents <- as.integer(hipo_baza$Dependents)
+hipo_baza$Education <- as.integer(hipo_baza$Education)
+hipo_baza$Self_Employed <- as.integer(hipo_baza$Self_Employed)
+hipo_baza$ApplicantIncome <- as.integer(hipo_baza$ApplicantIncome)
+hipo_baza$CoapplicantIncome <- as.integer(hipo_baza$CoapplicantIncome)
+hipo_baza$LoanAmount <- as.integer(hipo_baza$LoanAmount)
+hipo_baza$Loan_Amount_Term <- as.integer(hipo_baza$Loan_Amount_Term)
+hipo_baza$Credit_History <- as.integer(hipo_baza$Credit_History)
 ```
 
-
+head(hipo_baza)
