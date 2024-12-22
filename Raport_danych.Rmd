@@ -89,7 +89,7 @@ hipo_baza$Education <- ifelse(hipo_baza$Education == "graduate", 1, 0)
 hipo_baza$Self_Employed <- ifelse(hipo_baza$Self_Employed == "yes", 1, 0)
 
 #Kolumna Property_Area urban=1, semiurban=2, rural=3
-#hipo_baza <- ifelse(hipo_baza$Property_Area)
+hi
 `
 ``
 
