@@ -31,7 +31,7 @@ hipo_baza <- Hipoteczny
 #Wizualizacja Danych
 ```{r}
 sum(is.na(hipo_baza))
-hipo_baza <- hipo_baza[, colSums(is.na(hipo_baza)) == 0]
+hipo_baza <- hipo_baza[complete.cases(hipo_baza), ]
 sum(is.na(hipo_baza))
 
 ```
