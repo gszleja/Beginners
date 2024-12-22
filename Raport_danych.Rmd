@@ -89,9 +89,9 @@ hipo_baza$Education <- ifelse(hipo_baza$Education == "graduate", 1, 0)
 hipo_baza$Self_Employed <- ifelse(hipo_baza$Self_Employed == "yes", 1, 0)
 
 #Kolumna Property_Area urban=1, semiurban=2, rural=3
-hi
-`
-``
+
+```
+
 
 #Zminaa typu na liczbowy:
 ```{r}
@@ -106,5 +106,3 @@ hipo_baza$LoanAmount <- as.integer(hipo_baza$LoanAmount)
 hipo_baza$Loan_Amount_Term <- as.integer(hipo_baza$Loan_Amount_Term)
 hipo_baza$Credit_History <- as.integer(hipo_baza$Credit_History)
 ```
-
-head(hipo_baza)
