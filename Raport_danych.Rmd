@@ -40,3 +40,19 @@ hipo_baza <- hipo_baza[complete.cases(hipo_baza), ]
 sum(is.na(hipo_baza))
 
 ```
+
+#Sprwadzaniei usuwanie dupliatów
+```{r}
+sum(duplicated(hipo_baza$Loan_ID))
+hipo_baza <- hipo_baza[!duplicated(hipo_baza$Loan_ID), ]
+sum(duplicated(hipo_baza$Loan_ID))
+
+
+```
+
+
+
+
+
+
+
