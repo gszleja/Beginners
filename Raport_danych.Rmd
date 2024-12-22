@@ -7,10 +7,10 @@ output: html_document
 
 #Instalacja Pakietów
 
-install.packages("tidyverse")
-install.packages("dlookr")
-install.packages("VIM")
-install.packages("validate")
+if (! require("tidyverse")) install.packages("tidyverse", dependencies = TRUE)
+if (! require("dlookr")) install.packages("dlookr", dependencies = TRUE)
+if (! require("VIM")) install.packages("VIM", dependencies = TRUE)
+if (! require("validate")) install.packages("validate", dependencies = TRUE)
 
 #Wczytywanie bibliotek
 
