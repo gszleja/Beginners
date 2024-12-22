@@ -41,18 +41,8 @@ sum(is.na(hipo_baza))
 
 ```
 
-
-#Usuwanie wartośći niezawierających "LP" w kolumnie "Loan_ID", i usuwanie tych wierszy
-```{r}
-sum(!grepl("LP", hipo_baza$Loan_ID))
-hipo_baza <- hipo_baza[grepl("LP", hipo_baza$Loan_ID), ]
-sum(!grepl("LP", hipo_baza$Loan_ID))
-
-
-```
-
-
 #Sprwadzanie i usuwanie dupliatów
+
 ```{r}
 sum(duplicated(hipo_baza$Loan_ID))
 hipo_baza <- hipo_baza[!duplicated(hipo_baza$Loan_ID), ]
@@ -60,6 +50,20 @@ sum(duplicated(hipo_baza$Loan_ID))
 
 
 ```
+
+#Usuwanie wartośći niezawierających "LP" w kolumnie "Loan_ID", i usuwanie tych wierszy
+
+```{r}
+sum(!grepl("LP", hipo_baza$Loan_ID))
+hipo_baza <- hipo_baza[grepl("^LP\\d{6}$", hipo_baza$Loan_ID), ]  #czyszczenie jeśli nie mają LP i 6 cyfr
+hipo_baza <- subset(hipo_baza, Gender %in% c("Male", "Female")) #czyszczenie jesli nie ma male lub female
+hipo_baza <- subset(hipo_baza, Married %in% c("Yes", "No")) #czyszczenie jesli nie ma Yes lub No
+hipo_baza <- subset(hipo_baza, Married %in% c("Graduate", "Not Graduate")) #czyszczenie jesli graduate lub Not
+
+```
+
+
+
 #Kolumna Gender, przekodowanie aby 1 ozn. mężczyzne a 0 kobietę
 ```{r}
 hipo_baza$Gender <- ifelse(hipo_baza$Gender == "Male", 1, 0)
