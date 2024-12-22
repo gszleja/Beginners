@@ -42,7 +42,7 @@ hipo_baza <- Hipoteczny
 
 ```{r}
 sum(is.na(hipo_baza))
-hipo_baza[!is.na(hipo_baza),]
+hipo_baza <- hipo_baza[complete.cases(hipo_baza), ]
 sum(is.na(hipo_baza))
 
 ```
