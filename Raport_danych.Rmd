@@ -86,15 +86,12 @@ hipo_baza$Education <- ifelse(hipo_baza$Education == "graduate", 1, 0)
 #Kolumna Self_Employed, przekodowanie Yes=1, No=0
 hipo_baza$Self_Employed <- ifelse(hipo_baza$Self_Employed == "yes", 1, 0)
 
-<<<<<<< HEAD
 #Kolumna Property_Area urban=1, semiurban=2, rural=3
-
-=======
 hipo_baza$Property_Area <- ifelse(hipo_baza$Property_Area == "urban", 1,
                               ifelse(hipo_baza$Property_Area == "semiurban", 2,
                                   ifelse(hipo_baza$Property_Area == "rural", 3, NA)))
->>>>>>> 8e8db8d034daf8302e0302c2a121b606fce59a4a
 ```
+
 
 
 #Zminaa typu na liczbowy:
@@ -110,3 +107,6 @@ hipo_baza$LoanAmount <- as.integer(hipo_baza$LoanAmount)
 hipo_baza$Loan_Amount_Term <- as.integer(hipo_baza$Loan_Amount_Term)
 hipo_baza$Credit_History <- as.integer(hipo_baza$Credit_History)
 ```
+
+
+head(hipo_baza)
