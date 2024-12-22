@@ -63,7 +63,15 @@ sum(!grepl("LP", hipo_baza$Loan_ID))
 hipo_baza <- hipo_baza[grepl("^LP\\d{6}$", hipo_baza$Loan_ID), ]  #czyszczenie jeśli nie mają LP i 6 cyfr
 hipo_baza <- subset(hipo_baza, Gender %in% c("male", "female")) #czyszczenie jesli nie ma male lub female
 hipo_baza <- subset(hipo_baza, Married %in% c("yes", "no")) #czyszczenie jesli nie ma Yes lub No
-hipo_baza <- subset(hipo_baza, Education %in% c("graduate", "not graduate")) #czyszczenie jesli graduate lub Not
+hipo_baza <- subset(hipo_baza, Education %in% c("graduate", "not graduate")) #czyszczenie jesli graduate lubNot
+hipo_baza <- subset(hipo_baza, Self_Employed %in% c("yes", "no")) #czyszczenie jesli nie ma Yes lub No
+hipo_baza <- subset(hipo_baza, Credit_History %in% c(1, 0)) #czyszczenie jesli nie ma 1 lub 0
+hipo_baza <- subset(hipo_baza, LoanAmount > 0) #czyszczenie jesli jest mniejsze badz równe 0
+hipo_baza <- subset(hipo_baza, ApplicantIncome >= 0)#czyszczenie jesli jest mniejsze od 0
+hipo_baza <- subset(hipo_baza, CoapplicantIncome >= 0)
+hipo_baza <- subset(hipo_baza, Loan_Amount_Term >= 0)
+hipo_baza <- subset(hipo_baza, Property_Area %in% c("urban", "semiurban", "rural"))
+
 ```
 
 #Zmiana wartości w kolumach na dane binarne
