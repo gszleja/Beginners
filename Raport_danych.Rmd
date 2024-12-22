@@ -79,4 +79,3 @@ hipo_baza$Education <- ifelse(hipo_baza$Education == "Graduate", 1, 0)
 ```{r}
 hipo_baza$Self_Employed <- ifelse(hipo_baza$Self_Employed == "Yes", 1, 0)
 ```
-
