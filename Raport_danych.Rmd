@@ -55,9 +55,7 @@ hipo_baza$Property_Area <- tolower(hipo_baza$Property_Area)
 ```
 
 
-
 #Usuwanie błednych wartości 
-
 ```{r}
 sum(!grepl("LP", hipo_baza$Loan_ID))
 hipo_baza <- hipo_baza[grepl("^LP\\d{6}$", hipo_baza$Loan_ID), ]  #czyszczenie jeśli nie mają LP i 6 cyfr
@@ -88,8 +86,14 @@ hipo_baza$Education <- ifelse(hipo_baza$Education == "graduate", 1, 0)
 #Kolumna Self_Employed, przekodowanie Yes=1, No=0
 hipo_baza$Self_Employed <- ifelse(hipo_baza$Self_Employed == "yes", 1, 0)
 
+<<<<<<< HEAD
 #Kolumna Property_Area urban=1, semiurban=2, rural=3
 
+=======
+hipo_baza$Property_Area <- ifelse(hipo_baza$Property_Area == "urban", 1,
+                              ifelse(hipo_baza$Property_Area == "semiurban", 2,
+                                  ifelse(hipo_baza$Property_Area == "rural", 3, NA)))
+>>>>>>> 8e8db8d034daf8302e0302c2a121b606fce59a4a
 ```
 
 
