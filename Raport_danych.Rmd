@@ -71,7 +71,7 @@ hipo_baza <- subset(hipo_baza, ApplicantIncome >= 0)#czyszczenie jesli jest mnie
 hipo_baza <- subset(hipo_baza, CoapplicantIncome >= 0)
 hipo_baza <- subset(hipo_baza, Loan_Amount_Term >= 0)
 hipo_baza <- subset(hipo_baza, Property_Area %in% c("urban", "semiurban", "rural"))
-
+hipo_baza <- subset(hipo_baza, Dependents >= 0)
 ```
 
 #Zmiana wartości w kolumach na dane binarne
