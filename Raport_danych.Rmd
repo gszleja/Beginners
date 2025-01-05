@@ -109,6 +109,7 @@ hipo_baza$Credit_History <- as.integer(hipo_baza$Credit_History)
 hipo_baza$Property_Area <- as.integer(hipo_baza$p)
 ```
 
+
 #wykres zależności pomiędzy zarobkami wnioskodawcy a wielkością miejscowosći zamieszkania
 ```{r}
 ggplot(hipo_baza) +
