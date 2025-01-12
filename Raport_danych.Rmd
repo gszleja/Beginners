@@ -106,7 +106,7 @@ hipo_baza$CoapplicantIncome <- as.integer(hipo_baza$CoapplicantIncome)
 hipo_baza$LoanAmount <- as.integer(hipo_baza$LoanAmount)
 hipo_baza$Loan_Amount_Term <- as.integer(hipo_baza$Loan_Amount_Term)
 hipo_baza$Credit_History <- as.integer(hipo_baza$Credit_History)
-hipo_baza$Property_Area <- as.integer(hipo_baza$p)
+hipo_baza$Property_Area <- as.integer(hipo_baza$Property_Area)
 ```
 
 
@@ -114,7 +114,7 @@ hipo_baza$Property_Area <- as.integer(hipo_baza$p)
 ```{r}
 ggplot(hipo_baza) +
   aes(Property_Area, ApplicantIncome) +
-  geom_point(size = 2,5) +
+  geom_point(size = 2) +
   scale_color_manual(values = c("green", "orange", "red"))
   
 ```
