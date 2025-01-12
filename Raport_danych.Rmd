@@ -114,7 +114,7 @@ hipo_baza$Property_Area <- as.integer(hipo_baza$p)
 ```{r}
 ggplot(hipo_baza) +
   aes(Property_Area, ApplicantIncome) +
-  geom_point(size = 3) +
+  geom_point(size = 2,5) +
   scale_color_manual(values = c("green", "orange", "red"))
   
 ```
