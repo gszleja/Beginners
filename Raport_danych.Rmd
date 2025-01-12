@@ -126,6 +126,7 @@ wykres_zarobki_do_miejscowosci <- ggplot(hipo_baza, aes(x=Property_Area, y=Appli
   scale_color_manual(values = c("miasto" = "green", "wieś" = "purple", "turbowies"="red"))
   labs(x = "TEREN", y = "ZAROBKI", title="Zarobki Do Wielkośći Miejscowości") +
 plot(wykres_zarobki_do_miejscowosci)
+  
 
 ```
 
