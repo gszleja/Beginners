@@ -130,3 +130,4 @@ plot(wykres_zarobki_do_miejscowosci)
 ```
 
 
+
