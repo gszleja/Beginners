@@ -117,5 +117,4 @@ ggplot(hipo_baza) +
   geom_point(size = 3) +
   scale_color_manual(values = c("green", "orange", "red"))
   
-
 ```
