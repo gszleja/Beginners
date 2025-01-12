@@ -30,6 +30,15 @@ Hipoteczny <- read_delim("Hipoteczny.csv",
 hipo_baza <- Hipoteczny
 ```
 
+
+```{r}
+getmode <- function(v) {
+  uniqv <- unique(v)
+  uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+hipo_baza$Gender[is.na(hipo_baza$Gender)] <- getmode(hipo_baza$Gender)
+```
+
 #Usunięcie pustych wartości
 ```{r}
 sum(is.na(hipo_baza))
@@ -111,11 +120,13 @@ hipo_baza$Property_Area <- as.integer(hipo_baza$Property_Area)
 
 #wykres zależności pomiędzy zarobkami wnioskodawcy a wielkością miejscowosći zamieszkania
 ```{r}
-ggplot(hipo_baza) +
-  aes(Property_Area, ApplicantIncome) +
-  geom_point(size = 2,5) +
-  scale_color_manual(values = c("green", "orange", "red"))
-  
+hipo_baza$Property_Area <- factor(hipo_baza$Property_Area, levels = c(1, 2, 3), labels = c("miasto", "wieś", "turbowies"))
+wykres_zarobki_do_miejscowosci <- ggplot(hipo_baza, aes(x=Property_Area, y=ApplicantIncome, fill = Property_Area, color = Property_Area)) +
+  geom_point() +  
+  scale_color_manual(values = c("miasto" = "green", "wieś" = "purple", "turbowies"="red"))
+  labs(x = "TEREN", y = "ZAROBKI", title="Zarobki Do Wielkośći Miejscowości") +
+plot(wykres_zarobki_do_miejscowosci)
 
 ```
+
 
