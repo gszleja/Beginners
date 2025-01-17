@@ -125,6 +125,7 @@ hipo_baza$Credit_History <- as.integer(hipo_baza$Credit_History)
 hipo_baza$Property_Area <- as.integer(hipo_baza$Property_Area)
 ```
 
+
 #wykres zależności pomiędzy zarobkami wnioskodawcy a wielkością miejscowosći zamieszkania
 ```{r}
 hipo_baza$Property_Area <- factor(hipo_baza$Property_Area, levels = c(1, 2, 3), labels = c("miasto", "wieś", "turbowies"))
