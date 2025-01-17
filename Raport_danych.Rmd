@@ -30,19 +30,26 @@ Hipoteczny <- read_delim("Hipoteczny.csv",
 hipo_baza <- Hipoteczny
 ```
 
-
+#Zamiana pustych wartości na unikalne
 ```{r}
+sum(is.na(hipo_baza))
+hipo_baza <- hipo_baza[complete.cases(hipo_baza), ]
+
 getmode <- function(v) {
   uniqv <- unique(v)
   uniqv[which.max(tabulate(match(v, uniqv)))]
 }
 hipo_baza$Gender[is.na(hipo_baza$Gender)] <- getmode(hipo_baza$Gender)
-```
-
-#Usunięcie pustych wartości
-```{r}
-sum(is.na(hipo_baza))
-hipo_baza <- hipo_baza[complete.cases(hipo_baza), ]
+hipo_baza$Married[is.na(hipo_baza$Married)] <- getmode(hipo_baza$Married)
+hipo_baza$Dependents[is.na(hipo_baza$Dependents)] <- getmode(hipo_baza$Dependents)
+hipo_baza$Education[is.na(hipo_baza$Education)] <- getmode(hipo_baza$Education)
+hipo_baza$Self_Employed[is.na(hipo_baza$Self_Employed)] <- getmode(hipo_baza$Self_Employed)
+hipo_baza$ApplicantIncome[is.na(hipo_baza$ApplicantIncome)] <- getmode(hipo_baza$ApplicantIncome)
+hipo_baza$CoapplicantIncome[is.na(hipo_baza$CoapplicantIncome)] <- getmode(hipo_baza$CoapplicantIncome)
+hipo_baza$LoanAmount[is.na(hipo_baza$LoanAmount)] <- getmode(hipo_baza$LoanAmount)
+hipo_baza$Loan_Amount_Term[is.na(hipo_baza$Loan_Amount_Term)] <- getmode(hipo_baza$Loan_Amount_Term)
+hipo_baza$Credit_History[is.na(hipo_baza$Credit_History)] <- getmode(hipo_baza$Credit_History)
+hipo_baza$Property_Area[is.na(hipo_baza$Property_Area)] <- getmode(hipo_baza$Property_Area)
 sum(is.na(hipo_baza))
 
 ```
