@@ -1,6 +1,6 @@
 ---
 title: "Raport danych"
-author: "Gracjan"
+author: "Gracjan, Mateusz"
 date: "`r Sys.Date()`"
 output: html_document
 editor_options: 
