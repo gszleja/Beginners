@@ -281,3 +281,28 @@ print(wykres_zarobki_do_malzenstwa)
 
 ```
 
+
+##Analiza Opisowa
+#Postawowe dane dla dochodów i kredytów
+```{r}
+summary(hipo_baza[, c("ApplicantIncome", "CoapplicantIncome", "LoanAmount")])
+
+```
+
+```{r}
+ggplot(hipo_baza, aes(x = as.factor(Gender), fill = as.factor(Gender))) +
+  geom_bar() +
+  scale_fill_manual(values = c("Kobieta" = "pink", "Mężczyzna" = "blue"),
+                    labels = c("Kobieta", "Mężczyzna"))+
+  ggtitle("Rozkład płci wśród wnioskodawców")
+
+```
+```{r}
+ggplot(hipo_baza, aes(x = as.factor(Married), fill = as.factor(Married))) +
+  geom_bar() +
+  scale_fill_manual(values = c("Przed ślubem" = "white", "Małżeństwo" = "black"),
+                    labels = c("Przed ślubem", "Małżeństwo"))+
+  ggtitle("Wykaz stanu cywilnego wśród wnioskodawców")
+
+```
+
