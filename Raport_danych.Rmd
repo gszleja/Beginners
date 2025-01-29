@@ -33,7 +33,6 @@ hipo_baza <- Hipoteczny
 #Zamiana pustych wartości na unikalne
 ```{r}
 sum(is.na(hipo_baza))
-hipo_baza <- hipo_baza[complete.cases(hipo_baza), ]
 
 getmode <- function(v) {
   uniqv <- unique(v)
