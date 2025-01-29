@@ -280,3 +280,4 @@ wykres_zarobki_do_malzenstwa <- ggplot(hipo_baza, aes(x = Married, y = LoanAmoun
 print(wykres_zarobki_do_malzenstwa)
 
 ```
+
