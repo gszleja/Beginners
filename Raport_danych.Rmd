@@ -294,9 +294,11 @@ summary(hipo_baza[, c("ApplicantIncome", "CoapplicantIncome", "LoanAmount")])
 ```{r}
 ggplot(hipo_baza, aes(x = as.factor(Gender), fill = as.factor(Gender))) +
   geom_bar() +
-  scale_fill_manual(values = c("Kobieta" = "pink", "Mężczyzna" = "blue"),
-                    labels = c("Mężczyzna", "Kobieta"))+
-  ggtitle("Rozkład płci wśród wnioskodawców")
+  scale_fill_manual(values = c("Blue", "pink"),
+                    labels = c("Mężczyzna", "Kobieta")) +
+  ggtitle("Rozkład płci wśród wnioskodawców") +
+  xlab("Płeć") +
+  ylab("Liczba wnioskodawców")
 
 ```
 
@@ -306,7 +308,10 @@ ggplot(hipo_baza, aes(x = as.factor(Married), fill = as.factor(Married))) +
   geom_bar() +
   scale_fill_manual(values = c("Przed ślubem" = "white", "Małżeństwo" = "black"),
                     labels = c("Małżeńśtwo", "Przed ślubem"))+
-  ggtitle("Wykaz stanu cywilnego wśród wnioskodawców")
+  ggtitle("Wykaz stanu cywilnego wśród wnioskodawców") +
+  xlab("Stan Cywilny") +
+  ylab("Liczba wnioskodawców")
+
 
 ```
 
@@ -316,7 +321,9 @@ ggplot(hipo_baza, aes(x = as.factor(Married), fill = as.factor(Married))) +
 ```{r}
 ggplot(hipo_baza, aes(x = Dependents)) +
   geom_bar(fill = "orange") +
-  ggtitle("Liczba osób na utrzymaniu wśród wnioskodawców")
+  ggtitle("Liczba osób na utrzymaniu wśród wnioskodawców") +
+  xlab("Liczba osób na utrzymaniu") +
+  ylab("Liczba wnioskodawców")
 ```
 
 #Dochód wnioskodawcy a kwota kredytu
@@ -324,7 +331,9 @@ ggplot(hipo_baza, aes(x = Dependents)) +
 ggplot(hipo_baza, aes(x = ApplicantIncome, y = LoanAmount)) +
   geom_point(color = "blue", alpha = 0.5) +
   coord_cartesian(xlim = c(0, 20000)) +
-  ggtitle("Dochód wnioskodawcy a kwota kredytu")
+  ggtitle("Dochód wnioskodawcy a kwota kredytu") + 
+  xlab("Dochód") +
+  ylab("Kwota Kredytu")
 ```
 
 
