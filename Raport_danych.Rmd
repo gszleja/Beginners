@@ -290,12 +290,30 @@ summary(hipo_baza[, c("ApplicantIncome", "CoapplicantIncome", "LoanAmount")])
 
 ```
 
+
+#Rozkład płci wśród wnioskodawców
 ```{r}
 ggplot(hipo_baza, aes(x = as.factor(Gender), fill = as.factor(Gender))) +
   geom_bar() +
-  scale_fill_manual(values = c("0" = "pink", "1" = "blue"),
+  scale_fill_manual(values = c("Kobieta" = "pink", "Mężczyzna" = "blue"),
                     labels = c("Kobieta", "Mężczyzna"))+
   ggtitle("Rozkład płci wśród wnioskodawców")
 
 
+```
+
+
+#Rozkład liczby osób na utrzymaniu
+```{r}
+ggplot(hipo_baza, aes(x = Dependents)) +
+  geom_bar(fill = "orange") +
+  ggtitle("Liczba osób na utrzymaniu wśród wnioskodawców")
+```
+
+#Dochód wnioskodawcy a kwota kredytu
+```{r}
+ggplot(hipo_baza, aes(x = ApplicantIncome, y = LoanAmount)) +
+  geom_point(color = "blue", alpha = 0.5) +
+  coord_cartesian(xlim = c(0, 20000)) +
+  ggtitle("Dochód wnioskodawcy a kwota kredytu")
 ```
