@@ -280,3 +280,22 @@ wykres_zarobki_do_malzenstwa <- ggplot(hipo_baza, aes(x = Married, y = LoanAmoun
 print(wykres_zarobki_do_malzenstwa)
 
 ```
+
+
+##Analiza Opisowa
+
+#Postawowe dane dla dochodów i kredytów
+```{r}
+summary(hipo_baza[, c("ApplicantIncome", "CoapplicantIncome", "LoanAmount")])
+
+```
+
+```{r}
+ggplot(hipo_baza, aes(x = as.factor(Gender), fill = as.factor(Gender))) +
+  geom_bar() +
+  scale_fill_manual(values = c("0" = "pink", "1" = "blue"),
+                    labels = c(0, 1))+
+  ggtitle("Rozkład płci wśród wnioskodawców")
+
+
+```
