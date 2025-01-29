@@ -14,6 +14,8 @@ if (! require("tidyverse")) install.packages("tidyverse", dependencies = TRUE)
 if (! require("dlookr")) install.packages("dlookr", dependencies = TRUE)
 if (! require("VIM")) install.packages("VIM", dependencies = TRUE)
 if (! require("validate")) install.packages("validate", dependencies = TRUE)
+if (! require("dplyr")) install.packages("dplyr", dependencies = TRUE)
+if (! require("readr")) install.packages("readr", dependencies = TRUE)
 
 #Wczytywanie bibliotek
 library(tidyverse)
@@ -21,6 +23,7 @@ library(dlookr)
 library(VIM)
 library(validate)
 library(readr)
+library(dplyr)
 
 
 #Wproadzenie danych
@@ -127,13 +130,30 @@ hipo_baza$Property_Area <- as.integer(hipo_baza$Property_Area)
 
 #wykres zależności pomiędzy zarobkami wnioskodawcy a wielkością miejscowosći zamieszkania
 ```{r}
-hipo_baza$Property_Area <- factor(hipo_baza$Property_Area, levels = c(1, 2, 3), labels = c("miasto", "wieś", "turbowies"))
-wykres_zarobki_do_miejscowosci <- ggplot(hipo_baza, aes(x=Property_Area, y=ApplicantIncome, fill = Property_Area, color = Property_Area)) +
-  geom_point() +  
-  scale_color_manual(values = c("miasto" = "green", "wieś" = "purple", "turbowies"="red"))
-  labs(x = "TEREN", y = "ZAROBKI", title="Zarobki Do Wielkośći Miejscowości") +
-plot(wykres_zarobki_do_miejscowosci)
+
+hipo_baza$Property_Area <- factor(hipo_baza$Property_Area, 
+                                   levels = c(1, 2, 3), 
+                                   labels = c("Zurbanizowany", "średnio Zurbanizowany", "Wieś"))
+
+# Tworzenie wykresu
+wykres_zarobki_do_miejscowosci <- ggplot(hipo_baza, aes(x = Property_Area, y = ApplicantIncome, fill = Property_Area)) +
   
+  # Dodanie kolorowych punktów
+  geom_jitter(aes(color = Property_Area), width = 0.2, size = 2, alpha = 0.7) +
+  
+  # Skale kolorów
+  scale_fill_manual(values = c("Zurbanizowany" = "lightgreen", "średnio Zurbanizowany" = "violet", "Wieś" = "tomato")) +
+  scale_color_manual(values = c("Zurbanizowany" = "darkgreen", "średnio Zurbanizowany" = "purple", "Wieś" = "red")) +
+  
+  # Opis osi i tytułu
+  labs(
+    x = "Obszar",
+    y = "Dochód wnioskodawcy",
+    title = "Zarobki w zależności od obszaru zamieszkania"
+  ) 
+
+# Wyświetlenie wykresu
+print(wykres_zarobki_do_miejscowosci)
 
 ```
 
