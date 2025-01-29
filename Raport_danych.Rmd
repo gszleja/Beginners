@@ -250,3 +250,33 @@ print(wykres_zarobki_do_plci)
 
 ```
 
+#Wykres kredytu w stostunku do małżeńśtwa
+```{r}
+hipo_baza$Married <- factor(hipo_baza$Married, 
+                                   levels = c(1, 0),
+                                   labels = c("Małżeństwo", "Przed ślubem"))
+
+# Tworzenie wykresu
+wykres_zarobki_do_malzenstwa <- ggplot(hipo_baza, aes(x = Married, y = LoanAmount, fill = Married)) +
+  
+  # Dodanie kolorowych punktów
+  geom_jitter(aes(color = Married), width = 0.2, size = 2, alpha = 0.7) +
+  
+  # Skale kolorów
+  scale_fill_manual(values = c("Małżeństwo" = "lightgreen", "Przed ślubem" = "tomato")) +
+  scale_color_manual(values = c("Małżeństwo" = "darkgreen", "Przed ślubem" = "red")) +
+
+  coord_cartesian(ylim = c(0, 800)) +
+
+  
+  # Opis osi i tytułu
+  labs(
+    x = "Stan cywilny",
+    y = "Wielkość kredytu",
+    title = "Wielkość kredytu w zależności od stanu cywilnego"
+  ) 
+
+# Wyświetlenie wykresu
+print(wykres_zarobki_do_malzenstwa)
+
+```
