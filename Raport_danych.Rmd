@@ -143,6 +143,7 @@ wykres_zarobki_do_miejscowosci <- ggplot(hipo_baza, aes(x = Property_Area, y = A
   # Skale kolorów
   scale_fill_manual(values = c("miasto" = "lightgreen", "wieś" = "violet", "turbowies" = "tomato")) +
   scale_color_manual(values = c("miasto" = "darkgreen", "wieś" = "purple", "turbowies" = "red")) +
+  coord_cartesian(ylim = c(0, 15000)) +
   
   # Opis osi i tytułu
   labs(
