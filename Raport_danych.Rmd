@@ -296,7 +296,7 @@ summary(hipo_baza[, c("ApplicantIncome", "CoapplicantIncome", "LoanAmount")])
 ggplot(hipo_baza, aes(x = as.factor(Gender), fill = as.factor(Gender))) +
   geom_bar() +
   scale_fill_manual(values = c("Kobieta" = "pink", "Mężczyzna" = "blue"),
-                    labels = c("Kobieta", "Mężczyzna"))+
+                    labels = c("Mężczyzna","Kobieta" ))+
   ggtitle("Rozkład płci wśród wnioskodawców")
 
 
@@ -317,3 +317,21 @@ ggplot(hipo_baza, aes(x = ApplicantIncome, y = LoanAmount)) +
   coord_cartesian(xlim = c(0, 20000)) +
   ggtitle("Dochód wnioskodawcy a kwota kredytu")
 ```
+#Rozkład dochodów wnioskodawców
+```{r}
+ggplot(hipo_baza, aes(x = ApplicantIncome)) +
+  geom_histogram(bins = 30, fill = "green", color = "black") +
+  coord_cartesian(xlim = c(0, 20000)) +
+  ggtitle("Rozkład dochodów wnioskodawców")
+```
+
+
+#Porównanie średniej wartosci kredytu do zatrudnienia
+```{r}
+aggregate(LoanAmount ~ Self_Employed, data = hipo_baza, FUN = mean, na.rm = TRUE)
+
+```
+#Samozatrudnieni otrzymują wyższe kredyty średnio o około 15.42 jednostek więcej niż osoby niebędące samozatrudnione.
+
+
+
