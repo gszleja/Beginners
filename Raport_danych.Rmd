@@ -335,3 +335,4 @@ aggregate(LoanAmount ~ Self_Employed, data = hipo_baza, FUN = mean, na.rm = TRUE
 
 
 
+
