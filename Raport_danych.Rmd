@@ -133,7 +133,7 @@ hipo_baza$Property_Area <- as.integer(hipo_baza$Property_Area)
 
 hipo_baza$Property_Area <- factor(hipo_baza$Property_Area, 
                                    levels = c(1, 2, 3), 
-                                   labels = c("Zurbanizowany", "średnio Zurbanizowany", "Wieś"))
+                                   labels = c("Duże Miasto", "Małe Miasto", "Wieś"))
 
 # Tworzenie wykresu
 wykres_zarobki_do_miejscowosci <- ggplot(hipo_baza, aes(x = Property_Area, y = ApplicantIncome, fill = Property_Area)) +
@@ -142,8 +142,8 @@ wykres_zarobki_do_miejscowosci <- ggplot(hipo_baza, aes(x = Property_Area, y = A
   geom_jitter(aes(color = Property_Area), width = 0.2, size = 2, alpha = 0.7) +
   
   # Skale kolorów
-  scale_fill_manual(values = c("Zurbanizowany" = "lightgreen", "średnio Zurbanizowany" = "violet", "Wieś" = "tomato")) +
-  scale_color_manual(values = c("Zurbanizowany" = "darkgreen", "średnio Zurbanizowany" = "purple", "Wieś" = "red")) +
+  scale_fill_manual(values = c("Duże Miasto" = "lightgreen", "Małe Miasto" = "violet", "Wieś" = "tomato")) +
+  scale_color_manual(values = c("Duże Miasto" = "darkgreen", "Małe Miasto" = "purple", "Wieś" = "red")) +
 
   coord_cartesian(ylim = c(0, 15000)) +
 
@@ -190,6 +190,9 @@ wykres_zarobki_do_wyksztalcenia <- ggplot(hipo_baza, aes(x = Education, y = Appl
 print(wykres_zarobki_do_wyksztalcenia)
 
 ```
+
+
+
 #Wykres wielkość kredytu do obszaru zamieszkania
 ```{r}
 
@@ -200,8 +203,8 @@ wykres_kredyt_do_miejscowosci <- ggplot(hipo_baza, aes(x = Property_Area, y = Lo
   geom_jitter(aes(color = Property_Area), width = 0.2, size = 2, alpha = 0.7) +
   
   # Skale kolorów
-  scale_fill_manual(values = c("miasto" = "lightgreen", "wieś" = "violet", "turbowies" = "tomato")) +
-  scale_color_manual(values = c("miasto" = "darkgreen", "wieś" = "purple", "turbowies" = "red")) +
+  scale_fill_manual(values = c("Duże Miasto" = "lightgreen", "Małe Miasto" = "violet", "Wieś" = "tomato")) +
+  scale_color_manual(values = c("Duże Miasto" = "darkgreen", "Małe Miasto" = "purple", "Wieś" = "red")) +
   
   # Opis osi i tytułu
   labs(
