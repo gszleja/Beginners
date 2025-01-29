@@ -190,4 +190,27 @@ wykres_zarobki_do_wyksztalcenia <- ggplot(hipo_baza, aes(x = Education, y = Appl
 print(wykres_zarobki_do_wyksztalcenia)
 
 ```
+#Wykres wielkość kredytu do obszaru zamieszkania
+```{r}
+
+# Tworzenie wykresu
+wykres_kredyt_do_miejscowosci <- ggplot(hipo_baza, aes(x = Property_Area, y = LoanAmount, fill = Property_Area)) +
+  
+  # Dodanie kolorowych punktów
+  geom_jitter(aes(color = Property_Area), width = 0.2, size = 2, alpha = 0.7) +
+  
+  # Skale kolorów
+  scale_fill_manual(values = c("miasto" = "lightgreen", "wieś" = "violet", "turbowies" = "tomato")) +
+  scale_color_manual(values = c("miasto" = "darkgreen", "wieś" = "purple", "turbowies" = "red")) +
+  
+  # Opis osi i tytułu
+  labs(
+    x = "Obszar",
+    y = "Wielkość kredytu w tyś.",
+    title = "Wielkość kredytu w zależności od obszaru zamieszkania"
+  ) 
+
+# Wyświetlenie wykresu
+print(wykres_kredyt_do_miejscowosci)
+```
 
