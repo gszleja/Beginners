@@ -283,7 +283,6 @@ print(wykres_zarobki_do_malzenstwa)
 
 
 ##Analiza Opisowa
-
 #Postawowe dane dla dochodów i kredytów
 ```{r}
 summary(hipo_baza[, c("ApplicantIncome", "CoapplicantIncome", "LoanAmount")])
@@ -296,9 +295,22 @@ summary(hipo_baza[, c("ApplicantIncome", "CoapplicantIncome", "LoanAmount")])
 ggplot(hipo_baza, aes(x = as.factor(Gender), fill = as.factor(Gender))) +
   geom_bar() +
   scale_fill_manual(values = c("Kobieta" = "pink", "Mężczyzna" = "blue"),
+<<<<<<< HEAD
                     labels = c("Mężczyzna","Kobieta" ))+
+=======
+                    labels = c("Mężczyzna", "Kobieta"))+
+>>>>>>> ebbe6cf40136a05c58e16b252fbb098083a60591
   ggtitle("Rozkład płci wśród wnioskodawców")
 
+```
+
+
+```{r}
+ggplot(hipo_baza, aes(x = as.factor(Married), fill = as.factor(Married))) +
+  geom_bar() +
+  scale_fill_manual(values = c("Przed ślubem" = "white", "Małżeństwo" = "black"),
+                    labels = c("Małżeńśtwo", "Przed ślubem"))+
+  ggtitle("Wykaz stanu cywilnego wśród wnioskodawców")
 
 ```
 
@@ -317,6 +329,7 @@ ggplot(hipo_baza, aes(x = ApplicantIncome, y = LoanAmount)) +
   coord_cartesian(xlim = c(0, 20000)) +
   ggtitle("Dochód wnioskodawcy a kwota kredytu")
 ```
+
 #Rozkład dochodów wnioskodawców
 ```{r}
 ggplot(hipo_baza, aes(x = ApplicantIncome)) +
