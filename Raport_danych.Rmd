@@ -294,7 +294,7 @@ summary(hipo_baza[, c("ApplicantIncome", "CoapplicantIncome", "LoanAmount")])
 ggplot(hipo_baza, aes(x = as.factor(Gender), fill = as.factor(Gender))) +
   geom_bar() +
   scale_fill_manual(values = c("0" = "pink", "1" = "blue"),
-                    labels = c(0, 1))+
+                    labels = c("Kobieta", "Mężczyzna"))+
   ggtitle("Rozkład płci wśród wnioskodawców")
 
 
