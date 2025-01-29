@@ -215,3 +215,35 @@ print(wykres_kredyt_do_miejscowosci)
 ```
 
 
+#Wykres zarobków w stosunku do płci
+```{r}
+
+hipo_baza$Gender <- factor(hipo_baza$Gender, 
+                                   levels = c(1, 0),
+                                   labels = c("Mężczyzna", "Kobieta"))
+
+# Tworzenie wykresu
+wykres_zarobki_do_plci <- ggplot(hipo_baza, aes(x = Gender, y = ApplicantIncome, fill = Gender)) +
+  
+  # Dodanie kolorowych punktów
+  geom_jitter(aes(color = Gender), width = 0.2, size = 2, alpha = 0.7) +
+  
+  # Skale kolorów
+  scale_fill_manual(values = c("Mężczyzna" = "lightgreen", "Kobieta" = "tomato")) +
+  scale_color_manual(values = c("Mężczyzna" = "darkgreen", "Kobieta" = "red")) +
+
+  coord_cartesian(ylim = c(0, 15000)) +
+
+  
+  # Opis osi i tytułu
+  labs(
+    x = "Płeć",
+    y = "Dochód wnioskodawcy",
+    title = "Zarobki w zależności od wykształcenia"
+  ) 
+
+# Wyświetlenie wykresu
+print(wykres_zarobki_do_plci)
+
+```
+
