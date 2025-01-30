@@ -368,6 +368,14 @@ ggplot(hipo_baza, aes(x = Credit_History)) +
   
 ```
 
+#Wzorce wielkości kredytów do ilości domowników w różnych typach zurbanizowania
+```{r}
+Wykres_ilosc_domownikow_kredyt_zamieszkanie <- ggplot(hipo_baza, aes(LoanAmount, Dependents)) +
+  geom_abline() +
+  geom_jitter(width = 0.1, height = 0.1)
+Wykres_ilosc_domownikow_kredyt_zamieszkanie + facet_wrap(~Property_Area)
+```
+
 #Ponowna zmiana wartości w kolumach na dane binarne
 ```{r}
 #Kolumna Gender, przekodowanie aby 1 ozn. mężczyzne a 0 kobietę
