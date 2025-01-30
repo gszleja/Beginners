@@ -362,12 +362,11 @@ aggregate(LoanAmount ~ Self_Employed, data = hipo_baza, FUN = mean, na.rm = TRUE
 #Rozkład dochodów wnioskodawców
 ```{r}
 ggplot(hipo_baza, aes(x = Credit_History)) +
-  geom_bar(bins = 30, fill = "purple", color = "black") +
-  ggtitle("Liczba osób na utrzymaniu wśród wnioskodawców") 
+  geom_bar(fill = "purple", color = "black") +
+  ggtitle("Historia kredytowa pośród wnioskodawców") 
   #Coś jest tutaj nie tak 
   
 ```
-
 
 #Ponowna zmiana wartości w kolumach na dane binarne
 ```{r}
