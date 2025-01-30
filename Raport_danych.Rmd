@@ -9,24 +9,24 @@ editor_options:
 ---
 
 #Instalacja Pakietów
-```{r}
+
 if (! require("tidyverse")) install.packages("tidyverse", dependencies = TRUE)
 if (! require("dlookr")) install.packages("dlookr", dependencies = TRUE)
 if (! require("VIM")) install.packages("VIM", dependencies = TRUE)
 if (! require("validate")) install.packages("validate", dependencies = TRUE)
 if (! require("dplyr")) install.packages("dplyr", dependencies = TRUE)
 if (! require("readr")) install.packages("readr", dependencies = TRUE)
-```
+
 
 #Wczytywanie bibliotek
-```{r}
+
 library(tidyverse)
 library(dlookr)
 library(VIM)
 library(validate)
 library(readr)
 library(dplyr)
-```
+
 
 #Wproadzenie danych
 ```{r}
@@ -344,7 +344,7 @@ ggplot(hipo_baza, aes(x = ApplicantIncome)) +
   coord_cartesian(xlim = c(0, 20000)) +
   ggtitle("Rozkład dochodów wnioskodawców")+
   xlab("Dochód") +
-  ylab("Ilość wnioskó")
+  ylab("Ilość wniosków")
   
 ```
 
@@ -355,5 +355,39 @@ aggregate(LoanAmount ~ Self_Employed, data = hipo_baza, FUN = mean, na.rm = TRUE
 
 ```
 #Samozatrudnieni otrzymują wyższe kredyty średnio o około 15.42 jednostek więcej niż osoby niebędące samozatrudnione.
+
+
+
+
+#Rozkład dochodów wnioskodawców
+```{r}
+ggplot(hipo_baza, aes(x = Credit_History)) +
+  geom_bar(bins = 30, fill = "purple", color = "black") +
+  ggtitle("Liczba osób na utrzymaniu wśród wnioskodawców") 
+  #Coś jest tutaj nie tak 
+  
+```
+
+
+#Ponowna zmiana wartości w kolumach na dane binarne
+```{r}
+#Kolumna Gender, przekodowanie aby 1 ozn. mężczyzne a 0 kobietę
+hipo_baza$Gender <- ifelse(hipo_baza$Gender == "Mężczyzna", 1, 0)
+
+#Kolumna Married, przekodowanie aby 1 ozn. Żonatych a 0 nieżonatych
+hipo_baza$Married <- ifelse(hipo_baza$Married == "Małżeństwo", 1, 0)
+
+#Kolumna Education, przekodowanie aby Graduate =1 a 0=Not Graduate.
+hipo_baza$Education <- ifelse(hipo_baza$Education == "Z wykształceniem", 1, 0)
+
+#Kolumna Self_Employed, przekodowanie Yes=1, No=0
+hipo_baza$Self_Employed <- ifelse(hipo_baza$Self_Employed == "yes", 1, 0)
+
+#Kolumna Property_Area urban=1, semiurban=2, rural=3
+hipo_baza$Property_Area <- ifelse(hipo_baza$Property_Area == "Duże Miasto", 1,
+                              ifelse(hipo_baza$Property_Area == "Małe Miasto", 2,
+                                  ifelse(hipo_baza$Property_Area == "Wieś", 3, NA)))
+```
+
 
 
