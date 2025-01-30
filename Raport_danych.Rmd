@@ -16,6 +16,7 @@ if (! require("VIM")) install.packages("VIM", dependencies = TRUE)
 if (! require("validate")) install.packages("validate", dependencies = TRUE)
 if (! require("dplyr")) install.packages("dplyr", dependencies = TRUE)
 if (! require("readr")) install.packages("readr", dependencies = TRUE)
+if (! require("gtsummary")) install.packages("gtsummary, dependencies = TRUE)
 
 
 #Wczytywanie bibliotek
@@ -26,6 +27,7 @@ library(VIM)
 library(validate)
 library(readr)
 library(dplyr)
+library(gtsummary")
 
 
 #Wproadzenie danych
@@ -284,14 +286,6 @@ print(wykres_zarobki_do_malzenstwa)
 ```
 
 
-##Analiza Opisowa
-#Postawowe dane dla dochodów i kredytów
-```{r}
-summary(hipo_baza[, c("ApplicantIncome", "CoapplicantIncome", "LoanAmount")])
-
-```
-
-
 #Rozkład płci wśród wnioskodawców
 ```{r}
 ggplot(hipo_baza, aes(x = as.factor(Gender), fill = as.factor(Gender))) +
@@ -352,10 +346,9 @@ ggplot(hipo_baza, aes(x = ApplicantIncome)) +
 #Porównanie średniej wartosci kredytu do zatrudnienia
 ```{r}
 aggregate(LoanAmount ~ Self_Employed, data = hipo_baza, FUN = mean, na.rm = TRUE)
-
-```
 #Samozatrudnieni otrzymują wyższe kredyty średnio o około 15.42 jednostek więcej niż osoby niebędące samozatrudnione.
 
+```
 
 
 
@@ -386,6 +379,38 @@ hipo_baza$Self_Employed <- ifelse(hipo_baza$Self_Employed == "yes", 1, 0)
 hipo_baza$Property_Area <- ifelse(hipo_baza$Property_Area == "Duże Miasto", 1,
                               ifelse(hipo_baza$Property_Area == "Małe Miasto", 2,
                                   ifelse(hipo_baza$Property_Area == "Wieś", 3, NA)))
+```
+
+#Ponowna Zminaa typu na liczbowy:
+```{r}
+hipo_baza$Gender <- as.integer(hipo_baza$Gender)
+hipo_baza$Married <- as.integer(hipo_baza$Married)
+hipo_baza$Dependents <- as.integer(hipo_baza$Dependents)
+hipo_baza$Education <- as.integer(hipo_baza$Education)
+hipo_baza$Self_Employed <- as.integer(hipo_baza$Self_Employed)
+hipo_baza$ApplicantIncome <- as.integer(hipo_baza$ApplicantIncome)
+hipo_baza$CoapplicantIncome <- as.integer(hipo_baza$CoapplicantIncome)
+hipo_baza$LoanAmount <- as.integer(hipo_baza$LoanAmount)
+hipo_baza$Loan_Amount_Term <- as.integer(hipo_baza$Loan_Amount_Term)
+hipo_baza$Credit_History <- as.integer(hipo_baza$Credit_History)
+hipo_baza$Property_Area <- as.integer(hipo_baza$Property_Area)
+```
+
+
+##Analiza Opisowa
+#Postawowe dane dla dochodów i kredytów
+```{r}
+summary(hipo_baza[, c("ApplicantIncome", "CoapplicantIncome", "LoanAmount")])
+
+```
+
+```{r}
+summary(hipo_baza)
+```
+
+```{r}
+cor(hipo_baza[, sapply(hipo_baza, is.numeric)], use = "complete.obs")
+
 ```
 
 
