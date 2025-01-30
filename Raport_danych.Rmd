@@ -422,4 +422,3 @@ cor(hipo_baza[, sapply(hipo_baza, is.numeric)], use = "complete.obs")
 ```
 
 
-
