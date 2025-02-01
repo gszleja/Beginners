@@ -18,6 +18,13 @@ if (! require("dplyr")) install.packages("dplyr", dependencies =TRUE)
 if (! require("readr")) install.packages("readr", dependencies =TRUE)
 if (! require("gtsummary")) install.packages("gtsummary",dependencies = TRUE)
 if (! require("summarytools")) install.packages("summarytools",dependencies = TRUE)
+if (! require("validate")) install.packages("validate", dependencies = TRUE)
+if (! require("dplyr")) install.packages("dplyr", dependencies = TRUE)
+if (! require("readr")) install.packages("readr", dependencies = TRUE)
+if (! require("gtsummary")) install.packages("gtsummary", dependencies = TRUE)
+if (! require("summarytools")) install.packages
+if (! require("ggstatsplot")) install.packages("ggstatsplot", dependencies = TRUE)
+
   
 
 #Wczytywanie bibliotek
@@ -30,6 +37,7 @@ library(readr)
 library(dplyr)
 library(gtsummary)
 library(summarytools)
+library(ggstatsplot)
 
 #Wproadzenie danych
 
@@ -512,7 +520,7 @@ print(tabela_krzyzowa)
 #Podsumowanie wszystkich statysyk dla wszystkich zmiennych
 ```{r}
 podsumowanie <- dfSummary(hipo_baza,
-                           method = "render")   # Format renderowany (HTML)
+                           method = "render")
                            
 # Wyświetlenie podsumowania w konsoli
 print(podsumowanie, method = "render")
@@ -527,4 +535,45 @@ view(podsumowanie)
 
 
 ```
+
+
+##Wnioskowanie Statystyczne
+
+#Satystyka Długosci kredytu to wielkości
+```{r}
+ggbetweenstats(
+  data = hipo_baza,
+  x = Loan_Amount_Term,
+  y = LoanAmount, 
+  type = "parametric", 
+)
+
+```
+
+
+#wizualizację zależności między wielkościa kredytu a stusem cywilnym wraz z wynikami testu korelacji
+```{r}
+ggscatterstats(
+  data = hipo_baza,
+  x = LoanAmount,
+  y = Married,
+)
+
+```
+
+
+#Model regresji liniowej zależność dochodu od statusu cwyilnego i płuci
+```{r}
+model_dochod <- lm(ApplicantIncome ~ Married + Gender, data = hipo_baza)
+ggcoefstats(model_dochod)
+
+```
+
+#Wielkość kredytu zależna od  statusu cwyilnego, płuci i Historii Kredytowej
+```{r}
+model_wielkosc_kredytu <- lm(LoanAmount ~ Married + Gender + Credit_History, data = hipo_baza)
+ggcoefstats(model_wielkosc_kredytu)
+
+```
+
 
