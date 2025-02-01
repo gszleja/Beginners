@@ -550,6 +550,7 @@ ggbetweenstats(
 
 ```
 
+#Najczęściej udzielane kredyty mają okres 360 miesięcy (30 lat), ze średnią kwotą 133 tys.. Krótsze kredyty (np. 6–36 miesięcy) mają większą zmienność kwot – od 95 tys. do 260 tys.. Kredyty na 15 lat (180 miesięcy) mają najniższą średnią kwotę (80 tys.). Dłuższe okresy kredytowania wiążą się z większym rozproszeniem wartości kredytów.
 
 #wizualizację zależności między wielkościa kredytu a stusem cywilnym wraz z wynikami testu korelacji
 ```{r}
@@ -560,7 +561,7 @@ ggscatterstats(
 )
 
 ```
-
+#Osoby w związku małżeńskim częściej otrzymują wyższe kredyty, ale związek ten jest słaby (r = 0,18). Stan cywilny może mieć pewien wpływ na wysokość kredytu, jednak inne czynniki, jak dochód czy historia kredytowa, są bardziej istotne.
 
 #Model regresji liniowej zależność dochodu od statusu cwyilnego i płuci
 ```{r}
@@ -568,12 +569,13 @@ model_dochod <- lm(ApplicantIncome ~ Married + Gender, data = hipo_baza)
 ggcoefstats(model_dochod)
 
 ```
+#Analiza regresji wskazuje, że płeć i stan cywilny nie mają istotnego wpływu na dochód wnioskodawcy (p > 0,05). Jedynie wyraz wolny modelu (β = 4023,65, p < 0,001) jest istotny, co sugeruje, że inne czynniki niż płeć czy stan cywilny lepiej wyjaśniają poziom dochodów.
 
 #Wielkość kredytu zależna od  statusu cwyilnego, płuci i Historii Kredytowej
 ```{r}
-model_wielkosc_kredytu <- lm(LoanAmount ~ Married + Gender + Credit_History, data = hipo_baza)
-ggcoefstats(model_wielkosc_kredytu)
+  model_wielkosc_kredytu <- lm(LoanAmount ~ Married + Gender + Credit_History, data = hipo_baza)
+  ggcoefstats(model_wielkosc_kredytu)
 
 ```
-
+#Stan cywilny ma istotny, ale niewielki wpływ na kwotę kredytu (β = 22,39, p = 0,001). Płeć i historia kredytowa nie są istotnymi predyktorami (p > 0,05). Główne czynniki wpływające na kwotę kredytu to prawdopodobnie dochód i inne zmienne nieuwzględnione w tym modelu.
 
