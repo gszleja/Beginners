@@ -40,6 +40,7 @@ library(gtsummary)
 library(summarytools)
 library(ggstatsplot)
 library(knitr)
+library(kableExtra)
 
 
 
