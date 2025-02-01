@@ -503,10 +503,7 @@ cor(hipo_baza[, sapply(hipo_baza, is.numeric)], use = "complete.obs")
 ```{r}
 wyniki_descr <- descr(hipo_baza[, 2:10],
                       stats = c("min", "max", "mean", "sd"),
-                      transpose = TRUE)  # Opcjonalnie transponujemy wynik dla lepszej czytelności
-
-# Wyświetlenie wyników
-print(wyniki_descr)
+                      transpose = TRUE) 
 
 kable(wyniki_descr, format = "html", align = "c",
       col.names = c("Kolumny","Min", "Max","Mean","Std.Dev")) %>%
@@ -527,19 +524,7 @@ kable(wyniki_descr, format = "html", align = "c",
 wyniki_freq <- freq(hipo_baza$Gender,
                     report.nas = FALSE,  # Wyłączenie raportu o brakujących danych
                     plain.ascii = TRUE)  # Użycie formatu ASCII (dobry przy wyświetlaniu w konsoli)
-
-# Wyświetlenie wyników
 print(wyniki_freq)
-
-kable(wyniki_freq, format = "html", align = "c",
-      col.names = c("Wartość","Freq", "%","% Cum.")) %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "bordered"),
-                full_width = FALSE, position = "center") %>%
-  column_spec(1:3, bold = TRUE, background = "#f2f2f2") %>%
-  row_spec(0, bold = TRUE, color = "white", background = "#FF0000") %>%  # Zmiana koloru nagłówka
-  add_header_above(c("Podstawowe dane statystyczne" = 5), color = "white", background = "#FF0000")
-
-
 ```
 
 
