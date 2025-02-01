@@ -503,10 +503,7 @@ cor(hipo_baza[, sapply(hipo_baza, is.numeric)], use = "complete.obs")
 ```{r}
 wyniki_descr <- descr(hipo_baza[, 2:10],
                       stats = c("min", "max", "mean", "sd"),
-                      transpose = TRUE)  # Opcjonalnie transponujemy wynik dla lepszej czytelności
-
-# Wyświetlenie wyników
-print(wyniki_descr)
+                      transpose = TRUE) 
 
 kable(wyniki_descr, format = "html", align = "c",
       col.names = c("Kolumny","Min", "Max","Mean","Std.Dev")) %>%
@@ -526,10 +523,11 @@ kable(wyniki_descr, format = "html", align = "c",
 ```{r}
 wyniki_freq <- freq(hipo_baza$Gender,
                     report.nas = FALSE,  # Wyłączenie raportu o brakujących danych
-                    plain.ascii = FALSE)  # Użycie formatu ASCII (dobry przy wyświetlaniu w konsoli)
+                    plain.ascii = TRUE)  # Użycie formatu ASCII (dobry przy wyświetlaniu w konsoli)
 
 # Wyświetlenie wyników
 print(wyniki_freq)
+
 
 
 ```
