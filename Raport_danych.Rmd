@@ -16,7 +16,10 @@ if (! require("VIM")) install.packages("VIM", dependencies = TRUE)
 if (! require("validate")) install.packages("validate", dependencies = TRUE)
 if (! require("dplyr")) install.packages("dplyr", dependencies = TRUE)
 if (! require("readr")) install.packages("readr", dependencies = TRUE)
-if (! require("gtsummary")) install.packages("gtsummary, dependencies = TRUE)
+if (! require("gtsummary")) install.packages("gtsummary", dependencies = TRUE)
+if (! require("summarytools")) install.packages("summarytools", dependencies = TRUE)
+  
+
 
 
 #Wczytywanie bibliotek
@@ -27,7 +30,8 @@ library(VIM)
 library(validate)
 library(readr)
 library(dplyr)
-library(gtsummary")
+library(gtsummary)
+library(summarytools)
 
 
 #Wproadzenie danych
@@ -422,3 +426,52 @@ cor(hipo_baza[, sapply(hipo_baza, is.numeric)], use = "complete.obs")
 ```
 
 
+
+
+#podstawowe dane statystyczne dla całej bazy
+```{r}
+wyniki_descr <- descr(hipo_baza[, 2:10],
+                      stats = c("min", "max", "mean", "sd"),
+                      transpose = TRUE)  # Opcjonalnie transponujemy wynik dla lepszej czytelności
+
+# Wyświetlenie wyników
+print(wyniki_descr)
+```
+
+#Występowanie Płuci w wnioskach kreydtowych
+```{r}
+wyniki_freq <- freq(hipo_baza$Gender,
+                    report.nas = FALSE,  # Wyłączenie raportu o brakujących danych
+                    plain.ascii = TRUE)  # Użycie formatu ASCII (dobry przy wyświetlaniu w konsoli)
+
+# Wyświetlenie wyników
+print(wyniki_freq)
+```
+
+
+#Tabela krzyżowa historii kredytowej do wielkości kredytu
+```{r}
+
+# Upewnij się, że zmienne są kategoryczne
+hipo_baza$Credit_History <- factor(hipo_baza$Credit_History)
+hipo_baza$LoanAmount_cat <- cut(hipo_baza$LoanAmount, 
+                                breaks = c(0, 100, 200, 300, 1000), 
+                                include.lowest = TRUE, 
+                                labels = c("0 do 100", "100-200", "200-300", "300+"))
+
+# Generowanie tabeli krzyżowej z jawnie ustawionym zaokrągleniem
+tabela_krzyzowa <- ctable(hipo_baza$Credit_History, hipo_baza$LoanAmount_cat, prop = "r", round.digits = 2)
+print(tabela_krzyzowa)
+```
+
+#Podsumowanie wszystkich statysyk dla wszystkich zmiennych
+```{r}
+podsumowanie <- dfSummary(hipo_baza,
+                           method = "render")   # Format renderowany (HTML)
+                           
+# Wyświetlenie podsumowania w konsoli
+print(podsumowanie, method = "render")
+
+view(podsumowanie)
+
+```
