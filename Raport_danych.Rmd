@@ -579,3 +579,4 @@ ggcoefstats(model_dochod)
 ```
 #Stan cywilny ma istotny, ale niewielki wpływ na kwotę kredytu (β = 22,39, p = 0,001). Płeć i historia kredytowa nie są istotnymi predyktorami (p > 0,05). Główne czynniki wpływające na kwotę kredytu to prawdopodobnie dochód i inne zmienne nieuwzględnione w tym modelu.
 
+
