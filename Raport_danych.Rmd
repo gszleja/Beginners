@@ -1,6 +1,6 @@
 ---
 title: "Analiza danych - Kredyt Hipoteczny"
-author: "Gracjan, Mateusz"
+author: "Gracjan Szleja, Mateusz Majewski"
 date: "`r Sys.Date()`"
 output: html_document
 editor_options: 
@@ -160,27 +160,16 @@ hipo_baza$Property_Area <- factor(hipo_baza$Property_Area,
                                    levels = c(1, 2, 3), 
                                    labels = c("Duże Miasto", "Małe Miasto", "Wieś"))
 
-# Tworzenie wykresu
 wykres_zarobki_do_miejscowosci <- ggplot(hipo_baza, aes(x = Property_Area, y = ApplicantIncome, fill = Property_Area)) +
-  
-  # Dodanie kolorowych punktów
   geom_jitter(aes(color = Property_Area), width = 0.2, size = 2, alpha = 0.7) +
-  
-  # Skale kolorów
   scale_fill_manual(values = c("Duże Miasto" = "lightgreen", "Małe Miasto" = "violet", "Wieś" = "tomato")) +
   scale_color_manual(values = c("Duże Miasto" = "darkgreen", "Małe Miasto" = "purple", "Wieś" = "red")) +
-
   coord_cartesian(ylim = c(0, 15000)) +
-
-  
-  # Opis osi i tytułu
   labs(
     x = "Obszar",
     y = "Dochód wnioskodawcy",
     title = "Zarobki w zależności od obszaru zamieszkania"
   ) 
-
-# Wyświetlenie wykresu
 print(wykres_zarobki_do_miejscowosci)
 
 ```
@@ -193,30 +182,17 @@ hipo_baza$Education <- factor(hipo_baza$Education,
                                    levels = c(1, 0),
                                    labels = c("Z wykształceniem", "Bez wykształcenia"))
 
-# Tworzenie wykresu
 wykres_zarobki_do_wyksztalcenia <- ggplot(hipo_baza, aes(x = Education, y = ApplicantIncome, fill = Education)) +
-  
-  # Dodanie kolorowych punktów
   geom_jitter(aes(color = Education), width = 0.2, size = 2, alpha = 0.7) +
-  
-  # Skale kolorów
   scale_fill_manual(values = c("Z wykształceniem" = "lightgreen", "Bez wykształcenia" = "tomato")) +
   scale_color_manual(values = c("Z wykształceniem" = "darkgreen", "Bez wykształcenia" = "red")) +
-
   coord_cartesian(ylim = c(0, 15000)) +
-
-  
-  # Opis osi i tytułu
   labs(
     x = "Wykształcenie",
     y = "Dochód wnioskodawcy",
     title = "Zarobki w zależności od wykształcenia"
   ) 
-
-# Wyświetlenie wykresu
 print(wykres_zarobki_do_wyksztalcenia)
-
-
 ```
 #Dochody wnioskodawców różnią się w zależności od miejsca zamieszkania. W dużych miastach występują zarówno niskie, jak i bardzo wysokie zarobki. W małych miastach dochody są bardziej stabilne, ale rzadziej osiągają wysokie wartości. Na wsiach większość dochodów jest niższa, choć zdarzają się wyjątki z bardzo wysokimi zarobkami.
 
@@ -224,25 +200,15 @@ print(wykres_zarobki_do_wyksztalcenia)
 #Wykres wielkość kredytu do obszaru zamieszkania
 
 ```{r}
-  
-  # Tworzenie wykresu
   wykres_kredyt_do_miejscowosci <- ggplot(hipo_baza, aes(x = Property_Area, y = LoanAmount, fill = Property_Area)) +
-    
-    # Dodanie kolorowych punktów
     geom_jitter(aes(color = Property_Area), width = 0.2, size = 2, alpha = 0.7) +
-    
-    # Skale kolorów
     scale_fill_manual(values = c("Duże Miasto" = "lightgreen", "Małe Miasto" = "violet", "Wieś" = "tomato")) +
     scale_color_manual(values = c("Duże Miasto" = "darkgreen", "Małe Miasto" = "purple", "Wieś" = "red")) +
-    
-    # Opis osi i tytułu
     labs(
       x = "Obszar",
       y = "Wielkość kredytu w tyś.",
       title = "Wielkość kredytu w zależności od obszaru zamieszkania"
     ) 
-  
-  # Wyświetlenie wykresu
   print(wykres_kredyt_do_miejscowosci)
 ```
 #Wielkość kredytów różni się w zależności od miejsca zamieszkania. W dużych miastach występują zarówno małe, jak i wysokie kredyty, z pojedynczymi ekstremalnymi wartościami. W małych miastach kredyty są bardziej skupione wokół średnich wartości, choć pojawiają się nieliczne wysokie wnioski. Na wsiach rozrzut jest większy, a niektóre kredyty osiągają wysokie wartości, co może wynikać z różnych potrzeb finansowych mieszkańców.
@@ -255,27 +221,16 @@ hipo_baza$Gender <- factor(hipo_baza$Gender,
                                    levels = c(1, 0),
                                    labels = c("Mężczyzna", "Kobieta"))
 
-# Tworzenie wykresu
 wykres_zarobki_do_plci <- ggplot(hipo_baza, aes(x = Gender, y = ApplicantIncome, fill = Gender)) +
-  
-  # Dodanie kolorowych punktów
   geom_jitter(aes(color = Gender), width = 0.2, size = 2, alpha = 0.7) +
-  
-  # Skale kolorów
   scale_fill_manual(values = c("Mężczyzna" = "lightgreen", "Kobieta" = "tomato")) +
   scale_color_manual(values = c("Mężczyzna" = "darkgreen", "Kobieta" = "red")) +
-
   coord_cartesian(ylim = c(0, 15000)) +
-
-  
-  # Opis osi i tytułu
   labs(
     x = "Płeć",
     y = "Dochód wnioskodawcy",
     title = "Zarobki w zależności od wykształcenia"
   ) 
-
-# Wyświetlenie wykresu
 print(wykres_zarobki_do_plci)
 
 ```
@@ -289,28 +244,17 @@ print(wykres_zarobki_do_plci)
 hipo_baza$Married <- factor(hipo_baza$Married, 
                                    levels = c(1, 0),
                                    labels = c("Małżeństwo", "Przed ślubem"))
-
-# Tworzenie wykresu
 wykres_zarobki_do_malzenstwa <- ggplot(hipo_baza, aes(x = Married, y = LoanAmount, fill = Married)) +
-  
-  # Dodanie kolorowych punktów
   geom_jitter(aes(color = Married), width = 0.2, size = 2, alpha = 0.7) +
-  
-  # Skale kolorów
   scale_fill_manual(values = c("Małżeństwo" = "lightgreen", "Przed ślubem" = "tomato")) +
   scale_color_manual(values = c("Małżeństwo" = "darkgreen", "Przed ślubem" = "red")) +
 
   coord_cartesian(ylim = c(0, 800)) +
-
-  
-  # Opis osi i tytułu
   labs(
     x = "Stan cywilny",
     y = "Wielkość kredytu",
     title = "Wielkość kredytu w zależności od stanu cywilnego"
   ) 
-
-# Wyświetlenie wykresu
 print(wykres_zarobki_do_malzenstwa)
 
 ```
@@ -511,7 +455,7 @@ kable(wyniki_descr, format = "html", align = "c",
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "bordered"),
                 full_width = FALSE, position = "center") %>%
   column_spec(1:5, bold = TRUE, background = "#f2f2f2") %>%
-  row_spec(0, bold = TRUE, color = "white", background = "#FF0000") %>%  # Zmiana koloru nagłówka
+  row_spec(0, bold = TRUE, color = "white", background = "#FF0000") %>% 
   add_header_above(c("Podstawowe dane statystyczne" = 5), color = "white", background = "#FF0000")
 
 
@@ -523,13 +467,9 @@ kable(wyniki_descr, format = "html", align = "c",
 #Występowanie Płuci w wnioskach kreydtowych
 ```{r}
 wyniki_freq <- freq(hipo_baza$Gender,
-                    report.nas = FALSE,  # Wyłączenie raportu o brakujących danych
-                    plain.ascii = TRUE)  # Użycie formatu ASCII (dobry przy wyświetlaniu w konsoli)
-
-# Wyświetlenie wyników
+                    report.nas = FALSE,
+                    plain.ascii = TRUE)
 print(wyniki_freq)
-
-
 
 ```
 
@@ -544,7 +484,6 @@ hipo_baza$LoanAmount_cat <- cut(hipo_baza$LoanAmount,
                                 include.lowest = TRUE, 
                                 labels = c("0 do 100", "100-200", "200-300", "300+"))
 
-# Generowanie tabeli krzyżowej z jawnie ustawionym zaokrągleniem
 tabela_krzyzowa <- ctable(hipo_baza$Credit_History, hipo_baza$LoanAmount_cat, prop = "n", round.digits = 2)
 tabela_krzyzowa
 ```
