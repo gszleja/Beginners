@@ -229,7 +229,7 @@ wykres_zarobki_do_plci <- ggplot(hipo_baza, aes(x = Gender, y = ApplicantIncome,
   labs(
     x = "Płeć",
     y = "Dochód wnioskodawcy",
-    title = "Zarobki w zależności od wykształcenia"
+    title = "Zarobki w zależności od płci"
   ) 
 print(wykres_zarobki_do_plci)
 
@@ -275,7 +275,7 @@ ggplot(hipo_baza, aes(x = as.factor(Gender), fill = as.factor(Gender))) +
 ```
 #Wśród wnioskodawców znaczną większość stanowią mężczyźni, których liczba jest ponad trzykrotnie większa niż liczba kobiet. Może to sugerować, że mężczyźni częściej wnioskują o kredyty lub mają większą zdolność kredytową.
 
-
+#Wykaz stanu cywilnego wśród wnioskodawców
 ```{r}
 ggplot(hipo_baza, aes(x = as.factor(Married), fill = as.factor(Married))) +
   geom_bar() +
@@ -356,8 +356,7 @@ ggplot(hipo_baza, aes(x = Credit_History)) +
 ```
 #Większość wnioskodawców posiada pozytywną historię kredytową (wartość 1), co może zwiększać ich szanse na uzyskanie kredytu. Znacznie mniejsza grupa osób nie ma historii kredytowej lub ma negatywną (wartość 0), co może utrudniać uzyskanie finansowania. To sugeruje, że banki częściej obsługują klientów z ugruntowaną historią kredytową.
 
-#Wzorce wielkości kredytów do ilości domowników w różnych typach
-zurbanizowania
+#Wzorce wielkości kredytów do ilości domowników w różnych typach zurbanizowania
 
 ```{r}
 Wykres_ilosc_domownikow_kredyt_zamieszkanie <- ggplot(hipo_baza, aes(LoanAmount, Dependents)) +
@@ -407,7 +406,7 @@ hipo_baza$Credit_History <- as.integer(hipo_baza$Credit_History)
 hipo_baza$Property_Area <- as.integer(hipo_baza$Property_Area)
 ```
 
-##Analiza Opisowa #Postawowe dane dla dochodów i kredytów
+##Analiza Opisowa #Podstawowe dane dla dochodów i kredytów
 
 ```{r}
 stat_dochod_kredyt <- summary(hipo_baza[, c("ApplicantIncome", "CoapplicantIncome", "LoanAmount")])
@@ -422,7 +421,7 @@ kable(stat_dochod_kredyt, format = "html", align = "c",
 ```
 #Większość wnioskodawców ma dochody w przedziale 2864 – 5060, jednak pojedyncze przypadki bardzo wysokich zarobków podnoszą średnią. Współwnioskodawcy często nie mają dochodu, co sugeruje, że wiele wniosków opiera się na jednym źródle dochodu. Średnia kwota kredytu wynosi 136,3, a większość kredytów mieści się w zakresie 101 – 157,5, choć zdarzają się znacznie wyższe wnioski.
 
-
+#podstawowe dane statystyczne dla wszytkich zmiennych
 ```{r}
 suma_bazy <- summary(hipo_baza)
 kable(suma_bazy, format = "html", align = "c",
@@ -438,13 +437,14 @@ kable(suma_bazy, format = "html", align = "c",
 #Większość kredytów opiewa na 126–136 tys. i jest udzielana na 30 lat. Wnioskodawcy z pozytywną historią kredytową dominują, co sugeruje, że historia kredytowa ma istotny wpływ na decyzję o przyznaniu finansowania.
 
 
+
 ```{r}
 cor(hipo_baza[, sapply(hipo_baza, is.numeric)], use = "complete.obs")
 
 ```
 #Kwota kredytu jest najsilniej skorelowana z dochodem głównego wnioskodawcy (0,49), co oznacza, że im wyższy dochód, tym większy kredyt. Dochód współwnioskodawcy ma mniejszy wpływ (0,15). Liczba osób na utrzymaniu, stan cywilny, historia kredytowa i obszar zamieszkania mają bardzo słabe korelacje z innymi zmiennymi, co sugeruje, że nie są kluczowymi czynnikami w decyzjach kredytowych.
 
-#podstawowe dane statystyczne dla całej bazy
+#podstawowe dane statystyczne dla całej bazy w tabelce
 ```{r}
 wyniki_descr <- descr(hipo_baza[, 2:10],
                       stats = c("min", "max", "mean", "sd"),
