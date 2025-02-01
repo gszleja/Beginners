@@ -388,7 +388,7 @@ ggplot(hipo_baza, aes(x = ApplicantIncome)) +
 ```{r}
 srednia_kredytu <- aggregate(LoanAmount ~ Self_Employed, data = hipo_baza, FUN = mean, na.rm = TRUE)
 kable(srednia_kredytu, format = "html", align = "c",
-      col.names = c("Status Zatrudnienia", "Średnia Kwota Pożyczki (PLN)")) %>%
+      col.names = c("Status Zatrudnienia", "Średnia Kwota Pożyczki (tyś)")) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "bordered"),
                 full_width = FALSE, position = "center") %>%
   column_spec(1, bold = TRUE, color = "white", background = "#0073e6") %>%
@@ -465,13 +465,28 @@ hipo_baza$Property_Area <- as.integer(hipo_baza$Property_Area)
 ##Analiza Opisowa #Postawowe dane dla dochodów i kredytów
 
 ```{r}
-summary(hipo_baza[, c("ApplicantIncome", "CoapplicantIncome", "LoanAmount")])
+stat_dochod_kredyt <- summary(hipo_baza[, c("ApplicantIncome", "CoapplicantIncome", "LoanAmount")])
 
+kable(stat_dochod_kredyt, format = "html", align = "c",
+      col.names = c("Dochód Wnioskodawcy", "Dochód Współwnioskodawcy", "Kwota Kredytu (Tyś)")) %>%
+  row_spec(0, bold = TRUE, font_size = 14, color = "white", background = "green") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "bordered"),
+                full_width = FALSE, position = "center") %>%
+  add_header_above(c("Analiza Kredytów" = 4))
 ```
 #Większość wnioskodawców ma dochody w przedziale 2864 – 5060, jednak pojedyncze przypadki bardzo wysokich zarobków podnoszą średnią. Współwnioskodawcy często nie mają dochodu, co sugeruje, że wiele wniosków opiera się na jednym źródle dochodu. Średnia kwota kredytu wynosi 136,3, a większość kredytów mieści się w zakresie 101 – 157,5, choć zdarzają się znacznie wyższe wnioski.
 
 ```{r}
-summary(hipo_baza)
+suma_bazy <- summary(hipo_baza)
+kable(suma_bazy, format = "html", align = "c",
+      col.names = c("Loan_ID", "Gender", "Married", "Dependents", "Education", "Self_Employed",
+                  "ApplicantIncome", "CoapplicantIncome", "LoanAmount", "Loan_Amount_Term",
+                  "Credit_History", "Property_Area")) %>%
+  row_spec(0, bold = TRUE, font_size = 14, color = "black", background = "grey") %>%
+kable_styling(bootstrap_options = c("striped", "hover", "condensed", "bordered"),
+                full_width = FALSE, position = "center")
+  
+
 ```
 #Większość wnioskodawców to mężczyźni (80,9%), osoby zamężne (63,5%) i posiadające wyższe wykształcenie (71,1%). Dochody głównego wnioskodawcy są zróżnicowane, ale mediana wynosi 3786, a średnia 4806 – co wskazuje na obecność wysokich wartości odstających. Współwnioskodawcy często nie mają dochodu.
 #Większość kredytów opiewa na 126–136 tys. i jest udzielana na 30 lat. Wnioskodawcy z pozytywną historią kredytową dominują, co sugeruje, że historia kredytowa ma istotny wpływ na decyzję o przyznaniu finansowania.
@@ -510,8 +525,6 @@ print(wyniki_freq)
 
 #Tabela krzyżowa historii kredytowej do wielkości kredytu
 ```{r}
-
-# Upewnij się, że zmienne są kategoryczne
 hipo_baza$Credit_History <- factor(hipo_baza$Credit_History)
 hipo_baza$LoanAmount_cat <- cut(hipo_baza$LoanAmount, 
                                 breaks = c(0, 100, 200, 300, 1000), 
@@ -519,8 +532,8 @@ hipo_baza$LoanAmount_cat <- cut(hipo_baza$LoanAmount,
                                 labels = c("0 do 100", "100-200", "200-300", "300+"))
 
 # Generowanie tabeli krzyżowej z jawnie ustawionym zaokrągleniem
-tabela_krzyzowa <- ctable(hipo_baza$Credit_History, hipo_baza$LoanAmount_cat, prop = "r", round.digits = 2)
-print(tabela_krzyzowa)
+tabela_krzyzowa <- ctable(hipo_baza$Credit_History, hipo_baza$LoanAmount_cat, prop = "n", round.digits = 2)
+tabela_krzyzowa
 ```
 
 #Osoby z pozytywną historią kredytową częściej otrzymują wyższe kredyty – 64,29% z nich mieści się w przedziale 100-200 tys., a 1,95% przekracza 300 tys.. Natomiast osoby bez historii kredytowej rzadko dostają wysokie kredyty – aż 81,36% otrzymuje kwoty 100-200 tys., a nikt nie przekracza 300 tys..
@@ -531,20 +544,14 @@ print(tabela_krzyzowa)
 ```{r}
 podsumowanie <- dfSummary(hipo_baza,
                            method = "render")
-                           
-# Wyświetlenie podsumowania w konsoli
-print(podsumowanie, method = "render")
-
 view(podsumowanie)
 
+```
 #Większość wnioskodawców to mężczyźni (80,9%), osoby zamężne (63,5%) i posiadające wyższe wykształcenie (77,1%). Ponad połowa nie ma osób na utrzymaniu (57,2%).
 
 #Średni dochód głównego wnioskodawcy wynosi 4805,6, ale jest mocno zróżnicowany. Współwnioskodawcy często nie mają dochodu, a jeśli mają, to średnio 1569,6. Średnia kwota kredytu wynosi 136,3, a większość mieści się w przedziale 100-200 tys..
 
 #Większość kredytów udzielana jest na 30 lat, a 83,9% wnioskodawców ma pozytywną historię kredytową, co zwiększa ich szanse na uzyskanie finansowania.
-
-
-```
 
 
 ##Wnioskowanie Statystyczne
