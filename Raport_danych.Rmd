@@ -55,6 +55,7 @@ output:
     <li><a href="#wizualizacja-danych">4. Wizualizacja danych</a></li>
     <li><a href="#analiza-opisowa">5. Analiza Opisowa</a></li>
     <li><a href="#wnioskowanie-statystyczne">6. Wnioskowanie Statystyczne</a></li>
+    <li><a href="#podsumowanie-i-wnioski">7. Podsumowanie i Wnioski</a></li>
   </ul>
 </div>
 
@@ -719,3 +720,17 @@ Wielkość kredytu zależna od  statusu cwyilnego, płuci i Historii Kredytowej
 
 ```
 
+
+# Podsumowanie i Wnioski
+
+Wyniki analizy wskazują, że historia kredytowa oraz dochody wnioskodawcy są najważniejszymi czynnikami determinującymi decyzję banków o przyznaniu kredytu. Wnioskodawcy z pozytywną historią kredytową mają znacznie większe szanse na otrzymanie kredytu oraz mogą liczyć na wyższe kwoty finansowania. Brak historii kredytowej ogranicza możliwość uzyskania większych kredytów, co sugeruje, że banki opierają swoje decyzje na wcześniejszych zobowiązaniach kredytowych klientów.
+
+Dochody głównego wnioskodawcy wykazują najsilniejszą korelację z wysokością kredytu. Osoby o wyższych dochodach zazwyczaj otrzymują wyższe kredyty, co wynika z większej zdolności kredytowej oraz mniejszego ryzyka niespłacenia zobowiązania. Dochody współwnioskodawcy mają mniejsze znaczenie, co sugeruje, że w wielu przypadkach kredytobiorca główny jest kluczowym czynnikiem decydującym o wysokości kredytu.
+
+Z kolei czynniki demograficzne, takie jak płeć, stan cywilny czy liczba osób na utrzymaniu, odgrywają mniejszą rolę w decyzjach kredytowych. Analiza wykazała, że choć osoby zamężne częściej ubiegają się o wyższe kredyty, efekt ten nie jest na tyle silny, by znacząco wpływać na ostateczną decyzję banku. Podobnie, różnice w dochodach między kobietami a mężczyznami są zauważalne, jednak nie wpływają one bezpośrednio na wysokość przyznawanych kredytów.
+
+Dane pokazują również, że obszar zamieszkania może mieć pewne znaczenie – osoby z dużych miast mają większe zróżnicowanie dochodów i kwot kredytów, co może wynikać z wyższych kosztów życia i większej dostępności do kredytów hipotecznych w dużych aglomeracjach. Wnioskodawcy z obszarów wiejskich mają bardziej stabilne dochody, lecz czasem ubiegają się o wyższe kredyty, co może być efektem chęci inwestycji w nieruchomości o większej powierzchni.
+
+Podsumowując, analiza potwierdza, że banki opierają swoje decyzje przede wszystkim na stabilnych, mierzalnych czynnikach finansowych, takich jak historia kredytowa i dochody, natomiast zmienne demograficzne mają drugorzędne znaczenie w procesie przyznawania kredytu.
+
+_______________________________________________________________________________________________________
