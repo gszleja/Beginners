@@ -4,7 +4,7 @@ author: ""
 date: ""
 output:
   html_document:
-    toc: true
+    toc: false
     toc_depth: 3
     number_sections: true
     theme: cerulean
@@ -35,6 +35,36 @@ output:
 
 <div style="margin-top: 2vh;"></div> <!-- Dodaje odstęp, by treść nie nachodziła na nagłówek -->
 
+<!-- Dodanie odstępu po nagłówku -->
+<div style="margin-top: 20px;"></div>
+
+<!-- Spis treści -->
+<div style="
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px; /* Stała szerokość */
+    margin-left: 50px; /* Przesunięcie do lewej */
+    text-align: left; /* Wyrównanie tekstu do lewej */
+">
+  <h2 style="text-align: left;">Spis Treści</h2>
+  <ul style="list-style-type: none; padding-left: 0; font-size: 18px;">
+    <li><a href="#Wprowadzenie">1. Wprowadzenie</a></li>
+    <li><a href="#wczytanie-danych">2. Wczytanie danych</a></li>
+    <li><a href="#czyszczenie-danych">3. Czyszczenie danych</a></li>
+    <li><a href="#wizualizacja-danych">4. Wizualizacja danych</a></li>
+    <li><a href="#analiza-opisowa">5. Analiza Opisowa</a></li>
+    <li><a href="#wnioskowanie-statystyczne">6. Wnioskowanie Statystyczne</a></li>
+  </ul>
+</div>
+
+
+
+# Wprowadzenie
+
+Celem raportu jest analiza danych dotyczących kredytów mieszkaniowych oraz automatyzacja procesu ich przyznawania. Obecnie firma obsługuje klientów z różnych regionów – miejskich, podmiejskich i wiejskich, a decyzja o przyznaniu kredytu opiera się na wielu czynnikach, takich jak dochód, historia kredytowa, stan cywilny czy liczba osób na utrzymaniu.  
+
+W ramach projektu chcemy stworzyć model pozwalający na segmentację klientów oraz przewidywanie ich kwalifikacji do otrzymania pożyczki. Automatyzacja tego procesu pozwoli na efektywne podejmowanie decyzji w czasie rzeczywistym, co przełoży się na lepszą obsługę klientów oraz optymalizację działań firmy. Do analizy wykorzystamy dostarczony zbiór danych, zawierający istotne informacje o klientach i ich wnioskach kredytowych.
 
 ```{r message=TRUE, warning=TRUE, include=FALSE}
 if (! require("tidyverse")) install.packages("tidyverse", dependencies =TRUE)
@@ -55,6 +85,7 @@ if (! require("knitr")) install.packages("knitr", dependencies = TRUE)
 if (! require("kableExtra")) install.packages("kableExtra", dependencies = TRUE)
 if (! require("skimr")) install.packages("skimr", dependencies = TRUE)
 ```
+
 ```{r message=TRUE, warning=TRUE, include=FALSE}
 library(tidyverse)
 library(dlookr)
