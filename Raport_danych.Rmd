@@ -103,16 +103,19 @@ library(skimr)
 
 
 # Wczytanie danych
-
-```{r}
-#Wczytanie danych
+```{r message=FALSE, warning=FALSE}
 Hipoteczny <- read_delim("Hipoteczny.csv", 
     delim = ";", escape_double = FALSE, trim_ws = TRUE)
 hipo_baza <- Hipoteczny
+```
 
+```{r}
 # Podstawowa charakterystyka danych
 skim(hipo_baza)
 ```
+W tabeli przedstawiono kluczowe statystyki opisowe dla każdej zmiennej, co pozwala na ocenę ewentualnych braków i rozkładu wartości. Jednym z istotnych aspektów jest obecność brakujących danych. Najwięcej braków obserwujemy w zmiennej Self_Employed, gdzie brakuje aż 48 wartości.  Znaczne luki występują również w kolumnach Gender (24 brakujące wartości) oraz Dependents (22). Atutem zbioru danych jest brak nadmiarowych spacj i wysoki współczynnik kompletności dla większości zmiennych (powyżej 97%) sugeruje, że dane są stosunkowo dobrze uzupełnione, jednak te braki zostaną uwzględnione w dalszej analizie poprzez imputację.
+
+
 
 
 # Czyszczenie danych
