@@ -6,10 +6,14 @@ editor_options:
 
 # Beginners przedstwiają projekt z przedmiotu anailza danych w R.
 
+## Zatwierdzenie kredytu mieszkaniowego
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 ##Podsumowanie: #Celem projektu było zautomatyzowanie procesu
 =======
+=======
+>>>>>>> 69a1e3924e076a508873f87808a216569ac25326
 ## Twoja firma zajmuje się wszystkimi kredytami mieszkaniowymi. Jest obecna na wszystkich obszarach miejskich, półmiejskich i wiejskich. Klient najpierw ubiega się o kredyt mieszkaniowy, a następnie firma sprawdza, czy klient kwalifikuje się do otrzymania pożyczki.
 
 ## Firma chce zautomatyzować proces przyznawania pożyczki (w czasie rzeczywistym) w oparciu o dane klienta podane podczas wypełniania wniosku online. Dane te obejmują płeć, stan cywilny, wykształcenie, liczbę osób na utrzymaniu, dochód, kwotę pożyczki, historię kredytową i inne. Aby zautomatyzować ten proces, firma postawiła sobie za cel zidentyfikowanie segmentów klientów kwalifikujących się do otrzymania kwoty pożyczki i skierowanie jej właśnie do nich. W tym przypadku dostarczono częściowy zestaw danych.
@@ -46,7 +50,10 @@ editor_options:
 
 ##Podsumowanie: 
 #Celem projektu było zautomatyzowanie procesu
+<<<<<<< HEAD
 >>>>>>> c52d386d6ff965cd114366162ebf1c00f0b8d2ac
+=======
+>>>>>>> 69a1e3924e076a508873f87808a216569ac25326
 zatwierdzania kredytów mieszkaniowych poprzez analizę różnych cech
 klientów oraz określenie czynników, ##które mają największy wpływ na
 decyzję kredytową. Firma chciała opracować system, ##który umożliwi
