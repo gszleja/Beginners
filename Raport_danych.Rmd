@@ -188,7 +188,7 @@ sum(duplicated(hipo_baza$Loan_ID))
 ```
 Po wykonaniu naszego polecenia, baza nie zawiera już zduplikowanych wartośći.
 
-Ujednolicenie sposobu zapsania danych, tak aby wszystkie były zapisane małymi literami.
+
 ```{r include=FALSE}
 #Zmiana danych, aby były zapisane małymi literami
 hipo_baza$Gender <- tolower(hipo_baza$Gender)
