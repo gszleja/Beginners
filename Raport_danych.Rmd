@@ -95,6 +95,7 @@ if (! require("ggstatsplot")) install.packages("ggstatsplot", dependencies = TRU
 if (! require("knitr")) install.packages("knitr", dependencies = TRUE)
 if (! require("kableExtra")) install.packages("kableExtra", dependencies = TRUE)
 if (! require("skimr")) install.packages("skimr", dependencies = TRUE)
+if (! require("naniar")) install.packages("naniar", dependencies = TRUE)
 ```
 
 ```{r message=TRUE, warning=TRUE, include=FALSE}
@@ -110,6 +111,7 @@ library(ggstatsplot)
 library(knitr)
 library(kableExtra)
 library(skimr)
+library(naniar)
 ```
 
 
@@ -124,17 +126,24 @@ hipo_baza <- Hipoteczny
 # Podstawowa charakterystyka danych
 skim(hipo_baza)
 ```
-W tabeli przedstawiono kluczowe statystyki opisowe dla każdej zmiennej, co pozwala na ocenę ewentualnych braków i rozkładu wartości. Jednym z istotnych aspektów jest obecność brakujących danych. Najwięcej braków obserwujemy w zmiennej Self_Employed, gdzie brakuje aż 48 wartości.  Znaczne luki występują również w kolumnach Gender (24 brakujące wartości) oraz Dependents (22). Atutem zbioru danych jest brak nadmiarowych spacj i wysoki współczynnik kompletności dla większości zmiennych (powyżej 97%) sugeruje, że dane są stosunkowo dobrze uzupełnione, jednak te braki zostaną uwzględnione w dalszej analizie poprzez imputację.
+W tabeli przedstawiono kluczowe statystyki opisowe dla każdej zmiennej, co pozwala na ocenę ewentualnych braków i rozkładu wartości. Jednym z istotnych aspektów jest obecność brakujących danych. Najwięcej braków obserwujemy w zmiennej Credit_History , gdzie brakuje aż 60 wartości.  Znaczne luki występują również w kolumnach Self_Employed (44) oraz Gender (24). Atutem zbioru danych jest brak nadmiarowych spacj i wysoki współczynnik kompletności dla większości zmiennych (powyżej 97%) sugeruje, że dane są stosunkowo dobrze uzupełnione, jednak te braki zostaną uwzględnione w dalszej analizie poprzez imputację.
 
 
 
 
 # Czyszczenie danych
 
-Zamiana pustych wartości na unikalne
 ```{r}
 sum(is.na(hipo_baza))
+```
+W bazie mamy łącznie 190 pustych wartości. Zobaczmy to na wykresie.
+```{r}
+gg_miss_upset(hipo_baza, nsets = 2)
+```
+Najwięcej brakujących wartości występuje w zmiennej Credit_History (56 braków), co może sugerować, że niektóre wnioski kredytowe nie zawierają informacji o historii kredytowej klientów. Drugą zmienną z największą liczbą braków jest Self_Employed (44 braki), co oznacza, że w przypadku części klientów brakuje informacji o ich statusie zatrudnienia. Dodatkowo widoczne są przypadki współwystępowania braków w tych dwóch zmiennych, choć skala tego zjawiska jest mniejsza ponieważ tylko 4 przypadki. Taka analiza wskazuje na konieczność imputacji brakujących danych. 
 
+```{r}
+#Imputacja
 getmode <- function(v) {
   uniqv <- unique(v)
   uniqv[which.max(tabulate(match(v, uniqv)))]
@@ -153,6 +162,7 @@ hipo_baza$Property_Area[is.na(hipo_baza$Property_Area)] <- getmode(hipo_baza$Pro
 sum(is.na(hipo_baza))
 
 ```
+Po przeprowadzonej imputacji zbiór danych stał się kompletny – wszystkie brakujące wartości zostały zastąpione najczęściej występującymi wartościami w poszczególnych kolumnach. Dzięki temu zmienne kategoryczne, takie jak Gender, Married, Education czy Property_Area, nie zawierają już braków, co pozwala na ich pełne wykorzystanie w analizie. Podobnie w przypadku zmiennych liczbowych, takich jak ApplicantIncome i LoanAmount, uzupełnienie braków modalną zapewniło spójność i brak luk w danych. Sprawdzenie sumy braków (sum(is.na(hipo_baza))) zwróciło wartość 0, co potwierdza, że nie ma już żadnych pustych wartości w zbiorze.
 
 Sprwadzanie i usuwanie dupliatów
 ```{r}
