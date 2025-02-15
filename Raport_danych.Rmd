@@ -711,11 +711,6 @@ Większość kredytów udzielana jest na 30 lat, a 83,9% wnioskodawców ma pozyt
 <<<<<<< HEAD
 Satystyka długosci kredytu do wielkości
 ```{r message=FALSE, warning=FALSE}
-=======
-
-```{r warning=FALSE}
-#Satystyka Długosci kredytu to wielkości
->>>>>>> dde7ac3ae481d4fedb457d0e0ccf6999ac1656e6
 ggbetweenstats(
   data = hipo_baza,
   x = Loan_Amount_Term,
@@ -725,10 +720,7 @@ ggbetweenstats(
 
 ```
 
-<<<<<<< HEAD
 
-=======
->>>>>>> dde7ac3ae481d4fedb457d0e0ccf6999ac1656e6
 Najczęściej udzielane kredyty mają okres 360 miesięcy (30 lat), ze średnią kwotą 133 tys.. Krótsze kredyty (np. 6–36 miesięcy) mają większą zmienność kwot – od 95 tys. do 260 tys.. Kredyty na 15 lat (180 miesięcy) mają najniższą średnią kwotę (80 tys.). Dłuższe okresy kredytowania wiążą się z większym rozproszeniem wartości kredytów.
 
 ```{r warning=FALSE}
