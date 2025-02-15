@@ -256,6 +256,7 @@ hipo_baza$Property_Area <- as.integer(hipo_baza$Property_Area)
 ```
 
 
+
 # Wizualizacja danch
 
 
