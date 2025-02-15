@@ -9,7 +9,7 @@ editor_options:
 ---
 
 #Instalacja Pakietów
-
+```{r}
 if (! require("tidyverse")) install.packages("tidyverse", dependencies =TRUE)
 if (! require("dlookr")) install.packages("dlookr", dependencies =TRUE)
 if (! require("VIM")) install.packages("VIM", dependencies = TRUE)
@@ -41,6 +41,9 @@ library(summarytools)
 library(ggstatsplot)
 library(knitr)
 library(kableExtra)
+```
+
+
 
 
 
@@ -52,6 +55,7 @@ Hipoteczny <- read_delim("Hipoteczny.csv",
 hipo_baza <- Hipoteczny
 ```
 ##Czyszczenie danych
+
 #Zamiana pustych wartości na unikalne
 
 ```{r}
@@ -496,7 +500,7 @@ tabela_krzyzowa
 ```{r}
 podsumowanie <- dfSummary(hipo_baza,
                            method = "render")
-view(podsumowanie)
+print(podsumowanie)
 
 ```
 #Większość wnioskodawców to mężczyźni (80,9%), osoby zamężne (63,5%) i posiadające wyższe wykształcenie (77,1%). Ponad połowa nie ma osób na utrzymaniu (57,2%).
@@ -548,4 +552,42 @@ ggcoefstats(model_dochod)
 ```
 #Stan cywilny ma istotny, ale niewielki wpływ na kwotę kredytu (β = 22,39, p = 0,001). Płeć i historia kredytowa nie są istotnymi predyktorami (p > 0,05). Główne czynniki wpływające na kwotę kredytu to prawdopodobnie dochód i inne zmienne nieuwzględnione w tym modelu.
 
+##Podsumowanie: 
+
+#Celem projektu było zautomatyzowanie procesu
+zatwierdzania kredytów mieszkaniowych poprzez analizę różnych cech
+klientów oraz określenie czynników, ##które mają największy wpływ na
+decyzję kredytową. Firma chciała opracować system, ##który umożliwi
+szybkie podejmowanie decyzji o przyznaniu kredytu w oparciu o dane
+wprowadzone przez klientów w formularzu online. ##Dane obejmowały
+zarówno informacje demograficzne (np. płeć, stan cywilny, liczba osób na
+utrzymaniu), jak i finansowe (np. dochody, kwotę kredytu, ##historię
+kredytową). Analiza miała pomóc w identyfikacji klientów, którzy
+spełniają warunki kredytowe, co pozwoliłoby na efektywniejszą obsługę
+wniosków i minimalizację ryzyka banku.
+
+##Wnioski \# - Historia kredytowa ma największy wpływ na decyzję o
+kredycie – klienci z pozytywną historią kredytową mają znacznie większą
+szansę na otrzymanie kredytu, ##co sugeruje, że banki przywiązują dużą
+wagę do wcześniejszych zobowiązań klientów.
+
+# - Dochody głównego wnioskodawcy korelują z wysokością kredytu – osoby o wyższych zarobkach częściej otrzymują większe kredyty.
+
+##Dochód współwnioskodawcy ma znacznie mniejsze znaczenie, co może
+sugerować, że decyzje kredytowe są głównie podejmowane na podstawie
+głównego źródła dochodu.
+
+## - Stan cywilny i liczba osób na utrzymaniu mają umiarkowany wpływ – osoby będące w związku małżeńskim częściej uzyskują większe kredyty, ale efekt ten nie jest bardzo silny.
+
+##Może to wynikać z większej stabilności finansowej rodzin oraz większej
+zdolności kredytowej małżeństw.
+
+## - Występują braki w danych – szczególnie dotyczące historii kredytowej i dochodów współwnioskodawców.
+
+##Może to wpłynąć na skuteczność modelu i jego zdolność do przewidywania
+decyzji kredytowych.
+
+## - Kwoty kredytów są zróżnicowane – większość kredytów mieści się w przedziale 100-200 tys., ale niektóre wnioski przekraczają nawet 500 tys..
+
+## - Obszar zamieszkania nie ma istotnego wpływu na decyzję kredytową – analiza nie wykazała dużych różnic między miastami, przedmieściami i obszarami wiejskimi
 
