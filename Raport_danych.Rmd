@@ -195,8 +195,9 @@ hipo_baza$Self_Employed <- tolower(hipo_baza$Self_Employed)
 hipo_baza$Property_Area <- tolower(hipo_baza$Property_Area)
 ```
 
-Usuwanie błednych wartości
+
 ```{r message=TRUE, warning=TRUE, include=FALSE}
+#Usuwanie błednych wartości
 sum(!grepl("LP", hipo_baza$Loan_ID))
 ```
 
@@ -281,6 +282,7 @@ wykres_zarobki_do_miejscowosci <- ggplot(hipo_baza, aes(x = Property_Area, y = A
 print(wykres_zarobki_do_miejscowosci)
 
 ```
+
 Dochody wnioskodawców różnią się w zależności od miejsca zamieszkania. W dużych miastach występują zarówno niskie, jak i bardzo wysokie zarobki. W małych miastach dochody są bardziej stabilne, ale rzadziej osiągają wysokie wartości. Na wsiach większość dochodów jest niższa, choć zdarzają się wyjątki z bardzo wysokimi zarobkami.
 
 
@@ -502,6 +504,7 @@ ggplot(hipo_baza, aes(x = Credit_History)) +
   
   
 ```
+
 Większość wnioskodawców posiada pozytywną historię kredytową (wartość 1), co może zwiększać ich szanse na uzyskanie kredytu. Znacznie mniejsza grupa osób nie ma historii kredytowej lub ma negatywną (wartość 0), co może utrudniać uzyskanie finansowania. To sugeruje, że banki częściej obsługują klientów z ugruntowaną historią kredytową.
 
 
@@ -597,14 +600,14 @@ Większość kredytów opiewa na 126–136 tys. i jest udzielana na 30 lat. Wnio
 
 
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 cor(hipo_baza[, sapply(hipo_baza, is.numeric)], use = "complete.obs")
 
 ```
 Kwota kredytu jest najsilniej skorelowana z dochodem głównego wnioskodawcy (0,49), co oznacza, że im wyższy dochód, tym większy kredyt. Dochód współwnioskodawcy ma mniejszy wpływ (0,15). Liczba osób na utrzymaniu, stan cywilny, historia kredytowa i obszar zamieszkania mają bardzo słabe korelacje z innymi zmiennymi, co sugeruje, że nie są kluczowymi czynnikami w decyzjach kredytowych.
 
 
-podstawowe dane statystyczne dla całej bazy w tabelce
+Podstawowe dane statystyczne dla całej bazy w tabelce.
 ```{r}
 wyniki_descr <- descr(hipo_baza[, 2:10],
                       stats = c("min", "max", "mean", "sd"),
@@ -620,11 +623,12 @@ kable(wyniki_descr, format = "html", align = "c",
 
 
 ```
+
 Większość wnioskodawców ma dochody w przedziale 2864 – 5060, ale duże odchylenie standardowe wskazuje na znaczne różnice między zarobkami. Współwnioskodawcy często nie mają dochodu, co oznacza, że kredyty są głównie przyznawane na podstawie zarobków głównego wnioskodawcy.
 Średnia kwota kredytu wynosi 136,32, a większość kredytów udzielana jest na 30 lat. Ponad 63% wnioskodawców jest w związku małżeńskim. Brak danych dla samozatrudnionych może sugerować konieczność weryfikacji zbioru danych.
 
 
-Występowanie Płuci w wnioskach kreydtowych
+Występowanie Płci w wnioskach kreydtowych
 ```{r}
 wyniki_freq <- freq(hipo_baza$Gender,
                     report.nas = FALSE,
@@ -632,6 +636,7 @@ wyniki_freq <- freq(hipo_baza$Gender,
 print(wyniki_freq)
 
 ```
+
 Wśród wnioskodawców 80,93% stanowią mężczyźni (297 osób), a 19,07% kobiety (70 osób). Wskazuje to na znaczną przewagę mężczyzn w grupie ubiegających się o kredyt. Może to wynikać z różnic w dochodach, strukturze gospodarstw domowych lub preferencjach finansowych.
 
 Tabela krzyżowa historii kredytowej do wielkości kredytu
@@ -645,6 +650,7 @@ hipo_baza$LoanAmount_cat <- cut(hipo_baza$LoanAmount,
 tabela_krzyzowa <- ctable(hipo_baza$Credit_History, hipo_baza$LoanAmount_cat, prop = "n", round.digits = 2)
 tabela_krzyzowa
 ```
+
 Osoby z pozytywną historią kredytową częściej otrzymują wyższe kredyty – 64,29% z nich mieści się w przedziale 100-200 tys., a 1,95% przekracza 300 tys.. Natomiast osoby bez historii kredytowej rzadko dostają wysokie kredyty – aż 81,36% otrzymuje kwoty 100-200 tys., a nikt nie przekracza 300 tys..
 Brak historii kredytowej znacząco ogranicza dostęp do wyższych kredytów.
 
@@ -656,6 +662,7 @@ podsumowanie <- dfSummary(hipo_baza,
 print(podsumowanie)
 
 ```
+
 Większość wnioskodawców to mężczyźni (80,9%), osoby zamężne (63,5%) i posiadające wyższe wykształcenie (77,1%). Ponad połowa nie ma osób na utrzymaniu (57,2%).
 
 Średni dochód głównego wnioskodawcy wynosi 4805,6, ale jest mocno zróżnicowany. Współwnioskodawcy często nie mają dochodu, a jeśli mają, to średnio 1569,6. Średnia kwota kredytu wynosi 136,3, a większość mieści się w przedziale 100-200 tys..
@@ -666,7 +673,7 @@ Większość kredytów udzielana jest na 30 lat, a 83,9% wnioskodawców ma pozyt
 # Wnioskowanie Statystyczne
 
 Satystyka Długosci kredytu to wielkości
-```{r}
+```{r message=FALSE, warning=FALSE}
 ggbetweenstats(
   data = hipo_baza,
   x = Loan_Amount_Term,
@@ -675,10 +682,12 @@ ggbetweenstats(
 )
 
 ```
+
+
 Najczęściej udzielane kredyty mają okres 360 miesięcy (30 lat), ze średnią kwotą 133 tys.. Krótsze kredyty (np. 6–36 miesięcy) mają większą zmienność kwot – od 95 tys. do 260 tys.. Kredyty na 15 lat (180 miesięcy) mają najniższą średnią kwotę (80 tys.). Dłuższe okresy kredytowania wiążą się z większym rozproszeniem wartości kredytów.
 
-wizualizację zależności między wielkościa kredytu a stusem cywilnym wraz z wynikami testu korelacji
-```{r}
+Wizualizację zależności między wielkościa kredytu a stusem cywilnym wraz z wynikami testu korelacji.
+```{r message=FALSE, warning=FALSE}
 ggscatterstats(
   data = hipo_baza,
   x = LoanAmount,
@@ -686,14 +695,17 @@ ggscatterstats(
 )
 
 ```
+
 Osoby w związku małżeńskim częściej otrzymują wyższe kredyty, ale związek ten jest słaby (r = 0,18). Stan cywilny może mieć pewien wpływ na wysokość kredytu, jednak inne czynniki, jak dochód czy historia kredytowa, są bardziej istotne.
 
-Model regresji liniowej zależność dochodu od statusu cwyilnego i płuci
+
+Model regresji liniowej zależność dochodu od statusu cwyilnego i płci.
 ```{r}
 model_dochod <- lm(ApplicantIncome ~ Married + Gender, data = hipo_baza)
 ggcoefstats(model_dochod)
 
 ```
+
 Analiza regresji wskazuje, że płeć i stan cywilny nie mają istotnego wpływu na dochód wnioskodawcy (p > 0,05). Jedynie wyraz wolny modelu (β = 4023,65, p < 0,001) jest istotny, co sugeruje, że inne czynniki niż płeć czy stan cywilny lepiej wyjaśniają poziom dochodów.
 
 Wielkość kredytu zależna od  statusu cwyilnego, płuci i Historii Kredytowej
