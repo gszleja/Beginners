@@ -739,7 +739,7 @@ Pomimo większej liczby osób posiadających historię kredytową (n = 308) w po
 
 Istotnym wnioskiem z analizy jest brak wyraźnej różnicy w wysokości kredytów między grupami, co sugeruje, że np. dochód wnioskodawcy, może mieć większy wpływ na decyzję kredytową niż sama historia kredytowa.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 hipo_baza$kat_doch <- cut(
   hipo_baza$ApplicantIncome,
   breaks = c(0, 4500, 9000, 15000, Inf),  # Granice przedziałów
@@ -761,7 +761,7 @@ Największa stabilność w wysokości przyznawanych kredytów występuje wśród
 
 Testy statystyczne potwierdzają istotne różnice między kategoriami dochodowymi, co sugeruje, że dochód wnioskodawcy jest jednym z kluczowych czynników wpływających na decyzję kredytową. Wysokie zarobki zwiększają szanse na wyższe finansowanie, choć jednocześnie obserwujemy większe zróżnicowanie przyznawanych kwot w tej grupie.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 #wizualizację zależności między wielkościa kredytu a stusem cywilnym wraz z wynikami testu korelacji
 ggscatterstats(
   data = hipo_baza,
@@ -775,7 +775,7 @@ ggscatterstats(
 Osoby w związku małżeńskim częściej otrzymują wyższe kredyty, ale związek ten jest słaby (r = 0,18). Stan cywilny może mieć pewien wpływ na wysokość kredytu, jednak inne czynniki, jak dochód czy historia kredytowa, są bardziej istotne.
 
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 #Model regresji liniowej zależność dochodu od statusu cwyilnego i płuci
 model_dochod <- lm(ApplicantIncome ~ Married + Gender, data = hipo_baza)
 ggcoefstats(model_dochod)
@@ -786,7 +786,7 @@ ggcoefstats(model_dochod)
 Analiza regresji wskazuje, że płeć i stan cywilny nie mają istotnego wpływu na dochód wnioskodawcy (p > 0,05). Jedynie wyraz wolny modelu (β = 4023,65, p < 0,001) jest istotny, co sugeruje, że inne czynniki niż płeć czy stan cywilny lepiej wyjaśniają poziom dochodów.
 
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 #Wielkość kredytu zależna od  statusu cwyilnego, płuci i Historii Kredytowej
   model_wielkosc_kredytu <- lm(LoanAmount ~ Married + Gender + Credit_History, data = hipo_baza)
   ggcoefstats(model_wielkosc_kredytu)
