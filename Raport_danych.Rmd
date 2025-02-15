@@ -2,14 +2,27 @@
 title: "Analiza danych - Kredyt Hipoteczny"
 author: "Gracjan, Mateusz"
 date: "`r Sys.Date()`"
-output: html_document
-editor_options: 
-  markdown: 
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    editor_options: 
+    markdown: 
     wrap: 72
 ---
 
-#Instalacja Pakietów
+#Wstęp
 
+cos tam cos tammmm
+
+##Medtody co?
+
+cos tam cos tam 
+
+
+#Instalacja Pakietów
+```{r message=TRUE, warning=TRUE, include=FALSE}
 if (! require("tidyverse")) install.packages("tidyverse", dependencies =TRUE)
 if (! require("dlookr")) install.packages("dlookr", dependencies =TRUE)
 if (! require("VIM")) install.packages("VIM", dependencies = TRUE)
@@ -26,10 +39,15 @@ if (! require("summarytools")) install.packages
 if (! require("ggstatsplot")) install.packages("ggstatsplot", dependencies = TRUE)
 if (! require("knitr")) install.packages("knitr", dependencies = TRUE)
 if (! require("kableExtra")) install.packages("kableExtra", dependencies = TRUE)
+```
+  
+  
+  
   
 
-#Wczytywanie bibliotek
 
+#Wczytywanie bibliotek
+```{r message=TRUE, warning=TRUE, include=FALSE}
 library(tidyverse)
 library(dlookr)
 library(VIM)
@@ -41,6 +59,8 @@ library(summarytools)
 library(ggstatsplot)
 library(knitr)
 library(kableExtra)
+```
+
 
 
 
@@ -591,6 +611,8 @@ ggscatterstats(
 )
 
 ```
+
+
 #Osoby w związku małżeńskim częściej otrzymują wyższe kredyty, ale związek ten jest słaby (r = 0,18). Stan cywilny może mieć pewien wpływ na wysokość kredytu, jednak inne czynniki, jak dochód czy historia kredytowa, są bardziej istotne.
 
 #Model regresji liniowej zależność dochodu od statusu cwyilnego i płuci
@@ -599,6 +621,8 @@ model_dochod <- lm(ApplicantIncome ~ Married + Gender, data = hipo_baza)
 ggcoefstats(model_dochod)
 
 ```
+
+
 #Analiza regresji wskazuje, że płeć i stan cywilny nie mają istotnego wpływu na dochód wnioskodawcy (p > 0,05). Jedynie wyraz wolny modelu (β = 4023,65, p < 0,001) jest istotny, co sugeruje, że inne czynniki niż płeć czy stan cywilny lepiej wyjaśniają poziom dochodów.
 
 #Wielkość kredytu zależna od  statusu cwyilnego, płuci i Historii Kredytowej
@@ -607,6 +631,25 @@ ggcoefstats(model_dochod)
   ggcoefstats(model_wielkosc_kredytu)
 
 ```
+
+
 #Stan cywilny ma istotny, ale niewielki wpływ na kwotę kredytu (β = 22,39, p = 0,001). Płeć i historia kredytowa nie są istotnymi predyktorami (p > 0,05). Główne czynniki wpływające na kwotę kredytu to prawdopodobnie dochód i inne zmienne nieuwzględnione w tym modelu.
+
+
+
+
+#Wnioski
+# - Historia kredytowa ma największy wpływ na decyzję o kredycie – klienci z pozytywną historią kredytową mają znacznie większą szansę na otrzymanie kredytu,co sugeruje, że banki przywiązują dużą wagę do wcześniejszych zobowiązań klientów.
+
+# - Dochody głównego wnioskodawcy korelują z wysokością kredytu – osoby o wyższych zarobkach częściej otrzymują większe kredyty.Dochód współwnioskodawcy ma znacznie mniejsze znaczenie, co może sugerować, że decyzje kredytowe są głównie podejmowane na podstawie głównego źródła dochodu.
+
+## - Stan cywilny i liczba osób na utrzymaniu mają umiarkowany wpływ – osoby będące w związku małżeńskim częściej uzyskują większe kredyty, ale efekt ten nie jest bardzo silny.Może to wynikać z większej stabilności finansowej rodzin oraz większej zdolności kredytowej małżeństw.
+
+## - Występują braki w danych – szczególnie dotyczące historii kredytowej i dochodów współwnioskodawców.Może to wpłynąć na skuteczność modelu i jego zdolność do przewidywania decyzji kredytowych.
+
+## - Kwoty kredytów są zróżnicowane – większość kredytów mieści się w przedziale 100-200 tys., ale niektóre wnioski przekraczają nawet 500 tys..
+## - Obszar zamieszkania nie ma istotnego wpływu na decyzję kredytową – analiza nie wykazała dużych różnic między miastami, przedmieściami i obszarami wiejskimi
+
+
 
 
