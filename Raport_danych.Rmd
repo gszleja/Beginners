@@ -1,17 +1,38 @@
 ---
-title: "Analiza danych - Kredyt Hipoteczny"
-author: "Gracjan Szleja, Mateusz Majewski"
-date: "`r Sys.Date()`"
+title: ""
+author: ""
+date: ""
 output:
   html_document:
     toc: true
     toc_depth: 3
     number_sections: true
+    theme: cerulean
+    highlight: textmate
+    df_print: paged
     editor_options: 
     markdown: 
     wrap: 72
 ---
 
+<div style="
+    text-align: center;
+    background-color: #4A90E2; /* Jasnoniebieskie tło */
+    padding: 40px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    width: 100%; /* Dopasowanie do szerokości kontenera */
+    max-width: 1200px; /* Ograniczenie maksymalnej szerokości */
+    margin: 0 auto; /* Wyśrodkowanie nagłówka */
+    border-radius: 10px; /* Zaokrąglenie rogów */
+">
+  <h1 style="margin-bottom: 10px; color: white;">Analiza danych - Kredyt Hipoteczny</h1>
+  <h3 style="color: white;">Gracjan Szleja, Mateusz Majewski</h3>
+  <h4 style="color: white;">`r Sys.Date()`</h4>
+</div>
+
+<div style="margin-top: 2vh;"></div> <!-- Dodaje odstęp, by treść nie nachodziła na nagłówek -->
 
 
 #Instalacja Pakietów
@@ -35,8 +56,6 @@ if (! require("kableExtra")) install.packages("kableExtra", dependencies = TRUE)
 ```
   
   
-  
-
 
 #Wczytywanie bibliotek
 ```{r message=TRUE, warning=TRUE, include=FALSE}
@@ -56,14 +75,19 @@ library(kableExtra)
 
 
 
-#Wproadzenie danych
-
-```{r}
+```{r include=FALSE}
+#Wczytanie danych
 Hipoteczny <- read_delim("Hipoteczny.csv", 
     delim = ";", escape_double = FALSE, trim_ws = TRUE)
 hipo_baza <- Hipoteczny
+
+# Podstawowa charakterystyka danych
+summary(hipo_baza)
 ```
+
+
 ##Czyszczenie danych
+
 #Zamiana pustych wartości na unikalne
 
 ```{r}
@@ -508,7 +532,7 @@ tabela_krzyzowa
 ```{r}
 podsumowanie <- dfSummary(hipo_baza,
                            method = "render")
-view(podsumowanie)
+print(podsumowanie)
 
 ```
 #Większość wnioskodawców to mężczyźni (80,9%), osoby zamężne (63,5%) i posiadające wyższe wykształcenie (77,1%). Ponad połowa nie ma osób na utrzymaniu (57,2%).
@@ -565,22 +589,3 @@ ggcoefstats(model_dochod)
 
 
 #Stan cywilny ma istotny, ale niewielki wpływ na kwotę kredytu (β = 22,39, p = 0,001). Płeć i historia kredytowa nie są istotnymi predyktorami (p > 0,05). Główne czynniki wpływające na kwotę kredytu to prawdopodobnie dochód i inne zmienne nieuwzględnione w tym modelu.
-
-
-
-
-#Wnioski
-# - Historia kredytowa ma największy wpływ na decyzję o kredycie – klienci z pozytywną historią kredytową mają znacznie większą szansę na otrzymanie kredytu,co sugeruje, że banki przywiązują dużą wagę do wcześniejszych zobowiązań klientów.
-
-# - Dochody głównego wnioskodawcy korelują z wysokością kredytu – osoby o wyższych zarobkach częściej otrzymują większe kredyty.Dochód współwnioskodawcy ma znacznie mniejsze znaczenie, co może sugerować, że decyzje kredytowe są głównie podejmowane na podstawie głównego źródła dochodu.
-
-## - Stan cywilny i liczba osób na utrzymaniu mają umiarkowany wpływ – osoby będące w związku małżeńskim częściej uzyskują większe kredyty, ale efekt ten nie jest bardzo silny.Może to wynikać z większej stabilności finansowej rodzin oraz większej zdolności kredytowej małżeństw.
-
-## - Występują braki w danych – szczególnie dotyczące historii kredytowej i dochodów współwnioskodawców.Może to wpłynąć na skuteczność modelu i jego zdolność do przewidywania decyzji kredytowych.
-
-## - Kwoty kredytów są zróżnicowane – większość kredytów mieści się w przedziale 100-200 tys., ale niektóre wnioski przekraczają nawet 500 tys..
-## - Obszar zamieszkania nie ma istotnego wpływu na decyzję kredytową – analiza nie wykazała dużych różnic między miastami, przedmieściami i obszarami wiejskimi
-
-
-
-
