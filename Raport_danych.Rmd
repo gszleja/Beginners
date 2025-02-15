@@ -1,7 +1,4 @@
 ---
-title: "Analiza danych - Kredyt Hipoteczny"
-author: "Gracjan Szleja, Mateusz Majewski"
-date: "`r Sys.Date()`"
 title: ""
 author: ""
 date: ""
@@ -39,7 +36,6 @@ output:
 <div style="margin-top: 2vh;"></div> <!-- Dodaje odstęp, by treść nie nachodziła na nagłówek -->
 
 
-#Instalacja Pakietów
 ```{r message=TRUE, warning=TRUE, include=FALSE}
 if (! require("tidyverse")) install.packages("tidyverse", dependencies =TRUE)
 if (! require("dlookr")) install.packages("dlookr", dependencies =TRUE)
@@ -57,6 +53,7 @@ if (! require("summarytools")) install.packages
 if (! require("ggstatsplot")) install.packages("ggstatsplot", dependencies = TRUE)
 if (! require("knitr")) install.packages("knitr", dependencies = TRUE)
 if (! require("kableExtra")) install.packages("kableExtra", dependencies = TRUE)
+if (! require("skimr")) install.packages("skimr", dependencies = TRUE)
 ```
 ```{r message=TRUE, warning=TRUE, include=FALSE}
 library(tidyverse)
@@ -70,21 +67,20 @@ library(summarytools)
 library(ggstatsplot)
 library(knitr)
 library(kableExtra)
+library(skimr)
 ```
 
 
 # Wczytanie danych
 
-
-
-```{r include=FALSE}
+```{r}
 #Wczytanie danych
 Hipoteczny <- read_delim("Hipoteczny.csv", 
     delim = ";", escape_double = FALSE, trim_ws = TRUE)
 hipo_baza <- Hipoteczny
 
 # Podstawowa charakterystyka danych
-summary(hipo_baza)
+skim(hipo_baza)
 ```
 
 
