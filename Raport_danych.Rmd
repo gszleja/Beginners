@@ -167,12 +167,18 @@ Po przeprowadzonej imputacji zbiór danych stał się kompletny – wszystkie br
 Sprwadzanie i usuwanie dupliatów
 ```{r}
 sum(duplicated(hipo_baza$Loan_ID))
+```
+Baza danych ma prawie w połowie duplikaty które trzeba usunąć
+```{r}
 hipo_baza <- hipo_baza[!duplicated(hipo_baza$Loan_ID), ]
 sum(duplicated(hipo_baza$Loan_ID))
 ```
+aktualnie baza nie ma już zadnych duplikatów 
 
-Zmiana danych, aby były zapisane małymi literami
-```{r}
+
+
+```{r include=FALSE}
+#Zmiana danych, aby były zapisane małymi literami
 hipo_baza$Gender <- tolower(hipo_baza$Gender)
 hipo_baza$Married <- tolower(hipo_baza$Married)
 hipo_baza$Education <- tolower(hipo_baza$Education)
@@ -196,9 +202,11 @@ hipo_baza <- subset(hipo_baza, Loan_Amount_Term >= 0)
 hipo_baza <- subset(hipo_baza, Property_Area %in% c("urban", "semiurban", "rural"))
 hipo_baza <- subset(hipo_baza, Dependents >= 0)
 ```
+W bazie mogą pojawić sie dane które są błędnie zapisane, więc skrypt takie wiersze usuwa 
 
-Zmiana wartości w kolumach na dane binarne
-```{r}
+
+
+```{r include=FALSE}
 #Kolumna Gender, przekodowanie aby 1 ozn. mężczyzne a 0 kobietę
 hipo_baza$Gender <- ifelse(hipo_baza$Gender == "male", 1, 0)
 
@@ -217,8 +225,9 @@ hipo_baza$Property_Area <- ifelse(hipo_baza$Property_Area == "urban", 1,
                                   ifelse(hipo_baza$Property_Area == "rural", 3, NA)))
 ```
 
-Zminaa typu na liczbowy:
-```{r}
+
+```{r include=FALSE}
+#Zminaa typu na liczbowy
 hipo_baza$Gender <- as.integer(hipo_baza$Gender)
 hipo_baza$Married <- as.integer(hipo_baza$Married)
 hipo_baza$Dependents <- as.integer(hipo_baza$Dependents)
