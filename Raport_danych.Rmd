@@ -244,9 +244,11 @@ hipo_baza$Property_Area <- as.integer(hipo_baza$Property_Area)
 
 # Wizualizacja danch
 
-wykres zależności pomiędzy zarobkami wnioskodawcy a wielkością miejscowosći zamieszkania
-```{r}
 
+### Wykresy zależności
+
+```{r}
+#wykres zależności pomiędzy zarobkami wnioskodawcy a wielkością miejscowosći zamieszkania
 hipo_baza$Property_Area <- factor(hipo_baza$Property_Area, 
                                    levels = c(1, 2, 3), 
                                    labels = c("Duże Miasto", "Małe Miasto", "Wieś"))
@@ -260,14 +262,17 @@ wykres_zarobki_do_miejscowosci <- ggplot(hipo_baza, aes(x = Property_Area, y = A
     x = "Obszar",
     y = "Dochód wnioskodawcy",
     title = "Zarobki w zależności od obszaru zamieszkania"
-  ) 
+  ) +
+  theme(
+    plot.title = element_text(size = 18, face = "bold", hjust = 0.5) # Wyśrodkowanie tytułu
+  )
 print(wykres_zarobki_do_miejscowosci)
 
 ```
+Dochody wnioskodawców różnią się w zależności od miejsca zamieszkania. W dużych miastach występują zarówno niskie, jak i bardzo wysokie zarobki. W małych miastach dochody są bardziej stabilne, ale rzadziej osiągają wysokie wartości. Na wsiach większość dochodów jest niższa, choć zdarzają się wyjątki z bardzo wysokimi zarobkami.
 
-wykres zależności pomiędzy zarobkami a poziomem edukacji
 ```{r}
-
+#wykres zależności pomiędzy zarobkami a poziomem edukacji
 hipo_baza$Education <- factor(hipo_baza$Education, 
                                    levels = c(1, 0),
                                    labels = c("Z wykształceniem", "Bez wykształcenia"))
@@ -281,14 +286,18 @@ wykres_zarobki_do_wyksztalcenia <- ggplot(hipo_baza, aes(x = Education, y = Appl
     x = "Wykształcenie",
     y = "Dochód wnioskodawcy",
     title = "Zarobki w zależności od wykształcenia"
-  ) 
+  ) +
+  theme(
+    plot.title = element_text(size = 18, face = "bold", hjust = 0.5) # Wyśrodkowanie tytułu
+  )
 print(wykres_zarobki_do_wyksztalcenia)
 ```
-Dochody wnioskodawców różnią się w zależności od miejsca zamieszkania. W dużych miastach występują zarówno niskie, jak i bardzo wysokie zarobki. W małych miastach dochody są bardziej stabilne, ale rzadziej osiągają wysokie wartości. Na wsiach większość dochodów jest niższa, choć zdarzają się wyjątki z bardzo wysokimi zarobkami.
 
 
-Wykres wielkość kredytu do obszaru zamieszkania
+
+
 ```{r}
+#Wykres wielkość kredytu do obszaru zamieszkania
   wykres_kredyt_do_miejscowosci <- ggplot(hipo_baza, aes(x = Property_Area, y = LoanAmount, fill = Property_Area)) +
     geom_jitter(aes(color = Property_Area), width = 0.2, size = 2, alpha = 0.7) +
     scale_fill_manual(values = c("Duże Miasto" = "lightgreen", "Małe Miasto" = "violet", "Wieś" = "tomato")) +
@@ -297,14 +306,17 @@ Wykres wielkość kredytu do obszaru zamieszkania
       x = "Obszar",
       y = "Wielkość kredytu w tyś.",
       title = "Wielkość kredytu w zależności od obszaru zamieszkania"
-    ) 
+    ) +
+  theme(
+    plot.title = element_text(size = 18, face = "bold", hjust = 0.5) # Wyśrodkowanie tytułu
+  )
   print(wykres_kredyt_do_miejscowosci)
 ```
 Wielkość kredytów różni się w zależności od miejsca zamieszkania. W dużych miastach występują zarówno małe, jak i wysokie kredyty, z pojedynczymi ekstremalnymi wartościami. W małych miastach kredyty są bardziej skupione wokół średnich wartości, choć pojawiają się nieliczne wysokie wnioski. Na wsiach rozrzut jest większy, a niektóre kredyty osiągają wysokie wartości, co może wynikać z różnych potrzeb finansowych mieszkańców.
 
-Wykres zarobków w stosunku do płci
-```{r}
 
+```{r}
+#Wykres zarobków w stosunku do płci
 hipo_baza$Gender <- factor(hipo_baza$Gender, 
                                    levels = c(1, 0),
                                    labels = c("Mężczyzna", "Kobieta"))
@@ -318,15 +330,19 @@ wykres_zarobki_do_plci <- ggplot(hipo_baza, aes(x = Gender, y = ApplicantIncome,
     x = "Płeć",
     y = "Dochód wnioskodawcy",
     title = "Zarobki w zależności od płci"
-  ) 
+  ) +
+  theme(
+    plot.title = element_text(size = 18, face = "bold", hjust = 0.5) # Wyśrodkowanie tytułu
+  )
 print(wykres_zarobki_do_plci)
 
 ```
 Mężczyźni mają większy rozrzut zarobków i częściej osiągają wyższe dochody. Dochody kobiet są bardziej skupione w niższych przedziałach, choć występują pojedyncze wysokie wartości. Ogólnie, widać wyraźne różnice w rozkładzie zarobków między płciami.
 
 
-Wykres kredytu w stostunku do małżeńśtwa
+
 ```{r}
+#Wykres kredytu w stostunku do małżeńśtwa
 hipo_baza$Married <- factor(hipo_baza$Married, 
                                    levels = c(1, 0),
                                    labels = c("Małżeństwo", "Przed ślubem"))
@@ -340,41 +356,53 @@ wykres_zarobki_do_malzenstwa <- ggplot(hipo_baza, aes(x = Married, y = LoanAmoun
     x = "Stan cywilny",
     y = "Wielkość kredytu",
     title = "Wielkość kredytu w zależności od stanu cywilnego"
-  ) 
+  ) +
+  theme(
+    plot.title = element_text(size = 18, face = "bold", hjust = 0.5) # Wyśrodkowanie tytułu
+  )
 print(wykres_zarobki_do_malzenstwa)
 
 ```
 Osoby w małżeństwie zaciągają kredyty o większym rozrzucie, a niektóre wnioski osiągają bardzo wysokie wartości. Osoby przed ślubem częściej mają kredyty o niższej wartości, z mniejszą liczbą skrajnie wysokich przypadków. Wskazuje to, że status małżeński może wpływać na zdolność kredytową lub potrzeby finansowe.
 
-Rozkład płci wśród wnioskodawców
+
 ```{r}
+#Rozkład płci wśród wnioskodawców
 ggplot(hipo_baza, aes(x = as.factor(Gender), fill = as.factor(Gender))) +
   geom_bar() +
-  scale_fill_manual(values = c("Blue", "pink"),
-                    labels = c("Mężczyzna", "Kobieta")) +
+  scale_fill_manual(values = c( "Blue","pink"),
+                    labels = c("Mężczyzna","Kobieta")) +
   ggtitle("Rozkład płci wśród wnioskodawców") +
   xlab("Płeć") +
-  ylab("Liczba wnioskodawców")
+  ylab("Liczba wnioskodawców")+
+  theme(
+    plot.title = element_text(size = 18, face = "bold", hjust = 0.5) # Wyśrodkowanie tytułu
+  )
 
 ```
 Wśród wnioskodawców znaczną większość stanowią mężczyźni, których liczba jest ponad trzykrotnie większa niż liczba kobiet. Może to sugerować, że mężczyźni częściej wnioskują o kredyty lub mają większą zdolność kredytową.
 
-#Wykaz stanu cywilnego wśród wnioskodawców
+
 ```{r}
+#Wykaz stanu cywilnego wśród wnioskodawców
 ggplot(hipo_baza, aes(x = as.factor(Married), fill = as.factor(Married))) +
   geom_bar() +
   scale_fill_manual(values = c("Przed ślubem" = "white", "Małżeństwo" = "black"),
                     labels = c("Małżeńśtwo", "Przed ślubem"))+
   ggtitle("Wykaz stanu cywilnego wśród wnioskodawców") +
   xlab("Stan Cywilny") +
-  ylab("Liczba wnioskodawców")
+  ylab("Liczba wnioskodawców")+
+  theme(
+    plot.title = element_text(size = 18, face = "bold", hjust = 0.5) # Wyśrodkowanie tytułu
+  )
 
 
 ```
 Wśród wnioskodawców dominują osoby pozostające w małżeństwie, których liczba jest wyraźnie większa niż osób przed ślubem. Może to sugerować, że osoby zamężne/cywilnie poślubione częściej ubiegają się o kredyty, być może ze względu na większe potrzeby finansowe lub wyższą zdolność kredytową.
 
-Rozkład liczby osób na utrzymaniu
+
 ```{r}
+#Rozkład liczby osób na utrzymaniu
 ggplot(hipo_baza, aes(x = Dependents)) +
   geom_bar(fill = "orange") +
   ggtitle("Liczba osób na utrzymaniu wśród wnioskodawców") +
@@ -384,8 +412,9 @@ ggplot(hipo_baza, aes(x = Dependents)) +
 Większość wnioskodawców nie ma osób na utrzymaniu, co może sugerować, że kredyty są częściej zaciągane przez osoby samotne lub niezależne finansowo. Znacznie mniejsza grupa ma 1 lub 2 osoby na utrzymaniu, a najmniej wnioskodawców deklaruje utrzymywanie 3 osób. Może to mieć wpływ na zdolność kredytową i wysokość przyznawanych kredytów.
 
 
-Dochód wnioskodawcy a kwota kredytu
+
 ```{r}
+#Dochód wnioskodawcy a kwota kredytu
 ggplot(hipo_baza, aes(x = ApplicantIncome, y = LoanAmount)) +
   geom_point(color = "blue", alpha = 0.5) +
   coord_cartesian(xlim = c(0, 20000)) +
@@ -396,8 +425,9 @@ ggplot(hipo_baza, aes(x = ApplicantIncome, y = LoanAmount)) +
 Nie widać wyraźnej zależności między wysokością dochodu a kwotą kredytu. Wnioskodawcy o niskich i średnich dochodach najczęściej ubiegają się o kredyty w przedziale 100–200 tys. zł. Pojedyncze przypadki wysokich kredytów dotyczą zarówno osób o niższych, jak i wyższych dochodach, co może wskazywać na inne czynniki wpływające na decyzję kredytową.
 
 
-Rozkład dochodów wnioskodawców
+
 ```{r}
+#Rozkład dochodów wnioskodawców
 ggplot(hipo_baza, aes(x = ApplicantIncome)) +
   geom_histogram(bins = 30, fill = "green", color = "black") +
   coord_cartesian(xlim = c(0, 20000)) +
@@ -408,8 +438,9 @@ ggplot(hipo_baza, aes(x = ApplicantIncome)) +
 ```
 Większość wnioskodawców ma dochody poniżej 10 000 zł, z największą grupą w przedziale 2500–5000 zł. Dochody powyżej 10 000 zł są rzadkie, a ekstremalnie wysokie wartości występują sporadycznie. Rozkład jest prawostronnie skośny, co sugeruje, że znaczna część osób ma stosunkowo niskie zarobki, a tylko nieliczne osiągają bardzo wysokie dochody.
 
-Porównanie średniej wartosci kredytu do zatrudnienia
+
 ```{r}
+#Porównanie średniej wartosci kredytu do zatrudnienia
 srednia_kredytu <- aggregate(LoanAmount ~ Self_Employed, data = hipo_baza, FUN = mean, na.rm = TRUE)
 kable(srednia_kredytu, format = "html", align = "c",
       col.names = c("Status Zatrudnienia", "Średnia Kwota Pożyczki (tyś)")) %>%
@@ -421,8 +452,9 @@ kable(srednia_kredytu, format = "html", align = "c",
 ```
 Średnia kwota kredytu dla osób samozatrudnionych wynosi 150,19, natomiast dla osób niebędących samozatrudnionymi 134,77. Oznacza to, że samozatrudnieni otrzymują średnio o 15,42 jednostek więcej kredytu. Może to wynikać z ich wyższej zdolności kredytowej, potrzeby finansowania działalności gospodarczej lub większej skłonności do zaciągania większych zobowiązań.
 
-Rozkład dochodów wnioskodawców
+
 ```{r}
+#Rozkład dochodów wnioskodawców
 ggplot(hipo_baza, aes(x = Credit_History)) +
   geom_bar(fill = "purple", color = "black") +
   ggtitle("Historia kredytowa pośród wnioskodawców") +
@@ -431,12 +463,12 @@ ggplot(hipo_baza, aes(x = Credit_History)) +
   
   
 ```
-<<<<<<< HEAD
 Większość wnioskodawców posiada pozytywną historię kredytową (wartość 1), co może zwiększać ich szanse na uzyskanie kredytu. Znacznie mniejsza grupa osób nie ma historii kredytowej lub ma negatywną (wartość 0), co może utrudniać uzyskanie finansowania. To sugeruje, że banki częściej obsługują klientów z ugruntowaną historią kredytową.
 
 
-Wzorce wielkości kredytów do ilości domowników w różnych typach zurbanizowania
+
 ```{r}
+#Wzorce wielkości kredytów do ilości domowników w różnych typach zurbanizowania
 Wykres_ilosc_domownikow_kredyt_zamieszkanie <- ggplot(hipo_baza, aes(LoanAmount, Dependents)) +
   geom_abline() +
   geom_jitter(width = 0.1, height = 0.1)
