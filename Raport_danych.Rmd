@@ -20,7 +20,7 @@ output:
 <div style="
     text-align: center;
     background-color: #4A90E2; /* Jasnoniebieskie tło */
-    padding: 40px;
+    padding: 30px;
     color: white;
     font-size: 24px;
     font-weight: bold;
@@ -131,10 +131,15 @@ W tabeli przedstawiono kluczowe statystyki opisowe dla każdej zmiennej, co pozw
 
 # Czyszczenie danych
 
-Zamiana pustych wartości na unikalne
-```{r}
-sum(is.na(hipo_baza))
+Braukjące dane zaburzają otrzymane wyniki, sprwadźmuy ile mamy pustych wartości.
 
+```{r}
+#Suma brakującyh wartośći
+sum(is.na(hipo_baza))
+```
+
+Zamiana pustych wartości na unikalne.
+```{r}
 getmode <- function(v) {
   uniqv <- unique(v)
   uniqv[which.max(tabulate(match(v, uniqv)))]
@@ -150,18 +155,21 @@ hipo_baza$LoanAmount[is.na(hipo_baza$LoanAmount)] <- getmode(hipo_baza$LoanAmoun
 hipo_baza$Loan_Amount_Term[is.na(hipo_baza$Loan_Amount_Term)] <- getmode(hipo_baza$Loan_Amount_Term)
 hipo_baza$Credit_History[is.na(hipo_baza$Credit_History)] <- getmode(hipo_baza$Credit_History)
 hipo_baza$Property_Area[is.na(hipo_baza$Property_Area)] <- getmode(hipo_baza$Property_Area)
+
+#Ponowne sprwadzenie sumy pustych danych w celu weryfikacji
 sum(is.na(hipo_baza))
 
 ```
 
-Sprwadzanie i usuwanie dupliatów
+Sprwadzanie sumy zduplikownaych wartośći i ich sunięcie.
 ```{r}
 sum(duplicated(hipo_baza$Loan_ID))
 hipo_baza <- hipo_baza[!duplicated(hipo_baza$Loan_ID), ]
+#Ponowna weryfikacja
 sum(duplicated(hipo_baza$Loan_ID))
 ```
 
-Zmiana danych, aby były zapisane małymi literami
+Ujednolicenie sposobu zapsania danych, tak aby wszystkie były zapisane małymi literami.
 ```{r}
 hipo_baza$Gender <- tolower(hipo_baza$Gender)
 hipo_baza$Married <- tolower(hipo_baza$Married)
@@ -171,8 +179,11 @@ hipo_baza$Property_Area <- tolower(hipo_baza$Property_Area)
 ```
 
 Usuwanie błednych wartości
-```{r}
+```{r message=TRUE, warning=TRUE, include=FALSE}
 sum(!grepl("LP", hipo_baza$Loan_ID))
+```
+
+```{r}
 hipo_baza <- hipo_baza[grepl("^LP\\d{6}$", hipo_baza$Loan_ID), ]  #czyszczenie jeśli nie mają LP i 6 cyfr
 hipo_baza <- subset(hipo_baza, Gender %in% c("male", "female")) #czyszczenie jesli nie ma male lub female
 hipo_baza <- subset(hipo_baza, Married %in% c("yes", "no")) #czyszczenie jesli nie ma Yes lub No
@@ -187,7 +198,7 @@ hipo_baza <- subset(hipo_baza, Property_Area %in% c("urban", "semiurban", "rural
 hipo_baza <- subset(hipo_baza, Dependents >= 0)
 ```
 
-Zmiana wartości w kolumach na dane binarne
+Zmiana wartości w kolumach na wartości liczbowe.
 ```{r}
 #Kolumna Gender, przekodowanie aby 1 ozn. mężczyzne a 0 kobietę
 hipo_baza$Gender <- ifelse(hipo_baza$Gender == "male", 1, 0)
@@ -207,8 +218,9 @@ hipo_baza$Property_Area <- ifelse(hipo_baza$Property_Area == "urban", 1,
                                   ifelse(hipo_baza$Property_Area == "rural", 3, NA)))
 ```
 
-Zminaa typu na liczbowy:
-```{r}
+
+```{r include=FALSE}
+#Zmina typu na liczbowy
 hipo_baza$Gender <- as.integer(hipo_baza$Gender)
 hipo_baza$Married <- as.integer(hipo_baza$Married)
 hipo_baza$Dependents <- as.integer(hipo_baza$Dependents)
