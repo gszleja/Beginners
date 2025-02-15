@@ -1,8 +1,19 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
 # Beginners przedstwiają projekt z przedmiotu anailza danych w R.
 
 ## Zatwierdzenie kredytu mieszkaniowego
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> fd11e6a9414c03090cef4b655ec8c112183b05ed
 ##Podsumowanie: #Celem projektu było zautomatyzowanie procesu
 =======
 =======
@@ -11,16 +22,29 @@
 
 ## Firma chce zautomatyzować proces przyznawania pożyczki (w czasie rzeczywistym) w oparciu o dane klienta podane podczas wypełniania wniosku online. Dane te obejmują płeć, stan cywilny, wykształcenie, liczbę osób na utrzymaniu, dochód, kwotę pożyczki, historię kredytową i inne. Aby zautomatyzować ten proces, firma postawiła sobie za cel zidentyfikowanie segmentów klientów kwalifikujących się do otrzymania kwoty pożyczki i skierowanie jej właśnie do nich. W tym przypadku dostarczono częściowy zestaw danych.
 
+<<<<<<< HEAD
 
 ##Podsumowanie:
 ##Celem projektu było zautomatyzowanie procesu zatwierdzania kredytów mieszkaniowych poprzez analizę różnych cech klientów oraz określenie czynników,
-##ktWnioski
+##które mają największy wpływ na decyzję kredytową. Firma chciała opracować system,
+##który umożliwi szybkie podejmowanie decyzji o przyznaniu kredytu w oparciu o dane wprowadzone przez klientów w formularzu online.
+##Dane obejmowały zarówno informacje demograficzne (np. płeć, stan cywilny, liczba osób na utrzymaniu), jak i finansowe (np. dochody, kwotę kredytu,
+##historię kredytową). Analiza miała pomóc w identyfikacji klientów, którzy spełniają warunki kredytowe, co pozwoliłoby na efektywniejszą obsługę wniosków i minimalizację ryzyka banku.
+
+
+##Wnioski
 ## - Historia kredytowa ma największy wpływ na decyzję o kredycie – klienci z pozytywną historią kredytową mają znacznie większą szansę na otrzymanie kredytu,
 ##co sugeruje, że banki przywiązują dużą wagę do wcześniejszych zobowiązań klientów.
+=======
+## Kroki do wykonania:
 
+## 1. Określenie problemu
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> fd11e6a9414c03090cef4b655ec8c112183b05ed
 ## 2. Postawienie hipotez
 
 ## 3. Przygotowanie systemu i załadowanie danych
@@ -75,4 +99,7 @@ decyzji kredytowych.
 ## - Kwoty kredytów są zróżnicowane – większość kredytów mieści się w przedziale 100-200 tys., ale niektóre wnioski przekraczają nawet 500 tys..
 
 ## - Obszar zamieszkania nie ma istotnego wpływu na decyzję kredytową – analiza nie wykazała dużych różnic między miastami, przedmieściami i obszarami wiejskimi
+<<<<<<< HEAD
 >>>>>>> fb7212e57cb0d3bc2df2e209703e20a0e00da15e
+=======
+>>>>>>> fd11e6a9414c03090cef4b655ec8c112183b05ed

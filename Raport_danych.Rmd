@@ -6,7 +6,8 @@ output:
   html_document:
     toc: false
     toc_depth: 3
-    number_sections: true
+    number_sections: false
+    section_numbering: false
     theme: cerulean
     highlight: textmate
     df_print: paged
@@ -44,7 +45,6 @@ output:
     padding: 20px;
     border-radius: 5px;
     width: 300px; /* Stała szerokość */
-    margin-left: 20px; /* Przesunięcie do lewej */
     text-align: left; /* Wyrównanie tekstu do lewej */
 ">
   <h2 style="text-align: left;">Spis Treści</h2>
@@ -61,9 +61,21 @@ output:
 
 # Wprowadzenie
 
-Celem raportu jest analiza danych dotyczących kredytów mieszkaniowych oraz automatyzacja procesu ich przyznawania. Obecnie firma obsługuje klientów z różnych regionów – miejskich, podmiejskich i wiejskich, a decyzja o przyznaniu kredytu opiera się na wielu czynnikach, takich jak dochód, historia kredytowa, stan cywilny czy liczba osób na utrzymaniu.  
+Celem tego raportu jest analiza zestawu danych dotyczących kredytów hipotecznych, obejmująca czyszczenie danych, wizualizację, analizę opisową oraz wnioskowanie statystyczne. Kluczowym elementem analizy jest ocena czynników wpływających na decyzję kredytową oraz identyfikacja brakujących wartości w zbiorze danych.  
 
-W ramach projektu chcemy stworzyć model pozwalający na segmentację klientów oraz przewidywanie ich kwalifikacji do otrzymania pożyczki. Automatyzacja tego procesu pozwoli na efektywne podejmowanie decyzji w czasie rzeczywistym, co przełoży się na lepszą obsługę klientów oraz optymalizację działań firmy. Do analizy wykorzystamy dostarczony zbiór danych, zawierający istotne informacje o klientach i ich wnioskach kredytowych.
+Dostarczony zbiór danych zawiera informacje o wnioskodawcach kredytów oraz ich cechach demograficznych i finansowych. Poniżej przedstawiono główne kolumny oraz ich znaczenie:  
+
+**Loan_ID** – Unikalny identyfikator wniosku kredytowego.  
+**Gender** – Płeć wnioskodawcy (wartości mogą być brakujące).  
+**Married** – Status cywilny (np. "Yes" dla osób zamężnych).  
+**Dependents** – Liczba osób na utrzymaniu (występują brakujące wartości).  
+**Education** – Poziom wykształcenia wnioskodawcy (np. "Graduate", "Not Graduate").  
+**Self_Employed** – Informacja, czy wnioskodawca jest samozatrudniony (znaczna liczba braków).  
+**ApplicantIncome** – Dochód głównego wnioskodawcy.  
+**CoapplicantIncome** – Dochód współwnioskodawcy (jeśli dotyczy).  
+**LoanAmount** – Kwota wnioskowanego kredytu (niektóre wartości brakujące).  
+**Loan_Amount_Term** – Okres spłaty kredytu w miesiącach.  
+
 
 ```{r message=TRUE, warning=TRUE, include=FALSE}
 if (! require("tidyverse")) install.packages("tidyverse", dependencies =TRUE)
@@ -82,6 +94,7 @@ if (! require("summarytools")) install.packages
 if (! require("ggstatsplot")) install.packages("ggstatsplot", dependencies = TRUE)
 if (! require("knitr")) install.packages("knitr", dependencies = TRUE)
 if (! require("kableExtra")) install.packages("kableExtra", dependencies = TRUE)
+if (! require("skimr")) install.packages("skimr", dependencies = TRUE)
 ```
 
 ```{r message=TRUE, warning=TRUE, include=FALSE}
@@ -96,6 +109,7 @@ library(summarytools)
 library(ggstatsplot)
 library(knitr)
 library(kableExtra)
+library(skimr)
 ```
 
 
@@ -108,7 +122,7 @@ Hipoteczny <- read_delim("Hipoteczny.csv",
 hipo_baza <- Hipoteczny
 
 # Podstawowa charakterystyka danych
-summary(hipo_baza)
+skim(hipo_baza)
 ```
 
 
