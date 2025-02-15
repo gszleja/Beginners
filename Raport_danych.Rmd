@@ -289,6 +289,7 @@ print(wykres_zarobki_do_miejscowosci)
 Dochody wnioskodawców różnią się w zależności od miejsca zamieszkania. W dużych miastach występują zarówno niskie, jak i bardzo wysokie zarobki. W małych miastach dochody są bardziej stabilne, ale rzadziej osiągają wysokie wartości. Na wsiach większość dochodów jest niższa, choć zdarzają się wyjątki z bardzo wysokimi zarobkami.
 
 
+
 Wykres zależności pomiędzy zarobkami a poziomem edukacji.
 ```{r}
 #wykres zależności pomiędzy zarobkami a poziomem edukacji
