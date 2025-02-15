@@ -126,6 +126,7 @@ hipo_baza <- Hipoteczny
 # Podstawowa charakterystyka danych
 skim(hipo_baza)
 ```
+
 W tabeli przedstawiono kluczowe statystyki opisowe dla każdej zmiennej, co pozwala na ocenę ewentualnych braków i rozkładu wartości. Jednym z istotnych aspektów jest obecność brakujących danych. Najwięcej braków obserwujemy w zmiennej Credit_History , gdzie brakuje aż 60 wartości.  Znaczne luki występują również w kolumnach Self_Employed (44) oraz Gender (24). Atutem zbioru danych jest brak nadmiarowych spacj i wysoki współczynnik kompletności dla większości zmiennych (powyżej 97%) sugeruje, że dane są stosunkowo dobrze uzupełnione, jednak te braki zostaną uwzględnione w dalszej analizie poprzez imputację.
 
 
@@ -168,18 +169,25 @@ hipo_baza$Property_Area[is.na(hipo_baza$Property_Area)] <- getmode(hipo_baza$Pro
 sum(is.na(hipo_baza))
 
 ```
+
 Po przeprowadzonej imputacji zbiór danych stał się kompletny – wszystkie brakujące wartości zostały zastąpione najczęściej występującymi wartościami w poszczególnych kolumnach. Dzięki temu zmienne kategoryczne, takie jak Gender, Married, Education czy Property_Area, nie zawierają już braków, co pozwala na ich pełne wykorzystanie w analizie. Podobnie w przypadku zmiennych liczbowych, takich jak ApplicantIncome i LoanAmount, uzupełnienie braków modalną zapewniło spójność i brak luk w danych. Sprawdzenie sumy braków (sum(is.na(hipo_baza))) zwróciło wartość 0, co potwierdza, że nie ma już żadnych pustych wartości w zbiorze.
 
 Sprwadzanie sumy zduplikownaych wartośći i ich unięcie.
 ```{r}
 sum(duplicated(hipo_baza$Loan_ID))
+```
+
+Baza danych składa się w prawie połowie ze duplikownych wartośći, które należy usunąć.
+```{r}
 hipo_baza <- hipo_baza[!duplicated(hipo_baza$Loan_ID), ]
 #Ponowna weryfikacja
 sum(duplicated(hipo_baza$Loan_ID))
 ```
+Po wykonaniu naszego polecenia, baza nie zawiera już zduplikowanych wartośći.
 
 Ujednolicenie sposobu zapsania danych, tak aby wszystkie były zapisane małymi literami.
-```{r}
+```{r include=FALSE}
+#Zmiana danych, aby były zapisane małymi literami
 hipo_baza$Gender <- tolower(hipo_baza$Gender)
 hipo_baza$Married <- tolower(hipo_baza$Married)
 hipo_baza$Education <- tolower(hipo_baza$Education)
@@ -207,8 +215,9 @@ hipo_baza <- subset(hipo_baza, Property_Area %in% c("urban", "semiurban", "rural
 hipo_baza <- subset(hipo_baza, Dependents >= 0)
 ```
 
-Zmiana wartości w kolumach na wartości liczbowe.
-```{r}
+
+```{r include=FALSE}
+#Zmiana wartości w kolumach na wartości liczbowe.
 #Kolumna Gender, przekodowanie aby 1 ozn. mężczyzne a 0 kobietę
 hipo_baza$Gender <- ifelse(hipo_baza$Gender == "male", 1, 0)
 
@@ -229,7 +238,7 @@ hipo_baza$Property_Area <- ifelse(hipo_baza$Property_Area == "urban", 1,
 
 
 ```{r include=FALSE}
-#Zmina typu na liczbowy
+#Zminaa typu na liczbowy
 hipo_baza$Gender <- as.integer(hipo_baza$Gender)
 hipo_baza$Married <- as.integer(hipo_baza$Married)
 hipo_baza$Dependents <- as.integer(hipo_baza$Dependents)
@@ -246,7 +255,7 @@ hipo_baza$Property_Area <- as.integer(hipo_baza$Property_Area)
 
 # Wizualizacja danch
 
-Wykres zależności pomiędzy zarobkami wnioskodawcy a wielkością miejscowosći zamieszkania
+Wykres zależności pomiędzy zarobkami wnioskodawcy a wielkością miejscowosći zamieszkania.
 ```{r}
 
 hipo_baza$Property_Area <- factor(hipo_baza$Property_Area, 
@@ -267,7 +276,7 @@ print(wykres_zarobki_do_miejscowosci)
 
 ```
 
-Wykres zależności pomiędzy zarobkami a poziomem edukacji
+Wykres zależności pomiędzy zarobkami a poziomem edukacji.
 ```{r}
 
 hipo_baza$Education <- factor(hipo_baza$Education, 
@@ -286,7 +295,6 @@ wykres_zarobki_do_wyksztalcenia <- ggplot(hipo_baza, aes(x = Education, y = Appl
   ) 
 print(wykres_zarobki_do_wyksztalcenia)
 ```
-
 
 Dochody wnioskodawców różnią się w zależności od miejsca zamieszkania. W dużych miastach występują zarówno niskie, jak i bardzo wysokie zarobki. W małych miastach dochody są bardziej stabilne, ale rzadziej osiągają wysokie wartości. Na wsiach większość dochodów jest niższa, choć zdarzają się wyjątki z bardzo wysokimi zarobkami.
 
