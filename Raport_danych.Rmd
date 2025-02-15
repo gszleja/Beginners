@@ -44,7 +44,7 @@ output:
     padding: 20px;
     border-radius: 5px;
     width: 300px; /* Stała szerokość */
-    margin-left: 50px; /* Przesunięcie do lewej */
+    margin-left: 20px; /* Przesunięcie do lewej */
     text-align: left; /* Wyrównanie tekstu do lewej */
 ">
   <h2 style="text-align: left;">Spis Treści</h2>
@@ -57,7 +57,6 @@ output:
     <li><a href="#wnioskowanie-statystyczne">6. Wnioskowanie Statystyczne</a></li>
   </ul>
 </div>
-
 
 
 # Wprowadzenie
@@ -101,8 +100,6 @@ library(kableExtra)
 
 
 # Wczytanie danych
-
-
 
 ```{r}
 #Wczytanie danych
