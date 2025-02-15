@@ -1,6 +1,6 @@
 ---
 title: "Analiza danych - Kredyt Hipoteczny"
-author: "Gracjan, Mateusz"
+author: "Gracjan Szleja, Mateusz Majewski"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -12,7 +12,7 @@ output:
     wrap: 72
 ---
 
-#Instalacja Pakietów
+
 ```{r message=TRUE, warning=TRUE, include=FALSE}
 if (! require("tidyverse")) install.packages("tidyverse", dependencies =TRUE)
 if (! require("dlookr")) install.packages("dlookr", dependencies =TRUE)
@@ -31,10 +31,6 @@ if (! require("ggstatsplot")) install.packages("ggstatsplot", dependencies = TRU
 if (! require("knitr")) install.packages("knitr", dependencies = TRUE)
 if (! require("kableExtra")) install.packages("kableExtra", dependencies = TRUE)
 ```
-  
-  
-
-#Wczytywanie bibliotek
 ```{r message=TRUE, warning=TRUE, include=FALSE}
 library(tidyverse)
 library(dlookr)
@@ -50,9 +46,9 @@ library(kableExtra)
 ```
 
 
+# Wczytanie danych
 
-
-```{r}
+```{r warning=TRUE}
 #Wczytanie danych
 Hipoteczny <- read_delim("Hipoteczny.csv", 
     delim = ";", escape_double = FALSE, trim_ws = TRUE)
@@ -63,10 +59,9 @@ summary(hipo_baza)
 ```
 
 
-##Czyszczenie danych
+# Czyszczenie danych
 
-#Zamiana pustych wartości na unikalne
-
+Zamiana pustych wartości na unikalne
 ```{r}
 sum(is.na(hipo_baza))
 
@@ -89,16 +84,14 @@ sum(is.na(hipo_baza))
 
 ```
 
-#Sprwadzanie i usuwanie dupliatów
-
+Sprwadzanie i usuwanie dupliatów
 ```{r}
 sum(duplicated(hipo_baza$Loan_ID))
 hipo_baza <- hipo_baza[!duplicated(hipo_baza$Loan_ID), ]
 sum(duplicated(hipo_baza$Loan_ID))
 ```
 
-#Zmiana danych, aby były zapisane małymi literami
-
+Zmiana danych, aby były zapisane małymi literami
 ```{r}
 hipo_baza$Gender <- tolower(hipo_baza$Gender)
 hipo_baza$Married <- tolower(hipo_baza$Married)
@@ -107,8 +100,7 @@ hipo_baza$Self_Employed <- tolower(hipo_baza$Self_Employed)
 hipo_baza$Property_Area <- tolower(hipo_baza$Property_Area)
 ```
 
-#Usuwanie błednych wartości
-
+Usuwanie błednych wartości
 ```{r}
 sum(!grepl("LP", hipo_baza$Loan_ID))
 hipo_baza <- hipo_baza[grepl("^LP\\d{6}$", hipo_baza$Loan_ID), ]  #czyszczenie jeśli nie mają LP i 6 cyfr
@@ -125,8 +117,7 @@ hipo_baza <- subset(hipo_baza, Property_Area %in% c("urban", "semiurban", "rural
 hipo_baza <- subset(hipo_baza, Dependents >= 0)
 ```
 
-#Zmiana wartości w kolumach na dane binarne
-
+Zmiana wartości w kolumach na dane binarne
 ```{r}
 #Kolumna Gender, przekodowanie aby 1 ozn. mężczyzne a 0 kobietę
 hipo_baza$Gender <- ifelse(hipo_baza$Gender == "male", 1, 0)
@@ -146,8 +137,7 @@ hipo_baza$Property_Area <- ifelse(hipo_baza$Property_Area == "urban", 1,
                                   ifelse(hipo_baza$Property_Area == "rural", 3, NA)))
 ```
 
-#Zminaa typu na liczbowy:
-
+Zminaa typu na liczbowy:
 ```{r}
 hipo_baza$Gender <- as.integer(hipo_baza$Gender)
 hipo_baza$Married <- as.integer(hipo_baza$Married)
@@ -163,10 +153,9 @@ hipo_baza$Property_Area <- as.integer(hipo_baza$Property_Area)
 ```
 
 
-##Wizualizacja danch
-#wykres zależności pomiędzy zarobkami wnioskodawcy a wielkością
-miejscowosći zamieszkania
+# Wizualizacja danch
 
+wykres zależności pomiędzy zarobkami wnioskodawcy a wielkością miejscowosći zamieszkania
 ```{r}
 
 hipo_baza$Property_Area <- factor(hipo_baza$Property_Area, 
@@ -198,8 +187,7 @@ print(wykres_zarobki_do_miejscowosci)
 
 ```
 
-#wykres zależności pomiędzy zarobkami a poziomem edukacji
-
+wykres zależności pomiędzy zarobkami a poziomem edukacji
 ```{r}
 
 hipo_baza$Education <- factor(hipo_baza$Education, 
@@ -231,11 +219,10 @@ print(wykres_zarobki_do_wyksztalcenia)
 
 
 ```
-#Dochody wnioskodawców różnią się w zależności od miejsca zamieszkania. W dużych miastach występują zarówno niskie, jak i bardzo wysokie zarobki. W małych miastach dochody są bardziej stabilne, ale rzadziej osiągają wysokie wartości. Na wsiach większość dochodów jest niższa, choć zdarzają się wyjątki z bardzo wysokimi zarobkami.
+Dochody wnioskodawców różnią się w zależności od miejsca zamieszkania. W dużych miastach występują zarówno niskie, jak i bardzo wysokie zarobki. W małych miastach dochody są bardziej stabilne, ale rzadziej osiągają wysokie wartości. Na wsiach większość dochodów jest niższa, choć zdarzają się wyjątki z bardzo wysokimi zarobkami.
 
 
-#Wykres wielkość kredytu do obszaru zamieszkania
-
+Wykres wielkość kredytu do obszaru zamieszkania
 ```{r}
   
   # Tworzenie wykresu
@@ -258,10 +245,9 @@ print(wykres_zarobki_do_wyksztalcenia)
   # Wyświetlenie wykresu
   print(wykres_kredyt_do_miejscowosci)
 ```
-#Wielkość kredytów różni się w zależności od miejsca zamieszkania. W dużych miastach występują zarówno małe, jak i wysokie kredyty, z pojedynczymi ekstremalnymi wartościami. W małych miastach kredyty są bardziej skupione wokół średnich wartości, choć pojawiają się nieliczne wysokie wnioski. Na wsiach rozrzut jest większy, a niektóre kredyty osiągają wysokie wartości, co może wynikać z różnych potrzeb finansowych mieszkańców.
+Wielkość kredytów różni się w zależności od miejsca zamieszkania. W dużych miastach występują zarówno małe, jak i wysokie kredyty, z pojedynczymi ekstremalnymi wartościami. W małych miastach kredyty są bardziej skupione wokół średnich wartości, choć pojawiają się nieliczne wysokie wnioski. Na wsiach rozrzut jest większy, a niektóre kredyty osiągają wysokie wartości, co może wynikać z różnych potrzeb finansowych mieszkańców.
 
-#Wykres zarobków w stosunku do płci
-
+Wykres zarobków w stosunku do płci
 ```{r}
 
 hipo_baza$Gender <- factor(hipo_baza$Gender, 
@@ -292,12 +278,10 @@ wykres_zarobki_do_plci <- ggplot(hipo_baza, aes(x = Gender, y = ApplicantIncome,
 print(wykres_zarobki_do_plci)
 
 ```
+Mężczyźni mają większy rozrzut zarobków i częściej osiągają wyższe dochody. Dochody kobiet są bardziej skupione w niższych przedziałach, choć występują pojedyncze wysokie wartości. Ogólnie, widać wyraźne różnice w rozkładzie zarobków między płciami.
 
-#Mężczyźni mają większy rozrzut zarobków i częściej osiągają wyższe dochody. Dochody kobiet są bardziej skupione w niższych przedziałach, choć występują pojedyncze wysokie wartości. Ogólnie, widać wyraźne różnice w rozkładzie zarobków między płciami.
 
-
-#Wykres kredytu w stostunku do małżeńśtwa
-
+Wykres kredytu w stostunku do małżeńśtwa
 ```{r}
 hipo_baza$Married <- factor(hipo_baza$Married, 
                                    levels = c(1, 0),
@@ -327,11 +311,9 @@ wykres_zarobki_do_malzenstwa <- ggplot(hipo_baza, aes(x = Married, y = LoanAmoun
 print(wykres_zarobki_do_malzenstwa)
 
 ```
+Osoby w małżeństwie zaciągają kredyty o większym rozrzucie, a niektóre wnioski osiągają bardzo wysokie wartości. Osoby przed ślubem częściej mają kredyty o niższej wartości, z mniejszą liczbą skrajnie wysokich przypadków. Wskazuje to, że status małżeński może wpływać na zdolność kredytową lub potrzeby finansowe.
 
-#Osoby w małżeństwie zaciągają kredyty o większym rozrzucie, a niektóre wnioski osiągają bardzo wysokie wartości. Osoby przed ślubem częściej mają kredyty o niższej wartości, z mniejszą liczbą skrajnie wysokich przypadków. Wskazuje to, że status małżeński może wpływać na zdolność kredytową lub potrzeby finansowe.
-
-#Rozkład płci wśród wnioskodawców
-
+Rozkład płci wśród wnioskodawców
 ```{r}
 ggplot(hipo_baza, aes(x = as.factor(Gender), fill = as.factor(Gender))) +
   geom_bar() +
@@ -342,7 +324,7 @@ ggplot(hipo_baza, aes(x = as.factor(Gender), fill = as.factor(Gender))) +
   ylab("Liczba wnioskodawców")
 
 ```
-#Wśród wnioskodawców znaczną większość stanowią mężczyźni, których liczba jest ponad trzykrotnie większa niż liczba kobiet. Może to sugerować, że mężczyźni częściej wnioskują o kredyty lub mają większą zdolność kredytową.
+Wśród wnioskodawców znaczną większość stanowią mężczyźni, których liczba jest ponad trzykrotnie większa niż liczba kobiet. Może to sugerować, że mężczyźni częściej wnioskują o kredyty lub mają większą zdolność kredytową.
 
 
 ```{r}
@@ -356,10 +338,9 @@ ggplot(hipo_baza, aes(x = as.factor(Married), fill = as.factor(Married))) +
 
 
 ```
-#Wśród wnioskodawców dominują osoby pozostające w małżeństwie, których liczba jest wyraźnie większa niż osób przed ślubem. Może to sugerować, że osoby zamężne/cywilnie poślubione częściej ubiegają się o kredyty, być może ze względu na większe potrzeby finansowe lub wyższą zdolność kredytową.
+Wśród wnioskodawców dominują osoby pozostające w małżeństwie, których liczba jest wyraźnie większa niż osób przed ślubem. Może to sugerować, że osoby zamężne/cywilnie poślubione częściej ubiegają się o kredyty, być może ze względu na większe potrzeby finansowe lub wyższą zdolność kredytową.
 
-#Rozkład liczby osób na utrzymaniu
-
+Rozkład liczby osób na utrzymaniu
 ```{r}
 ggplot(hipo_baza, aes(x = Dependents)) +
   geom_bar(fill = "orange") +
@@ -367,11 +348,10 @@ ggplot(hipo_baza, aes(x = Dependents)) +
   xlab("Liczba osób na utrzymaniu") +
   ylab("Liczba wnioskodawców")
 ```
-#Większość wnioskodawców nie ma osób na utrzymaniu, co może sugerować, że kredyty są częściej zaciągane przez osoby samotne lub niezależne finansowo. Znacznie mniejsza grupa ma 1 lub 2 osoby na utrzymaniu, a najmniej wnioskodawców deklaruje utrzymywanie 3 osób. Może to mieć wpływ na zdolność kredytową i wysokość przyznawanych kredytów.
+Większość wnioskodawców nie ma osób na utrzymaniu, co może sugerować, że kredyty są częściej zaciągane przez osoby samotne lub niezależne finansowo. Znacznie mniejsza grupa ma 1 lub 2 osoby na utrzymaniu, a najmniej wnioskodawców deklaruje utrzymywanie 3 osób. Może to mieć wpływ na zdolność kredytową i wysokość przyznawanych kredytów.
 
 
-#Dochód wnioskodawcy a kwota kredytu
-
+Dochód wnioskodawcy a kwota kredytu
 ```{r}
 ggplot(hipo_baza, aes(x = ApplicantIncome, y = LoanAmount)) +
   geom_point(color = "blue", alpha = 0.5) +
@@ -380,12 +360,10 @@ ggplot(hipo_baza, aes(x = ApplicantIncome, y = LoanAmount)) +
   xlab("Dochód") +
   ylab("Kwota Kredytu")
 ```
+Nie widać wyraźnej zależności między wysokością dochodu a kwotą kredytu. Wnioskodawcy o niskich i średnich dochodach najczęściej ubiegają się o kredyty w przedziale 100–200 tys. zł. Pojedyncze przypadki wysokich kredytów dotyczą zarówno osób o niższych, jak i wyższych dochodach, co może wskazywać na inne czynniki wpływające na decyzję kredytową.
 
-#Nie widać wyraźnej zależności między wysokością dochodu a kwotą kredytu. Wnioskodawcy o niskich i średnich dochodach najczęściej ubiegają się o kredyty w przedziale 100–200 tys. zł. Pojedyncze przypadki wysokich kredytów dotyczą zarówno osób o niższych, jak i wyższych dochodach, co może wskazywać na inne czynniki wpływające na decyzję kredytową.
 
-
-#Rozkład dochodów wnioskodawców
-
+Rozkład dochodów wnioskodawców
 ```{r}
 ggplot(hipo_baza, aes(x = ApplicantIncome)) +
   geom_histogram(bins = 30, fill = "green", color = "black") +
@@ -395,10 +373,9 @@ ggplot(hipo_baza, aes(x = ApplicantIncome)) +
   ylab("Ilość wniosków")
   
 ```
-#Większość wnioskodawców ma dochody poniżej 10 000 zł, z największą grupą w przedziale 2500–5000 zł. Dochody powyżej 10 000 zł są rzadkie, a ekstremalnie wysokie wartości występują sporadycznie. Rozkład jest prawostronnie skośny, co sugeruje, że znaczna część osób ma stosunkowo niskie zarobki, a tylko nieliczne osiągają bardzo wysokie dochody.
+Większość wnioskodawców ma dochody poniżej 10 000 zł, z największą grupą w przedziale 2500–5000 zł. Dochody powyżej 10 000 zł są rzadkie, a ekstremalnie wysokie wartości występują sporadycznie. Rozkład jest prawostronnie skośny, co sugeruje, że znaczna część osób ma stosunkowo niskie zarobki, a tylko nieliczne osiągają bardzo wysokie dochody.
 
-#Porównanie średniej wartosci kredytu do zatrudnienia
- 
+Porównanie średniej wartosci kredytu do zatrudnienia
 ```{r}
 srednia_kredytu <- aggregate(LoanAmount ~ Self_Employed, data = hipo_baza, FUN = mean, na.rm = TRUE)
 kable(srednia_kredytu, format = "html", align = "c",
@@ -409,11 +386,9 @@ kable(srednia_kredytu, format = "html", align = "c",
   column_spec(2, bold = TRUE, background = "#f2f2f2") %>%
   add_header_above(c("Analiza Kredytów" = 2))
 ```
+Średnia kwota kredytu dla osób samozatrudnionych wynosi 150,19, natomiast dla osób niebędących samozatrudnionymi 134,77. Oznacza to, że samozatrudnieni otrzymują średnio o 15,42 jednostek więcej kredytu. Może to wynikać z ich wyższej zdolności kredytowej, potrzeby finansowania działalności gospodarczej lub większej skłonności do zaciągania większych zobowiązań.
 
-#Średnia kwota kredytu dla osób samozatrudnionych wynosi 150,19, natomiast dla osób niebędących samozatrudnionymi 134,77. Oznacza to, że samozatrudnieni otrzymują średnio o 15,42 jednostek więcej kredytu. Może to wynikać z ich wyższej zdolności kredytowej, potrzeby finansowania działalności gospodarczej lub większej skłonności do zaciągania większych zobowiązań.
-
-#Rozkład dochodów wnioskodawców
-
+Rozkład dochodów wnioskodawców
 ```{r}
 ggplot(hipo_baza, aes(x = Credit_History)) +
   geom_bar(fill = "purple", color = "black") +
@@ -423,11 +398,9 @@ ggplot(hipo_baza, aes(x = Credit_History)) +
   
   
 ```
-#Większość wnioskodawców posiada pozytywną historię kredytową (wartość 1), co może zwiększać ich szanse na uzyskanie kredytu. Znacznie mniejsza grupa osób nie ma historii kredytowej lub ma negatywną (wartość 0), co może utrudniać uzyskanie finansowania. To sugeruje, że banki częściej obsługują klientów z ugruntowaną historią kredytową.
+Większość wnioskodawców posiada pozytywną historię kredytową (wartość 1), co może zwiększać ich szanse na uzyskanie kredytu. Znacznie mniejsza grupa osób nie ma historii kredytowej lub ma negatywną (wartość 0), co może utrudniać uzyskanie finansowania. To sugeruje, że banki częściej obsługują klientów z ugruntowaną historią kredytową.
 
-#Wzorce wielkości kredytów do ilości domowników w różnych typach
-zurbanizowania
-
+Wzorce wielkości kredytów do ilości domowników w różnych typach zurbanizowania
 ```{r}
 Wykres_ilosc_domownikow_kredyt_zamieszkanie <- ggplot(hipo_baza, aes(LoanAmount, Dependents)) +
   geom_abline() +
@@ -437,11 +410,13 @@ Wykres_ilosc_domownikow_kredyt_zamieszkanie + facet_wrap(~Property_Area)+
   ylab("Liczba osób na utrzymaniu")
 
 ```
-#większość kredytobiorców ma 0–1 osoby na utrzymaniu i zaciąga kredyty o niższych wartościach. Wnioskodawcy z większą liczbą domowników (2–3) również uzyskują kredyty, ale nie ma wyraźnej zależności między liczbą osób na utrzymaniu a wysokością kredytu. Rozkład jest dość równomierny w różnych obszarach, co sugeruje, że liczba osób na utrzymaniu nie jest kluczowym czynnikiem wpływającym na kwotę kredytu.
+większość kredytobiorców ma 0–1 osoby na utrzymaniu i zaciąga kredyty o niższych wartościach. Wnioskodawcy z większą liczbą domowników (2–3) również uzyskują kredyty, ale nie ma wyraźnej zależności między liczbą osób na utrzymaniu a wysokością kredytu. Rozkład jest dość równomierny w różnych obszarach, co sugeruje, że liczba osób na utrzymaniu nie jest kluczowym czynnikiem wpływającym na kwotę kredytu.
 
+
+
+```{r include=FALSE}
 #Ponowna zmiana wartości w kolumach na dane binarne
 
-```{r}
 #Kolumna Gender, przekodowanie aby 1 ozn. mężczyzne a 0 kobietę
 hipo_baza$Gender <- ifelse(hipo_baza$Gender == "Mężczyzna", 1, 0)
 
@@ -460,9 +435,10 @@ hipo_baza$Property_Area <- ifelse(hipo_baza$Property_Area == "Duże Miasto", 1,
                                   ifelse(hipo_baza$Property_Area == "Wieś", 3, NA)))
 ```
 
-#Ponowna Zminaa typu na liczbowy:
 
-```{r}
+
+```{r include=FALSE}
+#Ponowna Zminaa typu na liczbowy:
 hipo_baza$Gender <- as.integer(hipo_baza$Gender)
 hipo_baza$Married <- as.integer(hipo_baza$Married)
 hipo_baza$Dependents <- as.integer(hipo_baza$Dependents)
@@ -476,8 +452,9 @@ hipo_baza$Credit_History <- as.integer(hipo_baza$Credit_History)
 hipo_baza$Property_Area <- as.integer(hipo_baza$Property_Area)
 ```
 
-##Analiza Opisowa #Postawowe dane dla dochodów i kredytów
+# Analiza Opisowa 
 
+Postawowe dane dla dochodów i kredytów
 ```{r}
 stat_dochod_kredyt <- summary(hipo_baza[, c("ApplicantIncome", "CoapplicantIncome", "LoanAmount")])
 
@@ -489,7 +466,7 @@ kable(stat_dochod_kredyt, format = "html", align = "c",
                 full_width = FALSE, position = "center") %>%
   add_header_above(c("Analiza Kredytów" = 4))
 ```
-#Większość wnioskodawców ma dochody w przedziale 2864 – 5060, jednak pojedyncze przypadki bardzo wysokich zarobków podnoszą średnią. Współwnioskodawcy często nie mają dochodu, co sugeruje, że wiele wniosków opiera się na jednym źródle dochodu. Średnia kwota kredytu wynosi 136,3, a większość kredytów mieści się w zakresie 101 – 157,5, choć zdarzają się znacznie wyższe wnioski.
+Większość wnioskodawców ma dochody w przedziale 2864 – 5060, jednak pojedyncze przypadki bardzo wysokich zarobków podnoszą średnią. Współwnioskodawcy często nie mają dochodu, co sugeruje, że wiele wniosków opiera się na jednym źródle dochodu. Średnia kwota kredytu wynosi 136,3, a większość kredytów mieści się w zakresie 101 – 157,5, choć zdarzają się znacznie wyższe wnioski.
 
 
 ```{r}
@@ -503,17 +480,17 @@ kable(suma_bazy, format = "html", align = "c",
                 full_width = FALSE, position = "center")
   
 ```
-#Większość wnioskodawców to mężczyźni (80,9%), osoby zamężne (63,5%) i posiadające wyższe wykształcenie (71,1%). Dochody głównego wnioskodawcy są zróżnicowane, ale mediana wynosi 3786, a średnia 4806 – co wskazuje na obecność wysokich wartości odstających. Współwnioskodawcy często nie mają dochodu.
-#Większość kredytów opiewa na 126–136 tys. i jest udzielana na 30 lat. Wnioskodawcy z pozytywną historią kredytową dominują, co sugeruje, że historia kredytowa ma istotny wpływ na decyzję o przyznaniu finansowania.
+Większość wnioskodawców to mężczyźni (80,9%), osoby zamężne (63,5%) i posiadające wyższe wykształcenie (71,1%). Dochody głównego wnioskodawcy są zróżnicowane, ale mediana wynosi 3786, a średnia 4806 – co wskazuje na obecność wysokich wartości odstających. Współwnioskodawcy często nie mają dochodu.
+Większość kredytów opiewa na 126–136 tys. i jest udzielana na 30 lat. Wnioskodawcy z pozytywną historią kredytową dominują, co sugeruje, że historia kredytowa ma istotny wpływ na decyzję o przyznaniu finansowania.
 
 
 ```{r}
 cor(hipo_baza[, sapply(hipo_baza, is.numeric)], use = "complete.obs")
 
 ```
-#Kwota kredytu jest najsilniej skorelowana z dochodem głównego wnioskodawcy (0,49), co oznacza, że im wyższy dochód, tym większy kredyt. Dochód współwnioskodawcy ma mniejszy wpływ (0,15). Liczba osób na utrzymaniu, stan cywilny, historia kredytowa i obszar zamieszkania mają bardzo słabe korelacje z innymi zmiennymi, co sugeruje, że nie są kluczowymi czynnikami w decyzjach kredytowych.
+Kwota kredytu jest najsilniej skorelowana z dochodem głównego wnioskodawcy (0,49), co oznacza, że im wyższy dochód, tym większy kredyt. Dochód współwnioskodawcy ma mniejszy wpływ (0,15). Liczba osób na utrzymaniu, stan cywilny, historia kredytowa i obszar zamieszkania mają bardzo słabe korelacje z innymi zmiennymi, co sugeruje, że nie są kluczowymi czynnikami w decyzjach kredytowych.
 
-#podstawowe dane statystyczne dla całej bazy
+podstawowe dane statystyczne dla całej bazy
 ```{r}
 wyniki_descr <- descr(hipo_baza[, 2:10],
                       stats = c("min", "max", "mean", "sd"),
@@ -529,11 +506,11 @@ kable(wyniki_descr, format = "html", align = "c",
 
 
 ```
-#Większość wnioskodawców ma dochody w przedziale 2864 – 5060, ale duże odchylenie standardowe wskazuje na znaczne różnice między zarobkami. Współwnioskodawcy często nie mają dochodu, co oznacza, że kredyty są głównie przyznawane na podstawie zarobków głównego wnioskodawcy.
-#Średnia kwota kredytu wynosi 136,32, a większość kredytów udzielana jest na 30 lat. Ponad 63% wnioskodawców jest w związku małżeńskim. Brak danych dla samozatrudnionych może sugerować konieczność weryfikacji zbioru danych.
+Większość wnioskodawców ma dochody w przedziale 2864 – 5060, ale duże odchylenie standardowe wskazuje na znaczne różnice między zarobkami. Współwnioskodawcy często nie mają dochodu, co oznacza, że kredyty są głównie przyznawane na podstawie zarobków głównego wnioskodawcy.
+Średnia kwota kredytu wynosi 136,32, a większość kredytów udzielana jest na 30 lat. Ponad 63% wnioskodawców jest w związku małżeńskim. Brak danych dla samozatrudnionych może sugerować konieczność weryfikacji zbioru danych.
 
 
-#Występowanie Płuci w wnioskach kreydtowych
+Występowanie Płuci w wnioskach kreydtowych
 ```{r}
 wyniki_freq <- freq(hipo_baza$Gender,
                     report.nas = FALSE,  # Wyłączenie raportu o brakujących danych
@@ -545,11 +522,9 @@ print(wyniki_freq)
 
 
 ```
+Wśród wnioskodawców 80,93% stanowią mężczyźni (297 osób), a 19,07% kobiety (70 osób). Wskazuje to na znaczną przewagę mężczyzn w grupie ubiegających się o kredyt. Może to wynikać z różnic w dochodach, strukturze gospodarstw domowych lub preferencjach finansowych.
 
-
-#Wśród wnioskodawców 80,93% stanowią mężczyźni (297 osób), a 19,07% kobiety (70 osób). Wskazuje to na znaczną przewagę mężczyzn w grupie ubiegających się o kredyt. Może to wynikać z różnic w dochodach, strukturze gospodarstw domowych lub preferencjach finansowych.
-
-#Tabela krzyżowa historii kredytowej do wielkości kredytu
+Tabela krzyżowa historii kredytowej do wielkości kredytu
 ```{r}
 hipo_baza$Credit_History <- factor(hipo_baza$Credit_History)
 hipo_baza$LoanAmount_cat <- cut(hipo_baza$LoanAmount, 
@@ -561,28 +536,27 @@ hipo_baza$LoanAmount_cat <- cut(hipo_baza$LoanAmount,
 tabela_krzyzowa <- ctable(hipo_baza$Credit_History, hipo_baza$LoanAmount_cat, prop = "n", round.digits = 2)
 tabela_krzyzowa
 ```
+Osoby z pozytywną historią kredytową częściej otrzymują wyższe kredyty – 64,29% z nich mieści się w przedziale 100-200 tys., a 1,95% przekracza 300 tys.. Natomiast osoby bez historii kredytowej rzadko dostają wysokie kredyty – aż 81,36% otrzymuje kwoty 100-200 tys., a nikt nie przekracza 300 tys..
+Brak historii kredytowej znacząco ogranicza dostęp do wyższych kredytów.
 
-#Osoby z pozytywną historią kredytową częściej otrzymują wyższe kredyty – 64,29% z nich mieści się w przedziale 100-200 tys., a 1,95% przekracza 300 tys.. Natomiast osoby bez historii kredytowej rzadko dostają wysokie kredyty – aż 81,36% otrzymuje kwoty 100-200 tys., a nikt nie przekracza 300 tys..
-#Brak historii kredytowej znacząco ogranicza dostęp do wyższych kredytów.
 
-
-#Podsumowanie wszystkich statysyk dla wszystkich zmiennych
+Podsumowanie wszystkich statysyk dla wszystkich zmiennych
 ```{r}
 podsumowanie <- dfSummary(hipo_baza,
                            method = "render")
 print(podsumowanie)
 
 ```
-#Większość wnioskodawców to mężczyźni (80,9%), osoby zamężne (63,5%) i posiadające wyższe wykształcenie (77,1%). Ponad połowa nie ma osób na utrzymaniu (57,2%).
+Większość wnioskodawców to mężczyźni (80,9%), osoby zamężne (63,5%) i posiadające wyższe wykształcenie (77,1%). Ponad połowa nie ma osób na utrzymaniu (57,2%).
 
-#Średni dochód głównego wnioskodawcy wynosi 4805,6, ale jest mocno zróżnicowany. Współwnioskodawcy często nie mają dochodu, a jeśli mają, to średnio 1569,6. Średnia kwota kredytu wynosi 136,3, a większość mieści się w przedziale 100-200 tys..
+Średni dochód głównego wnioskodawcy wynosi 4805,6, ale jest mocno zróżnicowany. Współwnioskodawcy często nie mają dochodu, a jeśli mają, to średnio 1569,6. Średnia kwota kredytu wynosi 136,3, a większość mieści się w przedziale 100-200 tys..
 
-#Większość kredytów udzielana jest na 30 lat, a 83,9% wnioskodawców ma pozytywną historię kredytową, co zwiększa ich szanse na uzyskanie finansowania.
+Większość kredytów udzielana jest na 30 lat, a 83,9% wnioskodawców ma pozytywną historię kredytową, co zwiększa ich szanse na uzyskanie finansowania.
 
 
-##Wnioskowanie Statystyczne
+# Wnioskowanie Statystyczne
 
-#Satystyka Długosci kredytu to wielkości
+Satystyka Długosci kredytu to wielkości
 ```{r}
 ggbetweenstats(
   data = hipo_baza,
@@ -592,10 +566,9 @@ ggbetweenstats(
 )
 
 ```
+Najczęściej udzielane kredyty mają okres 360 miesięcy (30 lat), ze średnią kwotą 133 tys.. Krótsze kredyty (np. 6–36 miesięcy) mają większą zmienność kwot – od 95 tys. do 260 tys.. Kredyty na 15 lat (180 miesięcy) mają najniższą średnią kwotę (80 tys.). Dłuższe okresy kredytowania wiążą się z większym rozproszeniem wartości kredytów.
 
-#Najczęściej udzielane kredyty mają okres 360 miesięcy (30 lat), ze średnią kwotą 133 tys.. Krótsze kredyty (np. 6–36 miesięcy) mają większą zmienność kwot – od 95 tys. do 260 tys.. Kredyty na 15 lat (180 miesięcy) mają najniższą średnią kwotę (80 tys.). Dłuższe okresy kredytowania wiążą się z większym rozproszeniem wartości kredytów.
-
-#wizualizację zależności między wielkościa kredytu a stusem cywilnym wraz z wynikami testu korelacji
+wizualizację zależności między wielkościa kredytu a stusem cywilnym wraz z wynikami testu korelacji
 ```{r}
 ggscatterstats(
   data = hipo_baza,
@@ -604,21 +577,17 @@ ggscatterstats(
 )
 
 ```
+Osoby w związku małżeńskim częściej otrzymują wyższe kredyty, ale związek ten jest słaby (r = 0,18). Stan cywilny może mieć pewien wpływ na wysokość kredytu, jednak inne czynniki, jak dochód czy historia kredytowa, są bardziej istotne.
 
-
-#Osoby w związku małżeńskim częściej otrzymują wyższe kredyty, ale związek ten jest słaby (r = 0,18). Stan cywilny może mieć pewien wpływ na wysokość kredytu, jednak inne czynniki, jak dochód czy historia kredytowa, są bardziej istotne.
-
-#Model regresji liniowej zależność dochodu od statusu cwyilnego i płuci
+Model regresji liniowej zależność dochodu od statusu cwyilnego i płuci
 ```{r}
 model_dochod <- lm(ApplicantIncome ~ Married + Gender, data = hipo_baza)
 ggcoefstats(model_dochod)
 
 ```
+Analiza regresji wskazuje, że płeć i stan cywilny nie mają istotnego wpływu na dochód wnioskodawcy (p > 0,05). Jedynie wyraz wolny modelu (β = 4023,65, p < 0,001) jest istotny, co sugeruje, że inne czynniki niż płeć czy stan cywilny lepiej wyjaśniają poziom dochodów.
 
-
-#Analiza regresji wskazuje, że płeć i stan cywilny nie mają istotnego wpływu na dochód wnioskodawcy (p > 0,05). Jedynie wyraz wolny modelu (β = 4023,65, p < 0,001) jest istotny, co sugeruje, że inne czynniki niż płeć czy stan cywilny lepiej wyjaśniają poziom dochodów.
-
-#Wielkość kredytu zależna od  statusu cwyilnego, płuci i Historii Kredytowej
+Wielkość kredytu zależna od  statusu cwyilnego, płuci i Historii Kredytowej
 ```{r}
   model_wielkosc_kredytu <- lm(LoanAmount ~ Married + Gender + Credit_History, data = hipo_baza)
   ggcoefstats(model_wielkosc_kredytu)
@@ -626,60 +595,6 @@ ggcoefstats(model_dochod)
 ```
 
 
-#Stan cywilny ma istotny, ale niewielki wpływ na kwotę kredytu (β = 22,39, p = 0,001). Płeć i historia kredytowa nie są istotnymi predyktorami (p > 0,05). Główne czynniki wpływające na kwotę kredytu to prawdopodobnie dochód i inne zmienne nieuwzględnione w tym modelu.
-
-##Podsumowanie: 
-
-#Celem projektu było zautomatyzowanie procesu
-zatwierdzania kredytów mieszkaniowych poprzez analizę różnych cech
-klientów oraz określenie czynników, ##które mają największy wpływ na
-decyzję kredytową. Firma chciała opracować system, ##który umożliwi
-szybkie podejmowanie decyzji o przyznaniu kredytu w oparciu o dane
-wprowadzone przez klientów w formularzu online. ##Dane obejmowały
-zarówno informacje demograficzne (np. płeć, stan cywilny, liczba osób na
-utrzymaniu), jak i finansowe (np. dochody, kwotę kredytu, ##historię
-kredytową). Analiza miała pomóc w identyfikacji klientów, którzy
-spełniają warunki kredytowe, co pozwoliłoby na efektywniejszą obsługę
-wniosków i minimalizację ryzyka banku.
-
-##Wnioski \# - Historia kredytowa ma największy wpływ na decyzję o
-kredycie – klienci z pozytywną historią kredytową mają znacznie większą
-szansę na otrzymanie kredytu, ##co sugeruje, że banki przywiązują dużą
-wagę do wcześniejszych zobowiązań klientów.
-
-# - Dochody głównego wnioskodawcy korelują z wysokością kredytu – osoby o wyższych zarobkach częściej otrzymują większe kredyty.
-
-##Dochód współwnioskodawcy ma znacznie mniejsze znaczenie, co może
-sugerować, że decyzje kredytowe są głównie podejmowane na podstawie
-głównego źródła dochodu.
-
-## - Stan cywilny i liczba osób na utrzymaniu mają umiarkowany wpływ – osoby będące w związku małżeńskim częściej uzyskują większe kredyty, ale efekt ten nie jest bardzo silny.
-
-##Może to wynikać z większej stabilności finansowej rodzin oraz większej
-zdolności kredytowej małżeństw.
-
-## - Występują braki w danych – szczególnie dotyczące historii kredytowej i dochodów współwnioskodawców.
-
-##Może to wpłynąć na skuteczność modelu i jego zdolność do przewidywania
-decyzji kredytowych.
-
-## - Kwoty kredytów są zróżnicowane – większość kredytów mieści się w przedziale 100-200 tys., ale niektóre wnioski przekraczają nawet 500 tys..
-
-## - Obszar zamieszkania nie ma istotnego wpływu na decyzję kredytową – analiza nie wykazała dużych różnic między miastami, przedmieściami i obszarami wiejskimi
-
-
-
-#Wnioski
-# - Historia kredytowa ma największy wpływ na decyzję o kredycie – klienci z pozytywną historią kredytową mają znacznie większą szansę na otrzymanie kredytu,co sugeruje, że banki przywiązują dużą wagę do wcześniejszych zobowiązań klientów.
-
-# - Dochody głównego wnioskodawcy korelują z wysokością kredytu – osoby o wyższych zarobkach częściej otrzymują większe kredyty.Dochód współwnioskodawcy ma znacznie mniejsze znaczenie, co może sugerować, że decyzje kredytowe są głównie podejmowane na podstawie głównego źródła dochodu.
-
-## - Stan cywilny i liczba osób na utrzymaniu mają umiarkowany wpływ – osoby będące w związku małżeńskim częściej uzyskują większe kredyty, ale efekt ten nie jest bardzo silny.Może to wynikać z większej stabilności finansowej rodzin oraz większej zdolności kredytowej małżeństw.
-
-## - Występują braki w danych – szczególnie dotyczące historii kredytowej i dochodów współwnioskodawców.Może to wpłynąć na skuteczność modelu i jego zdolność do przewidywania decyzji kredytowych.
-
-## - Kwoty kredytów są zróżnicowane – większość kredytów mieści się w przedziale 100-200 tys., ale niektóre wnioski przekraczają nawet 500 tys..
-## - Obszar zamieszkania nie ma istotnego wpływu na decyzję kredytową – analiza nie wykazała dużych różnic między miastami, przedmieściami i obszarami wiejskimi
 
 
 
