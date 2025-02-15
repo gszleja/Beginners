@@ -682,8 +682,9 @@ Większość kredytów udzielana jest na 30 lat, a 83,9% wnioskodawców ma pozyt
 
 # Wnioskowanie Statystyczne
 
-Satystyka Długosci kredytu to wielkości
-```{r}
+
+```{r warning=FALSE}
+#Satystyka Długosci kredytu to wielkości
 ggbetweenstats(
   data = hipo_baza,
   x = Loan_Amount_Term,
@@ -692,10 +693,49 @@ ggbetweenstats(
 )
 
 ```
+
 Najczęściej udzielane kredyty mają okres 360 miesięcy (30 lat), ze średnią kwotą 133 tys.. Krótsze kredyty (np. 6–36 miesięcy) mają większą zmienność kwot – od 95 tys. do 260 tys.. Kredyty na 15 lat (180 miesięcy) mają najniższą średnią kwotę (80 tys.). Dłuższe okresy kredytowania wiążą się z większym rozproszeniem wartości kredytów.
 
-wizualizację zależności między wielkościa kredytu a stusem cywilnym wraz z wynikami testu korelacji
+```{r warning=FALSE}
+#Satystyka Dochodów do wielkości kredytu
+ggbetweenstats(
+  data = hipo_baza,
+  x = Credit_History,
+  y = LoanAmount, 
+  type = "bonferroni", 
+)
+```
+
+Analiza zależności między historią kredytową a kwotą kredytu wskazuje, że średnia wartość udzielanego finansowania pozostaje na zbliżonym poziomie niezależnie od posiadania wcześniejszej historii kredytowej. Osoby bez historii kredytowej otrzymują średnio 128,74 jednostek kredytu, natomiast wnioskodawcy z historią kredytową 118,83.
+
+Pomimo większej liczby osób posiadających historię kredytową (n = 308) w porównaniu do osób bez historii (n = 59), rozkład wartości kredytów w obu grupach wykazuje podobne tendencje. Co więcej, szerokość rozkładów sugeruje większą zmienność w grupie z historią kredytową, gdzie występują pojedyncze przypadki znacznie wyższych kredytów.
+
+Istotnym wnioskiem z analizy jest brak wyraźnej różnicy w wysokości kredytów między grupami, co sugeruje, że np. dochód wnioskodawcy, może mieć większy wpływ na decyzję kredytową niż sama historia kredytowa.
+
 ```{r}
+hipo_baza$kat_doch <- cut(
+  hipo_baza$ApplicantIncome,
+  breaks = c(0, 4500, 9000, 15000, Inf),  # Granice przedziałów
+  labels = c("1", "2", "3", "4"),         # Nazwy kategorii
+  right = TRUE,                           # Domyślnie przedziały prawostronnie domknięte
+  include.lowest = TRUE                   # Włącza 0 do pierwszej kategorii
+)
+ggbetweenstats(
+  data = hipo_baza,
+  x = kat_doch,
+  y = LoanAmount, 
+  type = "bonferroni",
+)
+```
+
+Analiza zależności między dochodem a wysokością kredytu wskazuje, że osoby o wyższych zarobkach uzyskują średnio wyższe kwoty finansowania. Wartość średnia kredytu (MAP) wzrasta wraz z kategorią dochodową – od 118,93 dla osób zarabiających do 4500 jednostek, aż do 211,50 w grupie o najwyższych dochodach.
+
+Największa stabilność w wysokości przyznawanych kredytów występuje wśród osób z najniższymi dochodami, podczas gdy wśród najlepiej zarabiających obserwujemy znaczną rozpiętość kwot. Wskazuje to na większą elastyczność w przyznawaniu finansowania dla tej grupy.
+
+Testy statystyczne potwierdzają istotne różnice między kategoriami dochodowymi, co sugeruje, że dochód wnioskodawcy jest jednym z kluczowych czynników wpływających na decyzję kredytową. Wysokie zarobki zwiększają szanse na wyższe finansowanie, choć jednocześnie obserwujemy większe zróżnicowanie przyznawanych kwot w tej grupie.
+
+```{r}
+#wizualizację zależności między wielkościa kredytu a stusem cywilnym wraz z wynikami testu korelacji
 ggscatterstats(
   data = hipo_baza,
   x = LoanAmount,
@@ -705,32 +745,42 @@ ggscatterstats(
 ```
 Osoby w związku małżeńskim częściej otrzymują wyższe kredyty, ale związek ten jest słaby (r = 0,18). Stan cywilny może mieć pewien wpływ na wysokość kredytu, jednak inne czynniki, jak dochód czy historia kredytowa, są bardziej istotne.
 
-Model regresji liniowej zależność dochodu od statusu cwyilnego i płuci
+
 ```{r}
+#Model regresji liniowej zależność dochodu od statusu cwyilnego i płuci
 model_dochod <- lm(ApplicantIncome ~ Married + Gender, data = hipo_baza)
 ggcoefstats(model_dochod)
 
 ```
 Analiza regresji wskazuje, że płeć i stan cywilny nie mają istotnego wpływu na dochód wnioskodawcy (p > 0,05). Jedynie wyraz wolny modelu (β = 4023,65, p < 0,001) jest istotny, co sugeruje, że inne czynniki niż płeć czy stan cywilny lepiej wyjaśniają poziom dochodów.
 
-Wielkość kredytu zależna od  statusu cwyilnego, płuci i Historii Kredytowej
+
 ```{r}
+#Wielkość kredytu zależna od  statusu cwyilnego, płuci i Historii Kredytowej
   model_wielkosc_kredytu <- lm(LoanAmount ~ Married + Gender + Credit_History, data = hipo_baza)
   ggcoefstats(model_wielkosc_kredytu)
 
 ```
 
+Analiza regresji liniowej wykazała, że status cywilny istotnie wpływa na wysokość przyznanego kredytu. Osoby pozostające w związku małżeńskim otrzymują średnio wyższe kredyty (β = 22,39, p = 0.001), co może wynikać z postrzegania ich jako bardziej stabilnych finansowo przez instytucje kredytowe.
+
+Z kolei płeć oraz historia kredytowa nie wykazały istotnego wpływu na wysokość kredytu. Współczynnik regresji dla płci (β = 4,18, p = 0.61) oraz historii kredytowej (β = -3,50, p = 0.68) sugeruje, że te zmienne nie mają bezpośredniego znaczenia w decyzji o wysokości finansowania.
+
+Średnia wartość kredytu, gdy wszystkie analizowane zmienne są na poziomie referencyjnym, wynosi 121,65 jednostek. Wyniki te wskazują, że w procesie decyzyjnym banków status cywilny może odgrywać większą rolę niż sama historia kredytowa czy płeć, co może być istotnym czynnikiem w analizie polityki kredytowej.
+
 
 # Podsumowanie i Wnioski
 
-Wyniki analizy wskazują, że historia kredytowa oraz dochody wnioskodawcy są najważniejszymi czynnikami determinującymi decyzję banków o przyznaniu kredytu. Wnioskodawcy z pozytywną historią kredytową mają znacznie większe szanse na otrzymanie kredytu oraz mogą liczyć na wyższe kwoty finansowania. Brak historii kredytowej ogranicza możliwość uzyskania większych kredytów, co sugeruje, że banki opierają swoje decyzje na wcześniejszych zobowiązaniach kredytowych klientów.
+Raport dostarcza kompleksowej analizy danych o kredytach hipotecznych, obejmującej czyszczenie i eksplorację danych oraz szczegółową analizę statystyczną, identyfikującą kluczowe czynniki wpływające na wysokość przyznawanego kredytu.
 
-Dochody głównego wnioskodawcy wykazują najsilniejszą korelację z wysokością kredytu. Osoby o wyższych dochodach zazwyczaj otrzymują wyższe kredyty, co wynika z większej zdolności kredytowej oraz mniejszego ryzyka niespłacenia zobowiązania. Dochody współwnioskodawcy mają mniejsze znaczenie, co sugeruje, że w wielu przypadkach kredytobiorca główny jest kluczowym czynnikiem decydującym o wysokości kredytu.
+Wyniki analizy wskazują, że dochody głównego wnioskodawcy oraz stan cywilny mają największy wpływ na wysokość kredytu. Osoby o wyższych dochodach częściej otrzymują wyższe kredyty, co wynika z większej zdolności kredytowej oraz lepszej oceny ryzyka kredytowego przez banki. Dochody współwnioskodawcy mają mniejsze znaczenie, co sugeruje, że decyzje banków opierają się głównie na zarobkach kredytobiorcy głównego.
 
-Z kolei czynniki demograficzne, takie jak płeć, stan cywilny czy liczba osób na utrzymaniu, odgrywają mniejszą rolę w decyzjach kredytowych. Analiza wykazała, że choć osoby zamężne częściej ubiegają się o wyższe kredyty, efekt ten nie jest na tyle silny, by znacząco wpływać na ostateczną decyzję banku. Podobnie, różnice w dochodach między kobietami a mężczyznami są zauważalne, jednak nie wpływają one bezpośrednio na wysokość przyznawanych kredytów.
+Stan cywilny również odgrywa istotną rolę – osoby zamężne lub w związku małżeńskim częściej uzyskują wyższe kredyty. Może to wynikać z faktu, że gospodarstwa domowe oparte na dwóch osobach mają większą stabilność finansową i wyższe łączne dochody, co zwiększa ich zdolność kredytową. Banki mogą również preferować klientów zamężnych, postrzegając ich jako bardziej wiarygodnych kredytobiorców.
 
-Dane pokazują również, że obszar zamieszkania może mieć pewne znaczenie – osoby z dużych miast mają większe zróżnicowanie dochodów i kwot kredytów, co może wynikać z wyższych kosztów życia i większej dostępności do kredytów hipotecznych w dużych aglomeracjach. Wnioskodawcy z obszarów wiejskich mają bardziej stabilne dochody, lecz czasem ubiegają się o wyższe kredyty, co może być efektem chęci inwestycji w nieruchomości o większej powierzchni.
+Z kolei inne czynniki, takie jak płeć, historia kredytowa czy liczba osób na utrzymaniu, mają mniejsze znaczenie w określaniu wysokości kredytu. Chociaż osoby z pozytywną historią kredytową mają większe szanse na otrzymanie kredytu, to sama wysokość przyznanego finansowania zależy głównie od dochodów i sytuacji rodzinnej kredytobiorcy. Również analiza różnic między kobietami a mężczyznami wskazuje, że choć mężczyźni częściej ubiegają się o wyższe kredyty, to różnice te wynikają głównie z ich wyższych dochodów, a nie samej płci jako czynnika decydującego.
 
-Podsumowując, analiza potwierdza, że banki opierają swoje decyzje przede wszystkim na stabilnych, mierzalnych czynnikach finansowych, takich jak historia kredytowa i dochody, natomiast zmienne demograficzne mają drugorzędne znaczenie w procesie przyznawania kredytu.
+Dane pokazują także, że obszar zamieszkania może mieć pewien wpływ na wysokość kredytu. Wnioskodawcy z dużych miast mają większe zróżnicowanie dochodów i kwot kredytów, co może wynikać z wyższych kosztów życia i cen nieruchomości. Osoby mieszkające na terenach wiejskich częściej ubiegają się o niższe kredyty, choć zdarzają się wyjątki związane z większymi inwestycjami w nieruchomości.
+
+Podsumowując, analiza potwierdza, że banki przy określaniu wysokości kredytu opierają się przede wszystkim na dochodach głównego wnioskodawcy oraz jego sytuacji rodzinnej, podczas gdy inne czynniki, takie jak historia kredytowa czy płeć, mają mniejsze znaczenie w określaniu przyznanej kwoty finansowania.
 
 _______________________________________________________________________________________________________
