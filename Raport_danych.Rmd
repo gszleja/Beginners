@@ -257,6 +257,7 @@ hipo_baza$Property_Area <- as.integer(hipo_baza$Property_Area)
 
 Dane są odpowiednio przygotowne do pracy, zatem możemy przejść do nasępnego etapu, jakim jest wizualizacja danych.
 
+
 # Wizualizacja danch
 
 
