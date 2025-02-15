@@ -673,7 +673,7 @@ Większość kredytów udzielana jest na 30 lat, a 83,9% wnioskodawców ma pozyt
 
 # Wnioskowanie Statystyczne
 
-Satystyka Długosci kredytu to wielkości
+Satystyka długosci kredytu do wielkości
 ```{r message=FALSE, warning=FALSE}
 ggbetweenstats(
   data = hipo_baza,
